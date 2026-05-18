@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1920px; height: 1080px;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: #0D0B2B;
+    }
+
+    .bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0D0B2B 0%, #130E38 55%, #0D0B2B 100%);
+    }
+    .bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(168,85,247,0.07) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .glow {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1600px; height: 800px;
+      background: radial-gradient(ellipse, rgba(107,33,232,0.13) 0%, transparent 60%);
+    }
+
+    /* HEADER */
+    .header {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 36px 90px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      z-index: 30;
+    }
+    .hb { font-size: 19px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.22); }
+    .hc { text-align: center; }
+    .hc h2 { font-size: 40px; font-weight: 900; color: #fff; }
+    .hc h2 em { font-style: normal; color: #C4B5FD; }
+    .hc p { font-size: 21px; font-weight: 500; color: rgba(255,255,255,0.35); margin-top: 6px; }
+    .ht { font-size: 19px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(168,85,247,0.60); }
+
+    /* ÁREA PRINCIPAL */
+    .main {
+      position: absolute;
+      top: 118px; left: 80px; right: 80px; bottom: 56px;
+      display: flex; gap: 20px;
+      z-index: 10;
+    }
+
+    /* LINHA DO TEMPO — coluna esquerda */
+    .col-timeline {
+      width: 820px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      justify-content: center;
+    }
+
+    .etapa {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      position: relative;
+    }
+
+    /* linha vertical conectora */
+    .etapa:not(:last-child) .etapa-linha {
+      position: absolute;
+      left: 31px;
+      top: 64px;
+      width: 2px;
+      height: calc(100% - 8px);
+      background: linear-gradient(180deg, rgba(107,33,232,0.5), rgba(107,33,232,0.15));
+    }
+
+    .etapa-num-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      padding-top: 4px;
+    }
+    .etapa-circulo {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 900;
+      flex-shrink: 0;
+      position: relative; z-index: 1;
+    }
+    .c1 { background: linear-gradient(135deg, #2D1B69, #4C1D95); border: 2px solid rgba(168,85,247,0.40); color: rgba(196,181,253,0.80); }
+    .c2 { background: linear-gradient(135deg, #3D2380, #6B21E8); border: 2px solid rgba(168,85,247,0.50); color: rgba(196,181,253,0.90); }
+    .c3 { background: linear-gradient(135deg, #5B21B6, #7C3AED); border: 2px solid rgba(168,85,247,0.60); color: #fff; }
+    .c4 { background: linear-gradient(135deg, #6B21E8, #A855F7); border: 2px solid rgba(168,85,247,0.80); color: #fff; }
+
+    .etapa-linha { }
+
+    .etapa-corpo {
+      flex: 1;
+      padding: 10px 0 28px 24px;
+    }
+    .etapa-prazo {
+      font-size: 14px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(168,85,247,0.55);
+      margin-bottom: 4px;
+    }
+    .etapa-titulo {
+      font-size: 28px; font-weight: 900; color: #fff;
+      line-height: 1.15; margin-bottom: 6px;
+    }
+    .etapa-desc {
+      font-size: 19px; font-weight: 500;
+      color: rgba(255,255,255,0.40); line-height: 1.6;
+    }
+    .etapa-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 10px;
+      padding: 5px 14px;
+      background: rgba(107,33,232,0.18);
+      border: 1px solid rgba(168,85,247,0.30);
+      border-radius: 20px;
+      font-size: 14px; font-weight: 700; letter-spacing: 1px;
+      color: rgba(196,181,253,0.85);
+    }
+
+    /* COLUNA DIREITA — acompanhamento contínuo */
+    .col-direita {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+      border-left: 1px solid rgba(168,85,247,0.14);
+      padding-left: 40px;
+    }
+
+    .cont-label {
+      font-size: 14px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(168,85,247,0.55);
+      margin-bottom: 4px;
+    }
+    .cont-titulo {
+      font-size: 32px; font-weight: 900; color: #fff;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+
+    .cont-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(168,85,247,0.12);
+      border-left: 3px solid rgba(107,33,232,0.50);
+      border-radius: 0 10px 10px 0;
+    }
+    .cont-icone {
+      font-size: 24px; flex-shrink: 0; margin-top: 2px;
+    }
+    .cont-texto { flex: 1; }
+    .cont-item-titulo {
+      font-size: 20px; font-weight: 700; color: #fff;
+      margin-bottom: 3px;
+    }
+    .cont-item-desc {
+      font-size: 17px; font-weight: 500;
+      color: rgba(255,255,255,0.38); line-height: 1.5;
+    }
+
+    /* FOOTER */
+    .footer {
+      position: absolute; bottom: 16px; left: 0; right: 0;
+      text-align: center; z-index: 20;
+    }
+    .footer p {
+      font-size: 19px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.12);
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="glow"></div>
+
+<div class="header">
+  <div class="hb">Vértice Assessoria</div>
+  <div class="hc">
+    <h2>Próximos <em>passos</em></h2>
+    <p>O que acontece a partir do momento em que fechamos</p>
+  </div>
+  <div class="ht">Como trabalhamos</div>
+</div>
+
+<div class="main">
+
+  <!-- LINHA DO TEMPO -->
+  <div class="col-timeline">
+
+    <div class="etapa">
+      <div class="etapa-linha"></div>
+      <div class="etapa-num-col">
+        <div class="etapa-circulo c1">01</div>
+      </div>
+      <div class="etapa-corpo">
+        <div class="etapa-prazo">Dia 1 — após o fechamento</div>
+        <div class="etapa-titulo">Reunião de Integração</div>
+        <div class="etapa-desc">Nos aprofundamos no seu negócio — produto, público, processo de venda e histórico. Na mesma reunião já coletamos todos os acessos necessários e a equipe começa a execução imediatamente.</div>
+        <div class="etapa-tag">⚡ Primeiras campanhas já em andamento</div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa-linha"></div>
+      <div class="etapa-num-col">
+        <div class="etapa-circulo c2">02</div>
+      </div>
+      <div class="etapa-corpo">
+        <div class="etapa-prazo">Dia 3 — após a integração</div>
+        <div class="etapa-titulo">Entrega do Planejamento Estratégico</div>
+        <div class="etapa-desc">Apresentamos o plano completo de execução — o que vamos fazer, em qual ordem, por quê, e quais resultados esperamos em cada etapa. Você sai sabendo exatamente o que vem pela frente.</div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa-linha"></div>
+      <div class="etapa-num-col">
+        <div class="etapa-circulo c3">03</div>
+      </div>
+      <div class="etapa-corpo">
+        <div class="etapa-prazo">A partir daí — toda semana</div>
+        <div class="etapa-titulo">Reunião Semanal de Resultados</div>
+        <div class="etapa-desc">Com o decisor presente — analisamos o que foi executado, os resultados da semana, o que ajustar e quais são os próximos movimentos. Relatório completo com dados de anúncios e vendas a cada reunião.</div>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa-num-col">
+        <div class="etapa-circulo c4">04</div>
+      </div>
+      <div class="etapa-corpo">
+        <div class="etapa-prazo">Todo mês — aprofundamento estratégico</div>
+        <div class="etapa-titulo">Reunião Mensal Estratégica</div>
+        <div class="etapa-desc">Revisamos os resultados do mês, definimos novas estratégias, decidimos sobre novos recursos e alinhamos as prioridades do próximo ciclo — para o projeto continuar evoluindo.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COLUNA DIREITA -->
+  <div class="col-direita">
+
+    <div>
+      <div class="cont-label">Durante toda a parceria</div>
+      <div class="cont-titulo">Acompanhamento<br>contínuo</div>
+    </div>
+
+    <div class="cont-item">
+      <div class="cont-icone">💬</div>
+      <div class="cont-texto">
+        <div class="cont-item-titulo">Grupo no WhatsApp</div>
+        <div class="cont-item-desc">Canal direto com toda a equipe envolvida no projeto — feedbacks, atualizações e decisões rápidas em tempo real.</div>
+      </div>
+    </div>
+
+    <div class="cont-item">
+      <div class="cont-icone">📊</div>
+      <div class="cont-texto">
+        <div class="cont-item-titulo">Relatório integrado de resultados</div>
+        <div class="cont-item-desc">Unimos os dados de anúncios com os dados de vendas do seu negócio — para ter clareza real sobre o retorno do investimento.</div>
+      </div>
+    </div>
+
+    <div class="cont-item">
+      <div class="cont-icone">⚡</div>
+      <div class="cont-texto">
+        <div class="cont-item-titulo">Visibilidade total do projeto</div>
+        <div class="cont-item-desc">Você sempre sabe o que está sendo feito, o que está funcionando e o que está sendo ajustado — sem depender de alguém para te contar.</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Vértice Assessoria — Próximos Passos</p>
+</div>
+
+</body>
+</html>

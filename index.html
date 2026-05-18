@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vértice Assessoria — Hub de Ferramentas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0D0B2B;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(107,33,232,0.3) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .header {
+      margin-bottom: 48px;
+    }
+    .brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    h1 em {
+      font-style: normal;
+      color: #A855F7;
+    }
+    .divider {
+      width: 40px;
+      height: 3px;
+      background: #6B21E8;
+      border-radius: 2px;
+      margin-top: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      display: block;
+      text-decoration: none;
+      padding: 28px 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(107,33,232,0.5);
+      background: rgba(107,33,232,0.08);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #A855F7;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <p class="brand">Vértice Assessoria</p>
+      <h1>Ferramentas <em>Internas</em></h1>
+      <div class="divider"></div>
+    </div>
+
+    <div class="grid">
+      <a class="card" href="calculadora-resultados/calculadora-resultados.html">
+        <div class="card-icon">📊</div>
+        <p class="card-title">Calculadora de Resultados</p>
+        <p class="card-desc">Projeção de faturamento com base no investimento em tráfego. Modos: Clínicas e Varejo.</p>
+        <span class="card-tag">Comercial</span>
+      </a>
+
+      <a class="card" href="apresentacao-comercial/iceberg.html">
+        <div class="card-icon">🎯</div>
+        <p class="card-title">Apresentação Comercial</p>
+        <p class="card-desc">Slides da apresentação para novos clientes — diagnóstico, método e proposta de valor.</p>
+        <span class="card-tag">Comercial</span>
+      </a>
+
+      <a class="card" href="dashboard-varejo/index.html">
+        <div class="card-icon">📈</div>
+        <p class="card-title">Dashboard — Varejo</p>
+        <p class="card-desc">Painel de resultados para clientes do segmento varejo. Métricas e acompanhamento.</p>
+        <span class="card-tag">Gestão</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

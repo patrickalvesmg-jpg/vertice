@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Resultados — Vértice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* === RESET === */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* === BASE === */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0D0B2B;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+    }
+
+    /* === GLOW DE FUNDO === */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(107,33,232,0.3) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* === WRAPPER PRINCIPAL === */
+    .calc-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* === HEADER === */
+    .calc-header {
+      margin-bottom: 32px;
+    }
+    .calc-header .brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 10px;
+    }
+    .calc-header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .calc-header h1 em {
+      font-style: normal;
+      color: #A855F7;
+    }
+    .calc-header .divider {
+      width: 40px;
+      height: 3px;
+      background: #6B21E8;
+      border-radius: 2px;
+      margin-top: 16px;
+    }
+
+    /* === LAYOUT DUAS COLUNAS === */
+    .calc-body {
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* === PAINEL === */
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px 32px;
+    }
+
+    /* === ABAS === */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 0;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: #6B21E8;
+      border-color: #6B21E8;
+      color: #fff;
+    }
+    .tab-btn:hover:not(.active) {
+      border-color: rgba(168,85,247,0.5);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* === CAMPOS === */
+    .field-group { margin-bottom: 20px; }
+    .field-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+      display: block;
+      text-transform: uppercase;
+    }
+    .field-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field-input:focus {
+      border-color: #6B21E8;
+      background: rgba(107,33,232,0.08);
+    }
+    .field-input::placeholder { color: rgba(255,255,255,0.2); }
+
+    /* === SLIDER === */
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slider-row input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.1);
+      outline: none;
+      cursor: pointer;
+    }
+    .slider-row input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #6B21E8;
+      box-shadow: 0 0 8px rgba(107,33,232,0.6);
+      cursor: pointer;
+    }
+    .slider-value {
+      min-width: 44px;
+      text-align: right;
+      font-size: 15px;
+      font-weight: 700;
+      color: #A855F7;
+    }
+
+    /* === SEÇÃO MODO (toggle) === */
+    .mode-section { display: none; }
+    .mode-section.active { display: block; }
+
+    /* === PAINEL RESULTADOS === */
+    .results-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 24px;
+    }
+
+    .funnel-step {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+    .funnel-step.highlight {
+      background: rgba(107,33,232,0.15);
+      border-color: rgba(107,33,232,0.4);
+    }
+    .funnel-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+    }
+    .funnel-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      min-width: 80px;
+      text-align: right;
+    }
+    .funnel-step.highlight .funnel-label {
+      color: rgba(255,255,255,0.75);
+    }
+    .funnel-step.highlight .funnel-value {
+      color: #A855F7;
+      font-size: 20px;
+    }
+
+    .funnel-arrow {
+      text-align: center;
+      color: rgba(107,33,232,0.4);
+      font-size: 16px;
+      margin: 2px 0;
+    }
+
+    .roi-block {
+      margin-top: 20px;
+      padding: 18px 20px;
+      background: rgba(168,85,247,0.08);
+      border: 1px solid rgba(168,85,247,0.2);
+      border-radius: 12px;
+    }
+    .roi-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(168,85,247,0.6);
+      margin-bottom: 8px;
+    }
+    .roi-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+    }
+    .roi-text strong {
+      color: #A855F7;
+      font-size: 18px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: rgba(255,255,255,0.2);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* === POLIMENTO === */
+
+    input[type="range"] {
+      background: linear-gradient(
+        to right,
+        #6B21E8 0%,
+        #6B21E8 var(--val, 30%),
+        rgba(255,255,255,0.1) var(--val, 30%),
+        rgba(255,255,255,0.1) 100%
+      );
+    }
+
+    .field-group + .field-group {
+      padding-top: 4px;
+    }
+
+    .panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .calc-body {
+        grid-template-columns: 1fr;
+      }
+      body { padding: 24px 16px; }
+      .calc-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="calc-wrapper">
+    <div class="calc-header">
+      <p class="brand">Vértice Assessoria</p>
+      <h1>Calculadora de <em>Resultados</em></h1>
+      <div class="divider"></div>
+    </div>
+    <div class="calc-body">
+      <div class="panel" id="panel-inputs">
+        <p class="panel-title">Parâmetros</p>
+        <!-- ABAS -->
+        <div class="tabs">
+          <button class="tab-btn active" onclick="setMode(event, 'clinicas')">Clínicas</button>
+          <button class="tab-btn" onclick="setMode(event, 'varejo')">Varejo</button>
+        </div>
+
+        <!-- MODO CLÍNICAS -->
+        <div class="mode-section active" id="mode-clinicas">
+
+          <div class="field-group">
+            <label class="field-label">Investimento em tráfego</label>
+            <input class="field-input" id="c-investimento" type="number" min="0" placeholder="Ex: 3000" oninput="calcular()">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Custo por lead</label>
+            <input class="field-input" id="c-cpl" type="number" min="0.01" step="0.01" placeholder="Ex: 15" oninput="calcular()">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">% leads que agendam</label>
+            <div class="slider-row">
+              <input type="range" id="c-p-agendam" min="0" max="100" value="30" oninput="syncSlider('c-p-agendam','sv-agendam'); calcular()">
+              <span class="slider-value" id="sv-agendam">30%</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">% agendados que comparecem</label>
+            <div class="slider-row">
+              <input type="range" id="c-p-comparecem" min="0" max="100" value="70" oninput="syncSlider('c-p-comparecem','sv-comparecem'); calcular()">
+              <span class="slider-value" id="sv-comparecem">70%</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">% consultas que fecham</label>
+            <div class="slider-row">
+              <input type="range" id="c-p-fecham" min="0" max="100" value="60" oninput="syncSlider('c-p-fecham','sv-fecham'); calcular()">
+              <span class="slider-value" id="sv-fecham">60%</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Ticket médio</label>
+            <input class="field-input" id="c-ticket" type="number" min="0" placeholder="Ex: 800" oninput="calcular()">
+          </div>
+
+        </div><!-- /mode-clinicas -->
+
+        <!-- MODO VAREJO -->
+        <div class="mode-section" id="mode-varejo">
+
+          <div class="field-group">
+            <label class="field-label">Investimento em tráfego</label>
+            <input class="field-input" id="v-investimento" type="number" min="0" placeholder="Ex: 2000" oninput="calcular()">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Custo por lead</label>
+            <input class="field-input" id="v-cpl" type="number" min="0.01" step="0.01" placeholder="Ex: 10" oninput="calcular()">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">% leads que compram</label>
+            <div class="slider-row">
+              <input type="range" id="v-p-compram" min="0" max="100" value="5" oninput="syncSlider('v-p-compram','sv-compram'); calcular()">
+              <span class="slider-value" id="sv-compram">5%</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Ticket médio</label>
+            <input class="field-input" id="v-ticket" type="number" min="0" placeholder="Ex: 150" oninput="calcular()">
+          </div>
+
+        </div><!-- /mode-varejo -->
+      </div>
+      <div class="panel" id="panel-results">
+        <p class="results-title">Projeção de Resultados</p>
+
+        <!-- RESULTADO CLÍNICAS -->
+        <div id="result-clinicas">
+          <div class="empty-state" id="rc-empty">
+            Preencha os campos ao lado<br>para ver a projeção
+          </div>
+          <div id="rc-funil" style="display:none">
+            <div class="funnel-step">
+              <span class="funnel-label">Leads gerados</span>
+              <span class="funnel-value" id="rc-leads">—</span>
+            </div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-step">
+              <span class="funnel-label">Agendamentos</span>
+              <span class="funnel-value" id="rc-agendamentos">—</span>
+            </div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-step">
+              <span class="funnel-label">Comparecimentos</span>
+              <span class="funnel-value" id="rc-comparecem">—</span>
+            </div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-step">
+              <span class="funnel-label">Fechamentos</span>
+              <span class="funnel-value" id="rc-fechamentos">—</span>
+            </div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-step highlight">
+              <span class="funnel-label">Faturamento esperado</span>
+              <span class="funnel-value" id="rc-faturamento">—</span>
+            </div>
+            <div class="roi-block">
+              <p class="roi-label">ROI</p>
+              <p class="roi-text" id="rc-roi">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTADO VAREJO -->
+        <div id="result-varejo" style="display:none">
+          <div class="empty-state" id="rv-empty">
+            Preencha os campos ao lado<br>para ver a projeção
+          </div>
+          <div id="rv-funil" style="display:none">
+            <div class="funnel-step">
+              <span class="funnel-label">Leads gerados</span>
+              <span class="funnel-value" id="rv-leads">—</span>
+            </div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-step">
+              <span class="funnel-label">Vendas</span>
+              <span class="funnel-value" id="rv-vendas">—</span>
+            </div>
+            <div class="funnel-arrow">↓</div>
+            <div class="funnel-step highlight">
+              <span class="funnel-label">Faturamento esperado</span>
+              <span class="funnel-value" id="rv-faturamento">—</span>
+            </div>
+            <div class="roi-block">
+              <p class="roi-label">ROI</p>
+              <p class="roi-text" id="rv-roi">—</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    let modoAtual = 'clinicas';
+
+    function setMode(event, modo) {
+      modoAtual = modo;
+
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('mode-' + modo).classList.add('active');
+
+      document.getElementById('result-clinicas').style.display = modo === 'clinicas' ? 'block' : 'none';
+      document.getElementById('result-varejo').style.display   = modo === 'varejo'   ? 'block' : 'none';
+
+      calcular();
+    }
+
+    function syncSlider(sliderId, labelId) {
+      const slider = document.getElementById(sliderId);
+      const val = slider.value;
+      document.getElementById(labelId).textContent = val + '%';
+      slider.style.setProperty('--val', val + '%');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      ['c-p-agendam','c-p-comparecem','c-p-fecham','v-p-compram'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.setProperty('--val', el.value + '%');
+      });
+    });
+
+    function brl(valor) {
+      return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+    }
+
+    function intBr(valor) {
+      return Math.round(valor).toLocaleString('pt-BR');
+    }
+
+    function calcular() {
+      if (modoAtual === 'clinicas') {
+        calcularClinicas();
+      } else {
+        calcularVarejo();
+      }
+    }
+
+    function calcularClinicas() {
+      const investimento  = parseFloat(document.getElementById('c-investimento').value);
+      const cpl           = parseFloat(document.getElementById('c-cpl').value);
+      const pAgendam      = parseFloat(document.getElementById('c-p-agendam').value) / 100;
+      const pComparecem   = parseFloat(document.getElementById('c-p-comparecem').value) / 100;
+      const pFecham       = parseFloat(document.getElementById('c-p-fecham').value) / 100;
+      const ticket        = parseFloat(document.getElementById('c-ticket').value);
+
+      const empty  = document.getElementById('rc-empty');
+      const funil  = document.getElementById('rc-funil');
+
+      if (!investimento || !cpl || cpl <= 0 || !ticket) {
+        empty.style.display = 'block';
+        funil.style.display = 'none';
+        return;
+      }
+
+      const leads         = investimento / cpl;
+      const agendamentos  = leads * pAgendam;
+      const comparecem    = agendamentos * pComparecem;
+      const fechamentos   = comparecem * pFecham;
+      const faturamento   = fechamentos * ticket;
+      const roi           = investimento > 0 ? faturamento / investimento : 0;
+
+      document.getElementById('rc-leads').textContent        = intBr(leads);
+      document.getElementById('rc-agendamentos').textContent = intBr(agendamentos);
+      document.getElementById('rc-comparecem').textContent   = intBr(comparecem);
+      document.getElementById('rc-fechamentos').textContent  = intBr(fechamentos);
+      document.getElementById('rc-faturamento').textContent  = brl(faturamento);
+      document.getElementById('rc-roi').innerHTML            =
+        'Para cada <strong>R$ 1</strong> investido, você gera <strong>' + roi.toFixed(1) + 'x</strong> em faturamento';
+
+      empty.style.display = 'none';
+      funil.style.display = 'block';
+    }
+
+    function calcularVarejo() {
+      const investimento = parseFloat(document.getElementById('v-investimento').value);
+      const cpl          = parseFloat(document.getElementById('v-cpl').value);
+      const pCompram     = parseFloat(document.getElementById('v-p-compram').value) / 100;
+      const ticket       = parseFloat(document.getElementById('v-ticket').value);
+
+      const empty = document.getElementById('rv-empty');
+      const funil = document.getElementById('rv-funil');
+
+      if (!investimento || !cpl || cpl <= 0 || !ticket) {
+        empty.style.display = 'block';
+        funil.style.display = 'none';
+        return;
+      }
+
+      const leads       = investimento / cpl;
+      const vendas      = leads * pCompram;
+      const faturamento = vendas * ticket;
+      const roi         = investimento > 0 ? faturamento / investimento : 0;
+
+      document.getElementById('rv-leads').textContent      = intBr(leads);
+      document.getElementById('rv-vendas').textContent     = intBr(vendas);
+      document.getElementById('rv-faturamento').textContent = brl(faturamento);
+      document.getElementById('rv-roi').innerHTML          =
+        'Para cada <strong>R$ 1</strong> investido, você gera <strong>' + roi.toFixed(1) + 'x</strong> em faturamento';
+
+      empty.style.display = 'none';
+      funil.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

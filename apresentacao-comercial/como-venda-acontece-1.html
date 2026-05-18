@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #0D0B2B;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+    }
+
+    .bg-glow {
+      position: absolute;
+      top: -300px; left: 50%;
+      transform: translateX(-50%);
+      width: 1200px; height: 700px;
+      background: radial-gradient(ellipse at center, rgba(107,33,232,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+    }
+
+    /* COLUNA ESQUERDA */
+    .col-left {
+      padding: 48px 32px 48px 48px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 1080px;
+    }
+    .brand-tag {
+      font-size: 23px; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      margin-bottom: 24px;
+    }
+    .slide-title {
+      font-size: 42px; font-weight: 900; line-height: 1.15; color: #fff;
+    }
+    .slide-title em { font-style: normal; color: #A855F7; }
+    .divider {
+      width: 40px; height: 3px; background: #6B21E8;
+      border-radius: 2px; margin: 22px 0;
+    }
+    .slide-desc {
+      font-size: 21px; font-weight: 500;
+      color: rgba(255,255,255,0.40); line-height: 1.7;
+    }
+    .page-badge {
+      display: inline-flex; align-items: flex-start;
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.25);
+      border-radius: 100px; padding: 9px 20px; margin-top: 24px;
+      font-size: 19px; font-weight: 700; color: rgba(196,181,253,0.70);
+    }
+    .etapas-nav { display: flex; flex-direction: column; gap: 10px; }
+    .etapa-tag {
+      font-size: 23px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.20);
+      padding: 8px 0 8px 14px;
+      border-left: 2px solid rgba(255,255,255,0.08);
+    }
+    .etapa-tag.ativa { color: #A855F7; border-left-color: #6B21E8; }
+
+    /* COLUNA DIREITA */
+    .col-right {
+      padding: 32px 48px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      height: 1080px;
+      gap: 16px;
+    }
+
+    /* CABEÇALHO */
+    .etapas-header {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .etapa-pill {
+      padding: 14px 8px; text-align: center; border-radius: 8px;
+      font-size: 21px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+    }
+    .pill-1 { background: #1E1A4A; color: rgba(255,255,255,0.7); }
+    .pill-2 { background: #2D2360; color: rgba(255,255,255,0.75); }
+    .pill-3 { background: #3D2F80; color: rgba(255,255,255,0.80); }
+    .pill-4 { background: #4C1D95; color: rgba(255,255,255,0.85); }
+    .pill-5 { background: #6B21E8; color: #fff; }
+
+    /* SEÇÃO */
+    .secao { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .linha-label {
+      font-size: 17px; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: #6B21E8;
+      margin-bottom: 10px; flex-shrink: 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .linha-label::after {
+      content: ''; flex: 1; height: 1px; background: rgba(107,33,232,0.25);
+    }
+    .grid5 {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 10px; flex: 1; min-height: 0;
+    }
+
+    /* CARDS */
+    .cell {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid rgba(107,33,232,0.3);
+      border-radius: 10px;
+      padding: 20px 18px;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .cell:last-child {
+      border-top-color: #6B21E8;
+      background: rgba(107,33,232,0.08);
+    }
+
+    /* Linha 1 — O que representa */
+    .cell-texto {
+      font-size: 23px; font-weight: 500;
+      color: rgba(255,255,255,0.72); line-height: 1.65;
+    }
+    .cell-texto strong { color: #fff; font-weight: 700; }
+    .cell-texto .hl { color: #A855F7; font-weight: 700; }
+
+    /* Linha 2 — Diagnóstico */
+    .diag-pergunta {
+      font-size: 21px; font-weight: 600;
+      color: rgba(255,255,255,0.55); line-height: 1.55;
+      font-style: italic; margin-bottom: 16px; flex: 1;
+    }
+    .diag-seta { display: flex; align-items: center; gap: 8px; }
+    .seta-icone { font-size: 26px; color: #A855F7; font-weight: 900; }
+    .seta-texto { font-size: 32px; font-weight: 900; color: #fff; }
+    .cell:last-child .seta-texto { color: #A855F7; }
+
+    /* RODAPÉ */
+    .rodape {
+      flex-shrink: 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .rodape-left {
+      font-size: 23px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.18);
+    }
+    .rodape-right {
+      font-size: 23px; font-weight: 600; color: rgba(107,33,232,0.6);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    
+
+    
+
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <div class="page">
+
+    <!-- COLUNA ESQUERDA -->
+    <div class="col-left">
+      <div>
+        <div class="brand-tag">Vértice Assessoria</div>
+        <div class="slide-title">Como uma <em>venda</em> acontece?</div>
+        <div class="divider"></div>
+        <p class="slide-desc">Cada cliente passa por 5 etapas antes de comprar — e a maioria das empresas perde pessoas em todas elas sem saber.</p>
+        <div class="page-badge">Parte 1 de 2</div>
+      </div>
+      <div class="etapas-nav">
+        <div class="etapa-tag ativa">01 Descoberta</div>
+        <div class="etapa-tag ativa">02 Atração</div>
+        <div class="etapa-tag ativa">03 Consideração</div>
+        <div class="etapa-tag ativa">04 Ação</div>
+        <div class="etapa-tag ativa">05 Apologia</div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA -->
+    <div class="col-right">
+
+      <div class="etapas-header">
+        <div class="etapa-pill pill-1">Descoberta</div>
+        <div class="etapa-pill pill-2">Atração</div>
+        <div class="etapa-pill pill-3">Consideração</div>
+        <div class="etapa-pill pill-4">Ação</div>
+        <div class="etapa-pill pill-5">Apologia</div>
+      </div>
+
+      <!-- SEÇÃO 1 — O que representa -->
+      <div class="secao">
+        <div class="linha-label">O que representa cada etapa</div>
+        <div class="grid5">
+          <div class="cell">
+            <p class="cell-texto">Seu negócio precisa <strong>aparecer</strong> antes do concorrente — no mapa, no boca a boca e nas redes.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">Aparecer não basta. O cliente precisa <span class="hl">gostar do que vê</span> e ter motivo para continuar.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">Ele está quase. <strong>Avaliações, fotos e atendimento rápido</strong> decidem se vai em frente ou volta pro concorrente.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">A compra precisa ser <span class="hl">fácil e sem fricção</span>. Cada barreira a mais é um cliente a menos.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">Cliente fiel <strong>custa 5× menos</strong> que cliente novo — e indicação é o anúncio mais barato que existe.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 2 — Diagnóstico -->
+      <div class="secao">
+        <div class="linha-label">Diagnóstico — onde você está perdendo clientes?</div>
+        <div class="grid5">
+          <div class="cell">
+            <p class="diag-pergunta">"De cada 100 pessoas que poderiam te encontrar, quantas realmente te acham?"</p>
+            <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Alcance %</span></div>
+          </div>
+          <div class="cell">
+            <p class="diag-pergunta">"De cada 100 que te encontram, quantas ficam para ver mais?"</p>
+            <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Interesse %</span></div>
+          </div>
+          <div class="cell">
+            <p class="diag-pergunta">"De cada 100 que se interessam, quantas chegam a perguntar o preço?"</p>
+            <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Intenção %</span></div>
+          </div>
+          <div class="cell">
+            <p class="diag-pergunta">"De cada 100 que perguntam, quantas fecham a compra?"</p>
+            <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Conversão %</span></div>
+          </div>
+          <div class="cell">
+            <p class="diag-pergunta">"De cada 100 que compraram, quantas voltam e ainda indicam alguém?"</p>
+            <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Retenção %</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rodape">
+        <span class="rodape-left">Jornada de Compra — Parte 1 de 2</span>
+        <span class="rodape-right">Vértice Assessoria</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

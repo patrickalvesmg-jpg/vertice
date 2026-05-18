@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1920px; height: 1080px;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Montserrat', sans-serif;
+      background: #0D0B2B;
+    }
+
+    .bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0D0B2B 0%, #130E38 55%, #0D0B2B 100%);
+    }
+    .bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(168,85,247,0.07) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .glow {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1600px; height: 800px;
+      background: radial-gradient(ellipse, rgba(107,33,232,0.13) 0%, transparent 60%);
+    }
+
+    /* HEADER */
+    .header {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 36px 90px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      z-index: 30;
+    }
+    .hb { font-size: 19px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.22); flex-shrink: 0; width: auto; }
+    .hc { text-align: center; }
+    .hc h2 { font-size: 40px; font-weight: 900; color: #fff; }
+    .hc h2 em { font-style: normal; color: #C4B5FD; }
+    .hc p { font-size: 26px; font-weight: 500; color: rgba(255,255,255,0.35); margin-top: 6px; }
+    .ht { font-size: 19px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(168,85,247,0.60); }
+
+    /* COLUNA ESQUERDA — âncora */
+    .col-ancora {
+      position: absolute;
+      top: 118px; left: 80px;
+      width: 380px; height: 922px;
+      display: flex; flex-direction: column;
+      justify-content: flex-start; gap: 24px;
+      border-right: 1px solid rgba(168,85,247,0.14);
+      padding-right: 36px;
+      padding-top: 40px;
+      z-index: 10;
+    }
+    .ancora-label {
+      font-size: 17px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.30);
+      margin-bottom: 4px;
+    }
+    .ancora-bloco {
+      background: rgba(239,68,68,0.05);
+      border: 1px solid rgba(239,68,68,0.18);
+      border-radius: 14px; padding: 22px 24px;
+    }
+    .ancora-bloco-label {
+      font-size: 14px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(239,68,68,0.50);
+      margin-bottom: 10px;
+    }
+    .ancora-valor-riscado {
+      font-size: 52px; font-weight: 900;
+      color: rgba(255,255,255,0.55);
+      text-decoration: line-through;
+      text-decoration-color: rgba(239,68,68,0.70);
+      text-decoration-thickness: 3px;
+      line-height: 1; white-space: nowrap;
+    }
+    .ancora-desc {
+      font-size: 16px; font-weight: 500;
+      color: rgba(255,255,255,0.28); margin-top: 10px; line-height: 1.55;
+    }
+    .ancora-seta {
+      text-align: center;
+      font-size: 28px; color: rgba(168,85,247,0.35); line-height: 1;
+    }
+    .ancora-economia {
+      background: linear-gradient(135deg, rgba(107,33,232,0.18), rgba(168,85,247,0.08));
+      border: 1px solid rgba(168,85,247,0.30);
+      border-radius: 12px; padding: 20px 22px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .ancora-economia-valor {
+      font-size: 38px; font-weight: 900; color: #A855F7;
+      line-height: 1; letter-spacing: -1px;
+    }
+    .ancora-economia-valor span { font-size: 20px; font-weight: 600; color: rgba(168,85,247,0.60); }
+    .ancora-economia-desc {
+      font-size: 17px; font-weight: 600; color: rgba(196,181,253,0.70); line-height: 1.5;
+    }
+    /* esconde os elementos antigos que não vamos mais usar */
+    .ancora-economia-icone { display: none; }
+    .ancora-economia-texto { display: none; }
+
+    /* CARD CENTRAL — preço */
+    .col-preco {
+      position: absolute;
+      top: 118px; left: 500px; right: 460px; height: 922px;
+      background: linear-gradient(160deg, rgba(107,33,232,0.20), rgba(76,29,149,0.12));
+      border: 1px solid rgba(168,85,247,0.35);
+      border-radius: 24px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; gap: 0;
+      padding: 0 52px;
+      z-index: 10; overflow: hidden;
+    }
+    .col-preco::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #6B21E8, #C4B5FD, #A855F7);
+    }
+    .preco-bg {
+      position: absolute; bottom: -40px; right: -20px;
+      font-size: 320px; font-weight: 900;
+      color: rgba(168,85,247,0.04); line-height: 1;
+      letter-spacing: -10px; pointer-events: none; user-select: none;
+    }
+    .preco-tag {
+      font-size: 23px; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: rgba(168,85,247,0.55);
+      margin-bottom: 20px; position: relative;
+    }
+    .preco-pre { font-size: 26px; font-weight: 600; color: rgba(196,181,253,0.45); margin-bottom: 8px; position: relative; }
+    .preco-valor {
+      font-size: 118px; font-weight: 900; color: #fff;
+      line-height: 1; letter-spacing: -3px; position: relative;
+    }
+    .preco-valor em { font-style: normal; color: #C4B5FD; }
+    .preco-periodo {
+      font-size: 26px; font-weight: 600;
+      color: rgba(196,181,253,0.45); margin-top: 12px; position: relative;
+    }
+    .preco-divider {
+      width: 50px; height: 2px;
+      background: rgba(168,85,247,0.25);
+      margin: 28px auto; position: relative;
+    }
+    .preco-obs {
+      font-size: 26px; font-weight: 500;
+      color: rgba(255,255,255,0.30); line-height: 1.7; position: relative;
+    }
+    .preco-obs strong { color: rgba(196,181,253,0.65); font-weight: 700; }
+
+    /* COLUNA DIREITA — incluso */
+    .col-incluso {
+      position: absolute;
+      top: 118px; right: 60px;
+      width: 380px; height: 922px;
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 0;
+      border-left: 1px solid rgba(168,85,247,0.14);
+      padding-left: 36px;
+      z-index: 10;
+    }
+    .incluso-label {
+      font-size: 23px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(168,85,247,0.55);
+      margin-bottom: 22px;
+    }
+    .incluso-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .incluso-item:last-child { border-bottom: none; }
+    .incluso-check {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.28);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 23px; color: #A855F7; font-weight: 900; margin-top: 1px;
+    }
+    .incluso-texto { flex: 1; }
+    .incluso-titulo { font-size: 23px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .incluso-sub { font-size: 20px; font-weight: 500; color: rgba(255,255,255,0.32); line-height: 1.4; }
+
+    /* pills no card central */
+    .preco-pills {
+      display: flex; flex-direction: column; gap: 12px;
+      align-items: center; position: relative;
+    }
+    .preco-pill {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(168,85,247,0.18);
+      border-radius: 100px; padding: 14px 28px;
+      font-size: 21px; font-weight: 500; color: rgba(255,255,255,0.50);
+      text-align: center; white-space: nowrap;
+    }
+    .preco-pill strong { color: rgba(255,255,255,0.75); font-weight: 700; }
+    .pill-icon {
+      font-size: 23px; color: rgba(168,85,247,0.60); width: 22px; text-align: center;
+    }
+
+    .preco-impacto {
+      margin-top: 24px;
+      background: linear-gradient(135deg, rgba(107,33,232,0.22), rgba(168,85,247,0.10));
+      border: 1px solid rgba(168,85,247,0.35);
+      border-radius: 16px; padding: 26px 36px;
+      text-align: center; position: relative;
+    }
+    .preco-impacto::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      border-radius: 16px 16px 0 0;
+      background: linear-gradient(90deg, #6B21E8, #C4B5FD, #A855F7);
+    }
+    .preco-impacto-texto {
+      font-size: 32px; font-weight: 800; color: #C4B5FD; line-height: 1.35;
+    }
+    .preco-impacto-sub {
+      font-size: 21px; font-weight: 500; color: rgba(255,255,255,0.35);
+      margin-top: 10px; line-height: 1.5;
+    }
+
+    .preco-extra {
+      margin-top: 18px;
+      border-top: 1px solid rgba(168,85,247,0.15);
+      padding-top: 18px; text-align: left; width: 100%;
+    }
+    .preco-extra-label {
+      font-size: 19px; font-weight: 700;
+      color: rgba(255,255,255,0.35); margin-bottom: 10px;
+      text-transform: uppercase; letter-spacing: 2px;
+    }
+    .preco-extra-itens { display: flex; flex-direction: column; gap: 6px; }
+    .extra-item {
+      font-size: 21px; font-weight: 500; color: rgba(255,255,255,0.45);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .extra-item span { color: rgba(168,85,247,0.50); font-size: 23px; }
+
+    /* RODAPÉ */
+    .footer { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; z-index: 20; }
+    .footer p { font-size: 26px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.12); }
+
+    
+
+    
+
+  </style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="glow"></div>
+
+<div class="header">
+  <div class="hb">Vértice Assessoria</div>
+  <div class="hc">
+    <h2>Nossa <em>Proposta</em></h2>
+    <p>Tudo que você precisa para vender mais — em um único parceiro</p>
+  </div>
+  <div class="ht">Investimento</div>
+</div>
+
+<!-- ÂNCORA -->
+<div class="col-ancora">
+  <div class="ancora-label">Se você montasse sozinho…</div>
+  <div class="ancora-bloco">
+    <div class="ancora-bloco-label">Custo de um time interno</div>
+    <div class="ancora-valor-riscado">R$ 12.500<span style="font-size:26px">/mês</span></div>
+    <div class="ancora-desc">Gestor de tráfego · Editor de criativos · Designer · Estrategista · Gestor de projetos</div>
+  </div>
+  <div class="ancora-seta">↓</div>
+  <div class="ancora-economia">
+    <div class="ancora-economia-valor">R$ 10.500<span>/mês</span></div>
+    <div class="ancora-economia-desc">economizados todo mês — sem abrir mão de nenhuma entrega</div>
+  </div>
+</div>
+
+<!-- PREÇO CENTRAL -->
+<div class="col-preco">
+  <div class="preco-bg">2K</div>
+  <div class="preco-tag">Investimento mensal</div>
+  <div class="preco-pre">apenas</div>
+  <div class="preco-valor">R$ <em>2.000</em></div>
+  <div class="preco-periodo">por mês</div>
+  <div class="preco-divider"></div>
+  <div class="preco-pills">
+    <div class="preco-pill">
+      <span class="pill-icon">↩</span>
+      <span>Cancelamento com aviso de <strong>30 dias — sem multa</strong></span>
+    </div>
+    <div class="preco-pill">
+      <span class="pill-icon">∞</span>
+      <span>Parceria pensada para o <strong>longo prazo</strong></span>
+    </div>
+  </div>
+  <div class="preco-impacto">
+    <div class="preco-impacto-texto">Esse investimento se paga<br>com o faturamento que a gente vai gerar.</div>
+    <div class="preco-impacto-sub">Você não paga do próprio bolso — paga com o resultado.</div>
+  </div>
+  <div class="preco-extra">
+    <div class="preco-extra-label">Além disso, o cliente investe separadamente em:</div>
+    <div class="preco-extra-itens">
+      <div class="extra-item"><span>▸</span> Mídia paga (anúncios)</div>
+      <div class="extra-item"><span>▸</span> Ferramentas como CRM, se necessário</div>
+      <div class="extra-item"><span>▸</span> Custos de parcerias estratégicas</div>
+    </div>
+  </div>
+</div>
+
+<!-- INCLUSO -->
+<div class="col-incluso">
+  <div class="incluso-label">O que está incluso</div>
+
+  <div class="incluso-item">
+    <div class="incluso-check">✓</div>
+    <div class="incluso-texto">
+      <div class="incluso-titulo">Diagnóstico & estratégia</div>
+      <div class="incluso-sub">Identificamos o maior gargalo e agimos primeiro</div>
+    </div>
+  </div>
+
+  <div class="incluso-item">
+    <div class="incluso-check">✓</div>
+    <div class="incluso-texto">
+      <div class="incluso-titulo">Gestão de tráfego pago</div>
+      <div class="incluso-sub">Anúncios no Meta e Google otimizados</div>
+    </div>
+  </div>
+
+  <div class="incluso-item">
+    <div class="incluso-check">✓</div>
+    <div class="incluso-texto">
+      <div class="incluso-titulo">Criativos & artes para anúncio</div>
+      <div class="incluso-sub">Vídeos e peças prontas para veicular</div>
+    </div>
+  </div>
+
+  <div class="incluso-item">
+    <div class="incluso-check">✓</div>
+    <div class="incluso-texto">
+      <div class="incluso-titulo">Funil de vendas & oferta</div>
+      <div class="incluso-sub">Landing page e estrutura de conversão</div>
+    </div>
+  </div>
+
+  <div class="incluso-item">
+    <div class="incluso-check">✓</div>
+    <div class="incluso-texto">
+      <div class="incluso-titulo">Acompanhamento de resultados</div>
+      <div class="incluso-sub">Reuniões periódicas e relatório de performance</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Vértice Assessoria — Investimento</p>
+</div>
+
+</body>
+</html>

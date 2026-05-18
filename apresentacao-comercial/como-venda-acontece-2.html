@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #0D0B2B;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+    }
+
+    .bg-glow {
+      position: absolute;
+      top: -300px; left: 50%;
+      transform: translateX(-50%);
+      width: 1200px; height: 700px;
+      background: radial-gradient(ellipse at center, rgba(107,33,232,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+    }
+
+    /* COLUNA ESQUERDA */
+    .col-left {
+      padding: 48px 32px 48px 48px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 1080px;
+    }
+    .brand-tag {
+      font-size: 18px; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      margin-bottom: 24px;
+    }
+    .slide-title {
+      font-size: 42px; font-weight: 900; line-height: 1.15; color: #fff;
+    }
+    .slide-title em { font-style: normal; color: #A855F7; }
+    .divider {
+      width: 40px; height: 3px; background: #6B21E8;
+      border-radius: 2px; margin: 22px 0;
+    }
+    .slide-desc {
+      font-size: 21px; font-weight: 500;
+      color: rgba(255,255,255,0.40); line-height: 1.7;
+    }
+    .page-badge {
+      display: inline-flex; align-items: flex-start;
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.25);
+      border-radius: 100px; padding: 9px 20px; margin-top: 24px;
+      font-size: 19px; font-weight: 700; color: rgba(196,181,253,0.70);
+    }
+    .etapas-nav { display: flex; flex-direction: column; gap: 10px; }
+    .etapa-tag {
+      font-size: 18px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.20);
+      padding: 8px 0 8px 14px;
+      border-left: 2px solid rgba(255,255,255,0.08);
+    }
+    .etapa-tag.ativa { color: #A855F7; border-left-color: #6B21E8; }
+
+    /* COLUNA DIREITA */
+    .col-right {
+      padding: 32px 48px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      height: 1080px;
+      gap: 14px;
+    }
+
+    /* CABEÇALHO */
+    .etapas-header {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .etapa-pill {
+      padding: 14px 8px; text-align: center; border-radius: 8px;
+      font-size: 21px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+    }
+    .pill-1 { background: #1E1A4A; color: rgba(255,255,255,0.7); }
+    .pill-2 { background: #2D2360; color: rgba(255,255,255,0.75); }
+    .pill-3 { background: #3D2F80; color: rgba(255,255,255,0.80); }
+    .pill-4 { background: #4C1D95; color: rgba(255,255,255,0.85); }
+    .pill-5 { background: #6B21E8; color: #fff; }
+
+    /* SEÇÃO */
+    .secao { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .linha-label {
+      font-size: 17px; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: #6B21E8;
+      margin-bottom: 10px; flex-shrink: 0;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .linha-label::after {
+      content: ''; flex: 1; height: 1px; background: rgba(107,33,232,0.25);
+    }
+    .grid5 {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 10px; flex: 1; min-height: 0;
+    }
+
+    /* CARDS */
+    .cell {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid rgba(107,33,232,0.3);
+      border-radius: 10px;
+      padding: 18px 16px;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .cell:last-child {
+      border-top-color: #6B21E8;
+      background: rgba(107,33,232,0.08);
+    }
+
+    /* Bullets */
+    .bullets { list-style: none; }
+    .bullets li {
+      font-size: 21px; font-weight: 500;
+      color: rgba(255,255,255,0.60);
+      line-height: 1.45;
+      padding-left: 16px;
+      position: relative;
+      margin-bottom: 5px;
+    }
+    .bullets li:last-child { margin-bottom: 0; }
+    .bullets li::before {
+      content: '▸'; position: absolute; left: 0;
+      color: #6B21E8; font-size: 21px; top: 4px;
+    }
+
+    /* Melhorias */
+    .melhoria-titulo {
+      font-size: 24px; font-weight: 700; color: #A855F7;
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .melhoria-texto {
+      font-size: 24px; font-weight: 500;
+      color: rgba(255,255,255,0.45); line-height: 1.55;
+      font-style: italic; margin-bottom: 10px;
+    }
+    .melhoria-ex {
+      font-size: 19px; font-weight: 500;
+      color: rgba(168,85,247,0.55); line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* RODAPÉ */
+    .rodape {
+      flex-shrink: 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .rodape-left {
+      font-size: 18px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.18);
+    }
+    .rodape-right {
+      font-size: 18px; font-weight: 600; color: rgba(107,33,232,0.6);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    
+
+    
+
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <div class="page">
+
+    <!-- COLUNA ESQUERDA -->
+    <div class="col-left">
+      <div>
+        <div class="brand-tag">Vértice Assessoria</div>
+        <div class="slide-title">Como uma <em>venda</em> acontece?</div>
+        <div class="divider"></div>
+        <p class="slide-desc">Na prática, como cada etapa aparece no dia a dia — e o que fazer para melhorar cada uma.</p>
+        <div class="page-badge">Parte 2 de 2</div>
+      </div>
+      <div class="etapas-nav">
+        <div class="etapa-tag ativa">01 Descoberta</div>
+        <div class="etapa-tag ativa">02 Atração</div>
+        <div class="etapa-tag ativa">03 Consideração</div>
+        <div class="etapa-tag ativa">04 Ação</div>
+        <div class="etapa-tag ativa">05 Apologia</div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA -->
+    <div class="col-right">
+
+      <div class="etapas-header">
+        <div class="etapa-pill pill-1">Descoberta</div>
+        <div class="etapa-pill pill-2">Atração</div>
+        <div class="etapa-pill pill-3">Consideração</div>
+        <div class="etapa-pill pill-4">Ação</div>
+        <div class="etapa-pill pill-5">Apologia</div>
+      </div>
+
+      <!-- SEÇÃO 1 — Como acontece -->
+      <div class="secao">
+        <div class="linha-label">Como acontece no dia a dia</div>
+        <div class="grid5">
+          <div class="cell">
+            <ul class="bullets">
+              <li>Anúncio no Instagram ou Facebook</li>
+              <li>Anúncio no Google (busca ou maps)</li>
+              <li>Panfletagem ou carro de som</li>
+              <li>Parceria com influenciador local</li>
+              <li>Fachada, placa ou banner visível</li>
+              <li>Indicação em grupo de WhatsApp</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Abre o perfil no Instagram e vê as fotos</li>
+              <li>Lê as avaliações no Google</li>
+              <li>Vê o cardápio, portfólio ou preços</li>
+              <li>Entra no site e olha os serviços</li>
+              <li>Um amigo mostra o produto ou resultado</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Pesquisa o nome da empresa no Google</li>
+              <li>Compara com o concorrente ao lado</li>
+              <li>Manda mensagem no WhatsApp perguntando</li>
+              <li>Vai à loja "só para ver" antes de decidir</li>
+              <li>Pergunta para alguém de confiança</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Compra no balcão, WhatsApp ou iFood</li>
+              <li>Agenda pelo link, ligação ou Instagram</li>
+              <li>Paga no cartão, Pix ou dinheiro</li>
+              <li>Desiste se o atendimento demora</li>
+              <li>Desiste se o processo é complicado</li>
+              <li>Fecha na hora se a oferta é clara</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Posta foto ou stories com o produto</li>
+              <li>Avalia 5 estrelas no Google ou Maps</li>
+              <li>Indica para amigos pelo WhatsApp</li>
+              <li>Volta sem precisar ser chamado</li>
+              <li>Responde quando a empresa entra em contato</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 2 — Como melhorar -->
+      <div class="secao">
+        <div class="linha-label">Como melhorar — oferta diferenciada</div>
+        <div class="grid5">
+          <div class="cell">
+            <div class="melhoria-titulo">Exclusividade</div>
+            <div class="melhoria-texto">Tenha algo que o concorrente não tem — produto, marca ou experiência única que vira assunto.</div>
+            <div class="melhoria-ex">ex: linha de armações exclusiva não vendida em outras óticas da cidade</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-titulo">Oferta com valor visível</div>
+            <div class="melhoria-texto">O cliente precisa entender em 3 segundos por que você é diferente — não apenas o que você vende.</div>
+            <div class="melhoria-ex">ex: "óculos com garantia de adaptação — ou trocamos as lentes sem custo"</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-titulo">Garantia que remove risco</div>
+            <div class="melhoria-texto">Elimine o medo de errar. Quem oferece garantia clara fecha mais — o cliente se sente seguro para decidir.</div>
+            <div class="melhoria-ex">ex: "não adaptou em 30 dias, trocamos as lentes sem custo"</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-titulo">Bônus na compra</div>
+            <div class="melhoria-texto">O cliente leva mais valor pelo mesmo preço — sem parecer promoção barata. Aumenta o valor percebido.</div>
+            <div class="melhoria-ex">ex: compre seus óculos e ganhe estojo premium + flanela personalizada</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-titulo">Incentivo à indicação</div>
+            <div class="melhoria-texto">Estruture o pedido de indicação. Cliente satisfeito indica — mas só se alguém pedir e recompensar.</div>
+            <div class="melhoria-ex">ex: programa de fidelidade, desconto na próxima compra ao indicar um amigo</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rodape">
+        <span class="rodape-left">Jornada de Compra — Parte 2 de 2</span>
+        <span class="rodape-right">Vértice Assessoria</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

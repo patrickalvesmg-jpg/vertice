@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #0D0B2B;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+    }
+
+    /* ── FUNDO ── */
+    .bg-glow {
+      position: absolute;
+      top: -300px; left: 50%;
+      transform: translateX(-50%);
+      width: 1200px; height: 700px;
+      background: radial-gradient(ellipse at center, rgba(107,33,232,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .bg-glow2 {
+      position: absolute;
+      bottom: -150px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(107,33,232,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── PAGE ── */
+    .page {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+    }
+
+    /* ── COLUNA ESQUERDA ── */
+    .col-left {
+      padding: 40px 28px 40px 40px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 1080px;
+    }
+    .brand-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 20px;
+    }
+    .slide-title {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #fff;
+    }
+    .slide-title em {
+      font-style: normal;
+      color: #A855F7;
+    }
+    .divider {
+      width: 36px; height: 3px;
+      background: #6B21E8;
+      border-radius: 2px;
+      margin: 20px 0;
+    }
+    .slide-desc {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.40);
+      line-height: 1.7;
+    }
+
+    /* ETAPAS VERTICAIS */
+    .etapas-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .etapa-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.20);
+      padding: 6px 0;
+      border-left: 2px solid rgba(255,255,255,0.08);
+      padding-left: 12px;
+    }
+    .etapa-tag.ativa {
+      color: #A855F7;
+      border-left-color: #6B21E8;
+    }
+
+    /* ── COLUNA DIREITA ── */
+    .col-right {
+      padding: 28px 44px 28px 36px;
+      display: flex;
+      flex-direction: column;
+      height: 1080px;
+    }
+
+    /* CABEÇALHO DE ETAPAS */
+    .etapas-header {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+    .etapa-pill {
+      padding: 10px 8px;
+      text-align: center;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .pill-1 { background: #1E1A4A; color: rgba(255,255,255,0.7); }
+    .pill-2 { background: #2D2360; color: rgba(255,255,255,0.75); }
+    .pill-3 { background: #3D2F80; color: rgba(255,255,255,0.80); }
+    .pill-4 { background: #4C1D95; color: rgba(255,255,255,0.85); }
+    .pill-5 { background: #6B21E8; color: #fff; }
+
+    /* ── LINHAS DE CONTEÚDO ── */
+    .linha {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      flex: 1;
+      min-height: 0;
+      margin-bottom: 8px;
+    }
+    .linha:last-of-type { margin-bottom: 0; }
+
+    .linha-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #6B21E8;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .linha-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(107,33,232,0.25);
+    }
+
+    .cell {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid rgba(107,33,232,0.3);
+      border-radius: 8px;
+      padding: 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow: hidden;
+    }
+    .cell:last-child {
+      border-top-color: #6B21E8;
+      background: rgba(107,33,232,0.08);
+    }
+
+    /* LINHA 1 — O que representa */
+    .cell-texto {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.70);
+      line-height: 1.6;
+    }
+    .cell-texto strong { color: #fff; font-weight: 700; }
+    .cell-texto .hl { color: #A855F7; font-weight: 700; }
+
+    /* LINHA 2 — Pergunta de diagnóstico */
+    .cell-diag {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      gap: 8px;
+    }
+    .diag-pergunta {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+    .diag-seta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .seta-icone {
+      font-size: 20px;
+      color: #A855F7;
+      font-weight: 900;
+    }
+    .seta-texto {
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .cell:last-child .seta-texto { color: #A855F7; }
+
+    /* LINHA 3 — Como acontece */
+    .bullets { list-style: none; }
+    .bullets li {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.45;
+      padding-left: 12px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+    .bullets li:last-child { margin-bottom: 0; }
+    .bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #6B21E8;
+      font-size: 10px;
+      top: 3px;
+    }
+
+    /* LINHA 4 — Como melhorar */
+    .melhoria-destaque {
+      font-size: 14px;
+      font-weight: 700;
+      color: #A855F7;
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .melhoria-ex {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.42);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* ── RODAPÉ ── */
+    .rodape {
+      flex-shrink: 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .rodape-left {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+    .rodape-right {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(107,33,232,0.6);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+  <div class="bg-glow2"></div>
+
+  <div class="page">
+
+    <!-- COLUNA ESQUERDA -->
+    <div class="col-left">
+      <div>
+        <div class="brand-tag">Vértice Assessoria</div>
+        <div class="slide-title">Como uma <em>venda</em> acontece?</div>
+        <div class="divider"></div>
+        <p class="slide-desc">Cada cliente passa por 5 etapas antes de comprar — e a maioria das empresas perde pessoas em todas elas sem saber.</p>
+      </div>
+      <div class="etapas-nav">
+        <div class="etapa-tag ativa">01 Descoberta</div>
+        <div class="etapa-tag ativa">02 Atração</div>
+        <div class="etapa-tag ativa">03 Consideração</div>
+        <div class="etapa-tag ativa">04 Ação</div>
+        <div class="etapa-tag ativa">05 Apologia</div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA -->
+    <div class="col-right">
+
+      <!-- CABEÇALHO -->
+      <div class="etapas-header">
+        <div class="etapa-pill pill-1">Descoberta</div>
+        <div class="etapa-pill pill-2">Atração</div>
+        <div class="etapa-pill pill-3">Consideração</div>
+        <div class="etapa-pill pill-4">Ação</div>
+        <div class="etapa-pill pill-5">Apologia</div>
+      </div>
+
+      <!-- LINHA 1 — O que é a etapa -->
+      <div style="flex:1; display:flex; flex-direction:column; margin-bottom:8px; min-height:0;">
+        <div class="linha-label">O que representa</div>
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1;">
+          <div class="cell">
+            <p class="cell-texto">Seu negócio precisa <strong>aparecer</strong> antes do concorrente — no mapa, no boca a boca e nas redes.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">Aparecer não basta. O cliente precisa <span class="hl">gostar do que vê</span> e ter motivo para continuar.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">Ele está quase. <strong>Avaliações, fotos e atendimento rápido</strong> decidem se vai em frente ou volta pro concorrente.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">A compra precisa ser <span class="hl">fácil e sem fricção</span>. Cada barreira a mais é um cliente a menos.</p>
+          </div>
+          <div class="cell">
+            <p class="cell-texto">Cliente fiel <strong>custa 5x menos</strong> que cliente novo — e indicação é o anúncio mais barato que existe.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINHA 2 — Diagnóstico com % -->
+      <div style="flex:1; display:flex; flex-direction:column; margin-bottom:8px; min-height:0;">
+        <div class="linha-label">Diagnóstico — onde você está perdendo clientes?</div>
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1;">
+          <div class="cell">
+            <div class="cell-diag">
+              <div class="diag-pergunta">"De cada 100 pessoas que poderiam te encontrar, quantas realmente te acham?"</div>
+              <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Alcance %</span></div>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="cell-diag">
+              <div class="diag-pergunta">"De cada 100 que te encontram, quantas ficam para ver mais?"</div>
+              <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Interesse %</span></div>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="cell-diag">
+              <div class="diag-pergunta">"De cada 100 que se interessam, quantas chegam a perguntar o preço?"</div>
+              <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Intenção %</span></div>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="cell-diag">
+              <div class="diag-pergunta">"De cada 100 que perguntam, quantas fecham a compra?"</div>
+              <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Conversão %</span></div>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="cell-diag">
+              <div class="diag-pergunta">"De cada 100 que compraram, quantas voltam e ainda indicam alguém?"</div>
+              <div class="diag-seta"><span class="seta-icone">↑</span><span class="seta-texto">Retenção %</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINHA 3 — Como acontece no dia a dia -->
+      <div style="flex:1; display:flex; flex-direction:column; margin-bottom:8px; min-height:0;">
+        <div class="linha-label">Como acontece no dia a dia</div>
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1;">
+          <div class="cell">
+            <ul class="bullets">
+              <li>Anúncio no Instagram ou Facebook</li>
+              <li>Anúncio no Google (busca ou maps)</li>
+              <li>Panfletagem ou carro de som</li>
+              <li>Anúncio no rádio ou TV local</li>
+              <li>Parceria com influenciador local</li>
+              <li>Fachada, placa ou banner visível</li>
+              <li>Indicação em grupo de WhatsApp</li>
+              <li>Boca a boca de cliente satisfeito</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Abre o perfil no Instagram e vê as fotos</li>
+              <li>Lê as avaliações no Google</li>
+              <li>Vê o cardápio, portfólio ou preços</li>
+              <li>Entra no site e olha os serviços</li>
+              <li>Um amigo mostra o produto ou resultado</li>
+              <li>Assiste a um vídeo ou reels da marca</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Pesquisa o nome da empresa no Google</li>
+              <li>Compara com o concorrente ao lado</li>
+              <li>Manda mensagem no WhatsApp perguntando</li>
+              <li>Vai à loja "só para ver" antes de decidir</li>
+              <li>Pergunta para alguém de confiança</li>
+              <li>Busca mais fotos, vídeos ou depoimentos</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Compra no balcão, WhatsApp ou iFood</li>
+              <li>Agenda pelo link, ligação ou Instagram</li>
+              <li>Paga no cartão, Pix ou dinheiro</li>
+              <li>Desiste se o atendimento demora</li>
+              <li>Desiste se o processo é complicado</li>
+              <li>Fecha na hora se a oferta é clara</li>
+            </ul>
+          </div>
+          <div class="cell">
+            <ul class="bullets">
+              <li>Posta foto ou stories com o produto</li>
+              <li>Avalia 5 estrelas no Google ou Maps</li>
+              <li>Indica para amigos pelo WhatsApp</li>
+              <li>Volta sem precisar ser chamado</li>
+              <li>Responde quando a empresa entra em contato</li>
+              <li>Defende a marca se alguém criticar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINHA 4 — Como melhorar: oferta diferenciada -->
+      <div style="flex:1; display:flex; flex-direction:column; margin-bottom:8px; min-height:0;">
+        <div class="linha-label">Como melhorar — oferta diferenciada</div>
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:10px; flex:1;">
+          <div class="cell">
+            <div class="melhoria-destaque">Exclusividade</div>
+            <div class="melhoria-ex">Tenha algo que o concorrente não tem — produto, marca ou experiência única que vira assunto.</div>
+            <div class="melhoria-ex" style="margin-top:4px; color:rgba(168,85,247,0.5);">ex: linha de armações exclusiva não vendida em outras óticas da cidade</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-destaque">Oferta com valor visível</div>
+            <div class="melhoria-ex">O cliente precisa entender em 3 segundos por que você é diferente — não apenas o que você vende.</div>
+            <div class="melhoria-ex" style="margin-top:4px; color:rgba(168,85,247,0.5);">ex: "óculos com garantia de adaptação — ou trocamos as lentes sem custo"</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-destaque">Garantia que remove risco</div>
+            <div class="melhoria-ex">Elimine o medo de errar. Quem oferece garantia clara fecha mais — o cliente se sente seguro para decidir.</div>
+            <div class="melhoria-ex" style="margin-top:4px; color:rgba(168,85,247,0.5);">ex: "não adaptou em 30 dias, trocamos as lentes sem custo"</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-destaque">Bônus na compra</div>
+            <div class="melhoria-ex">O cliente leva mais valor pelo mesmo preço — sem parecer promoção barata. Aumenta o valor percebido.</div>
+            <div class="melhoria-ex" style="margin-top:4px; color:rgba(168,85,247,0.5);">ex: compre seus óculos e ganhe estojo premium + flanela personalizada</div>
+          </div>
+          <div class="cell">
+            <div class="melhoria-destaque">Incentivo à indicação</div>
+            <div class="melhoria-ex">Estruture o pedido de indicação. Cliente satisfeito indica — mas só se alguém pedir e recompensar.</div>
+            <div class="melhoria-ex" style="margin-top:4px; color:rgba(168,85,247,0.5);">ex: programa de fidelidade, desconto na próxima compra ao indicar um amigo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RODAPÉ -->
+      <div class="rodape">
+        <span class="rodape-left">Diagnóstico Comercial — Jornada de Compra</span>
+        <span class="rodape-right">Vértice Assessoria</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1920px; height: 1080px;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: #0D0B2B;
+    }
+
+    /* FUNDO */
+    .bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0D0B2B 0%, #130E38 55%, #0D0B2B 100%);
+    }
+    .bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(168,85,247,0.07) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .glow {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1400px; height: 700px;
+      background: radial-gradient(ellipse, rgba(107,33,232,0.10) 0%, transparent 60%);
+    }
+
+    /* HEADER */
+    .header {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 36px 90px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      z-index: 30;
+    }
+    .hb { font-size: 19px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.22); flex-shrink: 0; width: auto; }
+    .hc { text-align: center; }
+    .hc h2 { font-size: 42px; font-weight: 900; color: #fff; }
+    .hc h2 em { font-style: normal; color: #C4B5FD; }
+    .hc p { font-size: 21px; font-weight: 500; color: rgba(255,255,255,0.35); margin-top: 6px; }
+    .ht { font-size: 19px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(168,85,247,0.60); }
+
+    /* COLUNA ESQUERDA — diagnóstico */
+    .diag {
+      position: absolute;
+      top: 118px; left: 80px;
+      width: 330px; bottom: 40px;
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 22px;
+      border-right: 1px solid rgba(168,85,247,0.14);
+      padding-right: 32px;
+      z-index: 10;
+    }
+    .diag-n { font-size: 90px; font-weight: 900; color: rgba(168,85,247,0.10); line-height: 1; letter-spacing: -4px; }
+    .diag-t { font-size: 46px; font-weight: 900; color: #fff; line-height: 1.1; }
+    .diag-t em { font-style: normal; color: #C4B5FD; }
+    .diag-s { font-size: 22px; font-weight: 500; color: rgba(255,255,255,0.42); line-height: 1.6; }
+    .diag-s strong { color: rgba(196,181,253,0.78); font-weight: 700; }
+    .diag-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25);
+      border-radius: 100px; padding: 10px 20px;
+      font-size: 20px; font-weight: 700; color: #C4B5FD; width: fit-content;
+    }
+    .diag-pill span { color: #A855F7; }
+
+    /* ÁREA CENTRAL — 5 linhas horizontais */
+    .etapas-area {
+      position: absolute;
+      top: 118px; left: 450px; right: 360px;
+      bottom: 40px;
+      display: flex; flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    /* cada etapa = faixa horizontal */
+    .etapa {
+      flex: 1;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(168,85,247,0.12);
+      border-radius: 14px;
+      display: flex; flex-direction: row;
+      align-items: center;
+      padding: 0 36px;
+      gap: 0;
+      position: relative; overflow: hidden;
+    }
+    /* barra lateral esquerda colorida */
+    .etapa::before {
+      content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+      border-radius: 14px 0 0 14px;
+    }
+    .e1::before { background: linear-gradient(180deg, #4C1D95, #7C3AED); }
+    .e2::before { background: linear-gradient(180deg, #6B21E8, #A855F7); }
+    .e3::before { background: linear-gradient(180deg, #8B3CF7, #C084FC); }
+    .e4::before { background: linear-gradient(180deg, #A855F7, #D8B4FE); }
+    .e5::before { background: linear-gradient(180deg, #C4B5FD, #A855F7); }
+
+    /* número grande decorativo ao fundo */
+    .etapa-bg-num {
+      position: absolute; right: 24px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 110px; font-weight: 900;
+      color: rgba(168,85,247,0.06);
+      line-height: 1; letter-spacing: -4px;
+      pointer-events: none; user-select: none;
+    }
+
+    /* ícone */
+    .etapa-icon {
+      width: 76px; height: 76px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(107,33,232,0.30), rgba(168,85,247,0.15));
+      border: 1.5px solid rgba(168,85,247,0.30);
+      display: flex; align-items: center; justify-content: center;
+      margin-right: 28px;
+    }
+    .etapa-icon svg { width: 34px; height: 34px; }
+
+    /* número etapa */
+    .etapa-num {
+      font-size: 23px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(168,85,247,0.50);
+      margin-bottom: 4px;
+    }
+
+    /* nome */
+    .etapa-nome {
+      font-size: 38px; font-weight: 900; color: #fff; line-height: 1.1;
+    }
+
+    /* divisor vertical */
+    .etapa-div {
+      width: 1px; height: 50px; flex-shrink: 0;
+      background: rgba(168,85,247,0.18);
+      margin: 0 36px;
+    }
+
+    /* foco/descrição */
+    .etapa-foco {
+      font-size: 23px; font-weight: 600;
+      color: rgba(196,181,253,0.60); line-height: 1.5;
+    }
+
+    /* COLUNA DIREITA */
+    .col-nao {
+      position: absolute;
+      top: 118px; right: 60px;
+      width: 290px; bottom: 40px;
+      display: flex; flex-direction: column; gap: 14px;
+      justify-content: center;
+      border-left: 1px solid rgba(168,85,247,0.14);
+      padding-left: 34px;
+      z-index: 10;
+    }
+    .nao-titulo { font-size: 23px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(239,68,68,0.50); margin-bottom: 2px; }
+    .nao-lista { list-style: none; margin-bottom: 14px; }
+    .nao-lista li {
+      font-size: 22px; font-weight: 600; color: rgba(255,255,255,0.33);
+      padding: 10px 0 10px 24px; position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .nao-lista li:last-child { border-bottom: none; }
+    .nao-lista li::before { content: '✕'; position: absolute; left: 0; color: rgba(239,68,68,0.42); font-size: 21px; font-weight: 800; top: 12px; }
+
+    .foco {
+      background: linear-gradient(135deg, rgba(107,33,232,0.18), rgba(76,29,149,0.12));
+      border: 1px solid rgba(168,85,247,0.25); border-radius: 14px; padding: 24px 20px;
+    }
+    .foco p { font-size: 28px; font-weight: 900; color: #C4B5FD; line-height: 1.2; margin-bottom: 8px; }
+    .foco span { font-size: 20px; font-weight: 500; color: rgba(255,255,255,0.35); line-height: 1.5; }
+
+    /* RODAPÉ */
+    .footer { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center; z-index: 20; }
+    .footer p { font-size: 22px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.12); }
+
+    
+
+    
+
+  </style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="glow"></div>
+
+<div class="header">
+  <div class="hb">Vértice Assessoria</div>
+  <div class="hc">
+    <h2>Como a <em>Vértice</em> trabalha</h2>
+    <p>Foco no que vai gerar mais resultado — no momento certo</p>
+  </div>
+  <div class="ht">Nosso Método</div>
+</div>
+
+<!-- DIAGNÓSTICO -->
+<div class="diag">
+  <div class="diag-n">01</div>
+  <div class="diag-t">Primeiro,<br>a gente<br><em>diagnostica.</em></div>
+  <div class="diag-s">Identificamos <strong>onde está o maior gargalo</strong> de faturamento e agimos ali primeiro.</div>
+  <div class="diag-pill"><span>▸</span> Foco no que importa agora</div>
+</div>
+
+<!-- 5 ETAPAS — layout horizontal -->
+<div class="etapas-area">
+
+  <div class="etapa e1">
+    <div class="etapa-bg-num">01</div>
+    <div class="etapa-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+    </div>
+    <div>
+      <div class="etapa-num">Etapa 01</div>
+      <div class="etapa-nome">Descoberta</div>
+    </div>
+    <div class="etapa-div"></div>
+    <div class="etapa-foco">Anúncios pagos &<br>parcerias estratégicas</div>
+  </div>
+
+  <div class="etapa e2">
+    <div class="etapa-bg-num">02</div>
+    <div class="etapa-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+      </svg>
+    </div>
+    <div>
+      <div class="etapa-num">Etapa 02</div>
+      <div class="etapa-nome">Atração</div>
+    </div>
+    <div class="etapa-div"></div>
+    <div class="etapa-foco">Criativos, vídeos<br>e artes para anúncio</div>
+  </div>
+
+  <div class="etapa e3">
+    <div class="etapa-bg-num">03</div>
+    <div class="etapa-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+    </div>
+    <div>
+      <div class="etapa-num">Etapa 03</div>
+      <div class="etapa-nome">Consideração</div>
+    </div>
+    <div class="etapa-div"></div>
+    <div class="etapa-foco">Funil de vendas,<br>landing page & oferta</div>
+  </div>
+
+  <div class="etapa e4">
+    <div class="etapa-bg-num">04</div>
+    <div class="etapa-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+    </div>
+    <div>
+      <div class="etapa-num">Etapa 04</div>
+      <div class="etapa-nome">Ação</div>
+    </div>
+    <div class="etapa-div"></div>
+    <div class="etapa-foco">Taxa de fechamento,<br>processo & script de vendas</div>
+  </div>
+
+  <div class="etapa e5">
+    <div class="etapa-bg-num">05</div>
+    <div class="etapa-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </div>
+    <div>
+      <div class="etapa-num">Etapa 05</div>
+      <div class="etapa-nome">Apologia</div>
+    </div>
+    <div class="etapa-div"></div>
+    <div class="etapa-foco">Retenção, recompra<br>& indicação</div>
+  </div>
+
+</div>
+
+<!-- NÃO FAZEMOS -->
+<div class="col-nao">
+  <div class="nao-titulo">Não fazemos</div>
+  <ul class="nao-lista">
+    <li>Postagem no Instagram</li>
+    <li>Gestão de feed</li>
+    <li>Stories e reels orgânicos</li>
+    <li>Social media em geral</li>
+  </ul>
+  <div class="foco">
+    <p>Faturamento.<br>Não seguidores.</p>
+    <span>Medimos sucesso por resultado financeiro real.</span>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Vértice Assessoria — Nosso Método</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: #0D0B2B;
+    }
+
+    .bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, #0D0B2B 0%, #150F3A 50%, #0D0B2B 100%);
+      z-index: 0;
+    }
+    .bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(168,85,247,0.12) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .bg::after {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 1400px; height: 800px;
+      background: radial-gradient(ellipse, rgba(107,33,232,0.12) 0%, transparent 65%);
+    }
+
+    /* HEADER */
+    .header {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 36px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 20;
+    }
+    .header-brand {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .header-center { text-align: center; }
+    .header-center h2 {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+    }
+    .header-center h2 em {
+      font-style: normal;
+      color: #C4B5FD;
+    }
+    .header-center p {
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.38);
+      margin-top: 7px;
+    }
+    .header-tag {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(168,85,247,0.65);
+    }
+
+    /* LAYOUT PRINCIPAL */
+    .main {
+      position: absolute;
+      top: 120px; left: 0; right: 0; bottom: 56px;
+      display: flex;
+      align-items: stretch;
+      padding: 0 52px;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    /* CARDS DE CARGO */
+    .card {
+      flex: 1;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(168,85,247,0.15);
+      border-radius: 16px;
+      padding: 28px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+      justify-content: space-between;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6B21E8, #A855F7);
+      border-radius: 16px 16px 0 0;
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 65%);
+    }
+
+    /* AVATAR */
+    .avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2D1B69 0%, #4C1D95 100%);
+      border: 2px solid rgba(168,85,247,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .avatar svg {
+      width: 36px;
+      height: 36px;
+      opacity: 0.85;
+    }
+
+    /* CARGO */
+    .cargo {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    /* DESCRICAO */
+    .descricao {
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    /* TAREFAS */
+    .tarefas {
+      list-style: none;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    .tarefas li {
+      font-size: 19px;
+      font-weight: 600;
+      color: rgba(196,181,253,0.65);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(168,85,247,0.08);
+      padding-left: 16px;
+      position: relative;
+    }
+    .tarefas li:last-child { border-bottom: none; }
+    .tarefas li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #A855F7;
+      font-size: 21px;
+      top: 7px;
+    }
+
+    /* SEPARADOR */
+    .sep {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(168,85,247,0.30), transparent);
+      margin-bottom: 14px;
+    }
+
+    /* SALÁRIO */
+    .salario-label {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 4px;
+    }
+    .salario-valor {
+      font-size: 32px;
+      font-weight: 900;
+      color: #A855F7;
+      letter-spacing: -0.5px;
+    }
+    .salario-valor span {
+      font-size: 21px;
+      font-weight: 600;
+      color: rgba(168,85,247,0.55);
+    }
+
+    /* COLUNA TOTAL */
+    .col-total {
+      width: 270px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .total-card {
+      background: linear-gradient(135deg, rgba(107,33,232,0.25) 0%, rgba(76,29,149,0.20) 100%);
+      border: 1px solid rgba(168,85,247,0.35);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .total-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #A855F7, #C4B5FD, #A855F7);
+    }
+    .total-card::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(168,85,247,0.18) 0%, transparent 65%);
+    }
+    .total-eyebrow {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(196,181,253,0.55);
+      margin-bottom: 12px;
+    }
+    .total-numero {
+      font-size: 50px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+    }
+    .total-numero span {
+      font-size: 32px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      vertical-align: top;
+      margin-top: 6px;
+      display: inline-block;
+    }
+    .total-mes {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(196,181,253,0.50);
+      margin-bottom: 18px;
+    }
+    .total-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(168,85,247,0.20);
+      margin-bottom: 14px;
+    }
+    .total-anual-label {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
+      margin-bottom: 6px;
+    }
+    .total-anual {
+      font-size: 30px;
+      font-weight: 900;
+      color: rgba(196,181,253,0.70);
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .total-anual-sub {
+      font-size: 18px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.25);
+      line-height: 1.4;
+    }
+
+    .aviso-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(168,85,247,0.12);
+      border-radius: 16px;
+      padding: 22px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    .aviso-icon { font-size: 32px; margin-bottom: 4px; }
+    .aviso-titulo {
+      font-size: 26px;
+      font-weight: 800;
+      color: #C4B5FD;
+      line-height: 1.3;
+    }
+    .aviso-texto {
+      font-size: 19px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.55;
+    }
+    .aviso-texto strong {
+      color: rgba(196,181,253,0.70);
+      font-weight: 700;
+    }
+
+    /* RODAPÉ */
+    .footer {
+      position: absolute;
+      bottom: 18px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 20;
+    }
+    .footer p {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+    }
+
+    
+
+    
+
+  </style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-brand">Vértice Assessoria</div>
+  <div class="header-center">
+    <h2>Quanto custaria montar esse time <em>internamente?</em></h2>
+    <p>O que cada profissional custa se você montar esse time sozinho</p>
+  </div>
+  <div class="header-tag"></div>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="main">
+
+  <!-- CARD 1 — Gestor de Tráfego -->
+  <div class="card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12h18M3 6h18M3 18h18"/><circle cx="18" cy="6" r="3" fill="#A855F7" stroke="none"/><circle cx="6" cy="18" r="3" fill="#A855F7" stroke="none"/>
+      </svg>
+    </div>
+    <div class="cargo">Gestor de<br>Tráfego Pago</div>
+    <div class="descricao">Gerencia seus anúncios no Meta e Google para atrair clientes qualificados e maximizar o retorno por real investido.</div>
+    <ul class="tarefas">
+      <li>Criação e gestão de campanhas</li>
+      <li>Segmentação de público</li>
+      <li>Otimização de ROI</li>
+      <li>Relatórios de performance</li>
+    </ul>
+    <div class="sep"></div>
+    <div class="salario-label">Custo mensal</div>
+    <div class="salario-valor">R$ 2.500<span>/mês</span></div>
+  </div>
+
+  <!-- CARD 2 — Editor de Criativos -->
+  <div class="card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        <path d="M10 8l5 3-5 3V8z" fill="#A855F7" stroke="none"/>
+      </svg>
+    </div>
+    <div class="cargo">Editor de<br>Criativos</div>
+    <div class="descricao">Produz os vídeos e artes que alimentam as campanhas — peças feitas para converter, não apenas para aparecer.</div>
+    <ul class="tarefas">
+      <li>Edição de vídeos para anúncio</li>
+      <li>Criação de artes para campanhas</li>
+      <li>Adaptação de formatos</li>
+      <li>Testes de criativos A/B</li>
+    </ul>
+    <div class="sep"></div>
+    <div class="salario-label">Custo mensal</div>
+    <div class="salario-valor">R$ 2.000<span>/mês</span></div>
+  </div>
+
+  <!-- CARD 3 — Designer -->
+  <div class="card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        <circle cx="12" cy="12" r="2" fill="#A855F7" stroke="none"/>
+      </svg>
+    </div>
+    <div class="cargo">Designer<br>Gráfico</div>
+    <div class="descricao">Cria peças visuais de alta conversão para anúncios, landing pages e materiais de apoio à venda.</div>
+    <ul class="tarefas">
+      <li>Peças visuais para anúncios</li>
+      <li>Design de landing pages</li>
+      <li>Materiais de apoio à venda</li>
+      <li>Identidade visual aplicada</li>
+    </ul>
+    <div class="sep"></div>
+    <div class="salario-label">Custo mensal</div>
+    <div class="salario-valor">R$ 1.500<span>/mês</span></div>
+  </div>
+
+  <!-- CARD 4 — Estrategista -->
+  <div class="card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 20h20M6 20V10l6-6 6 6v10"/><path d="M10 20v-5h4v5" fill="rgba(168,85,247,0.2)" stroke="#A855F7"/>
+      </svg>
+    </div>
+    <div class="cargo">Estrategista<br>de Marketing</div>
+    <div class="descricao">Analisa o negócio, estrutura a oferta e define o caminho mais curto entre o anúncio e o faturamento.</div>
+    <ul class="tarefas">
+      <li>Diagnóstico comercial</li>
+      <li>Estruturação de funil e oferta</li>
+      <li>Planejamento de campanhas</li>
+      <li>Reuniões de estratégia</li>
+    </ul>
+    <div class="sep"></div>
+    <div class="salario-label">Custo mensal</div>
+    <div class="salario-valor">R$ 3.500<span>/mês</span></div>
+  </div>
+
+  <!-- CARD 5 — Gestor de Projetos -->
+  <div class="card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        <circle cx="9" cy="7" r="1.5" fill="#A855F7" stroke="none"/>
+      </svg>
+    </div>
+    <div class="cargo">Gestor de<br>Projetos</div>
+    <div class="descricao">Coordena o time, garante as entregas no prazo e mantém o cliente atualizado sobre cada etapa.</div>
+    <ul class="tarefas">
+      <li>Coordenação do time</li>
+      <li>Controle de prazos e entregas</li>
+      <li>Relatórios para o cliente</li>
+      <li>Gestão de ferramentas</li>
+    </ul>
+    <div class="sep"></div>
+    <div class="salario-label">Custo mensal</div>
+    <div class="salario-valor">R$ 3.000<span>/mês</span></div>
+  </div>
+
+  <!-- COLUNA TOTAL -->
+  <div class="col-total">
+
+    <div class="total-card">
+      <div class="total-eyebrow">Custo total do time</div>
+      <div class="total-numero"><span>R$</span> 12.500</div>
+      <div class="total-mes">por mês</div>
+      <div class="total-divider"></div>
+      <div class="total-anual-label">No ano</div>
+      <div class="total-anual">R$ 150.000</div>
+      <div class="total-anual-sub">Sem contar férias,<br>13º, FGTS e encargos</div>
+    </div>
+
+    <div class="aviso-card">
+      <div class="aviso-icon">⚡</div>
+      <div class="aviso-titulo">A Vértice entrega tudo isso — e mais</div>
+      <div class="aviso-texto">
+        Sem CLT, sem encargos, sem gestão de pessoas.<br><br>
+        <strong>Um único parceiro</strong> com visão completa do seu negócio, do tráfego ao pós-venda.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RODAPÉ -->
+<div class="footer">
+  <p>Vértice Assessoria</p>
+</div>
+
+</body>
+</html>
