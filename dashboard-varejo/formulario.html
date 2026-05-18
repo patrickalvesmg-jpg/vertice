@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Relatório Diário — Vértice Assessoria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0B0920; --bg2:#110D30; --bg3:#16103A;
+      --purple:#6B21E8; --lilac:#A855F7; --light:#C4B5FD;
+      --green:#4ade80; --yellow:#facc15; --red:#f87171;
+      --border:rgba(168,85,247,0.18); --border2:rgba(168,85,247,0.35);
+      --text:rgba(255,255,255,0.38); --text2:rgba(255,255,255,0.65);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html,body{background:var(--bg);font-family:'Montserrat',sans-serif;color:#fff;min-height:100vh;overflow-x:hidden;}
+
+    /* TOPO */
+    .top{
+      background:rgba(11,9,32,0.95);
+      border-bottom:1px solid var(--border);
+      padding:18px 20px;
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(12px);
+    }
+    .top-logo{font-size:13px;font-weight:900;letter-spacing:3px;color:var(--light);}
+    .top-logo span{color:var(--lilac);}
+    .top-cliente{font-size:13px;font-weight:700;color:#fff;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+    /* CONTAINER */
+    .wrap{max-width:560px;margin:0 auto;padding:28px 16px 60px;}
+
+    /* CABEÇALHO */
+    .head{text-align:center;margin-bottom:32px;}
+    .head-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(168,85,247,0.10);border:1px solid rgba(168,85,247,0.22);border-radius:20px;padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(196,181,253,0.70);margin-bottom:16px;}
+    .head h1{font-size:26px;font-weight:900;line-height:1.2;margin-bottom:8px;}
+    .head h1 em{font-style:normal;color:var(--light);}
+    .head p{font-size:14px;font-weight:500;color:var(--text);line-height:1.6;}
+
+    /* DATA */
+    .date-box{background:rgba(107,33,232,0.10);border:1px solid var(--border2);border-radius:14px;padding:18px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px;}
+    .date-ico{font-size:24px;flex-shrink:0;}
+    .date-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(168,85,247,0.60);margin-bottom:4px;}
+    .date-input{width:100%;background:transparent;border:none;outline:none;font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;color:#fff;cursor:pointer;}
+    .date-input::-webkit-calendar-picker-indicator{filter:invert(1);opacity:0.4;cursor:pointer;}
+
+    /* SEÇÃO */
+    .sec{margin-bottom:8px;margin-top:28px;}
+    .sec-title{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(168,85,247,0.55);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+    .sec-title::after{content:'';flex:1;height:1px;background:rgba(168,85,247,0.12);}
+
+    /* CARD DE CAMPO */
+    .field-card{background:rgba(255,255,255,0.025);border:1px solid rgba(168,85,247,0.12);border-radius:14px;padding:16px 18px;margin-bottom:10px;transition:border-color .2s,background .2s;}
+    .field-card:focus-within{border-color:rgba(168,85,247,0.40);background:rgba(107,33,232,0.07);}
+    .field-lbl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .field-lbl .badge{font-size:9px;background:rgba(168,85,247,0.12);border-radius:4px;padding:2px 6px;color:var(--light);letter-spacing:0.5px;text-transform:none;}
+    .field-row{display:flex;align-items:center;gap:12px;}
+    .field-prefix{font-size:13px;font-weight:600;color:var(--text);flex-shrink:0;}
+    .field-input{flex:1;background:transparent;border:none;outline:none;font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:#fff;width:100%;min-width:0;}
+    .field-input::placeholder{color:rgba(255,255,255,0.12);}
+    .field-input[type=number]::-webkit-inner-spin-button,
+    .field-input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;}
+    .field-hint{font-size:11px;font-weight:500;color:var(--text);margin-top:6px;line-height:1.5;}
+
+    /* TOTAL AUTO */
+    .total-card{background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.18);border-radius:14px;padding:16px 18px;margin-bottom:10px;}
+    .total-card.purple{background:rgba(107,33,232,0.10);border-color:rgba(168,85,247,0.25);}
+    .total-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(74,222,128,0.55);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+    .total-card.purple .total-lbl{color:rgba(168,85,247,0.55);}
+    .total-val{font-size:26px;font-weight:900;color:var(--green);}
+    .total-card.purple .total-val{color:var(--light);}
+    .total-sub{font-size:11px;color:var(--text);margin-top:3px;}
+
+    /* GRID 2 COLUNAS */
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+    /* BOTÃO ENVIAR */
+    .btn-wrap{margin-top:32px;}
+    .btn-send{width:100%;padding:18px;background:linear-gradient(135deg,var(--purple),var(--lilac));border:none;border-radius:14px;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;color:#fff;cursor:pointer;letter-spacing:1px;transition:opacity .2s,transform .1s;display:flex;align-items:center;justify-content:center;gap:10px;}
+    .btn-send:active{transform:scale(0.98);opacity:0.9;}
+    .btn-send:disabled{opacity:0.4;cursor:not-allowed;}
+    .btn-hint{text-align:center;font-size:12px;font-weight:500;color:var(--text);margin-top:10px;}
+
+    /* FEEDBACK */
+    .feedback{border-radius:14px;padding:20px 22px;margin-top:16px;display:none;align-items:flex-start;gap:14px;}
+    .feedback.ok{display:flex;background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.22);}
+    .feedback.err{display:flex;background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.22);}
+    .fb-ico{font-size:24px;flex-shrink:0;}
+    .fb-title{font-size:14px;font-weight:800;margin-bottom:4px;}
+    .feedback.ok .fb-title{color:var(--green);}
+    .feedback.err .fb-title{color:var(--red);}
+    .fb-sub{font-size:12px;font-weight:500;color:var(--text);line-height:1.6;}
+
+    /* LOADING */
+    .btn-spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.25);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* REGISTROS RECENTES */
+    .rec-wrap{margin-top:36px;}
+    .rec-empty{text-align:center;font-size:13px;color:var(--text);padding:20px 0;}
+    .rec-loading{text-align:center;font-size:12px;color:var(--text);padding:16px 0;letter-spacing:1px;}
+    .rec-item{background:rgba(255,255,255,0.025);border:1px solid rgba(168,85,247,0.12);border-radius:14px;padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:border-color .2s,background .2s;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .rec-item:active{background:rgba(107,33,232,0.10);}
+    .rec-item:hover{border-color:rgba(168,85,247,0.30);background:rgba(107,33,232,0.07);}
+    .rec-left{}
+    .rec-data{font-size:14px;font-weight:800;color:#fff;margin-bottom:4px;}
+    .rec-pills{display:flex;flex-wrap:wrap;gap:5px;}
+    .rec-pill{font-size:10px;font-weight:600;background:rgba(168,85,247,0.10);border:1px solid rgba(168,85,247,0.15);border-radius:5px;padding:2px 7px;color:var(--light);}
+    .rec-pill.green{background:rgba(74,222,128,0.08);border-color:rgba(74,222,128,0.18);color:var(--green);}
+    .rec-edit-btn{font-size:11px;font-weight:700;color:rgba(168,85,247,0.60);letter-spacing:1px;flex-shrink:0;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.18);border-radius:8px;padding:6px 12px;}
+
+    /* SETUP (sem planilha) */
+    #no-sheet{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+    .no-sheet-box{max-width:400px;text-align:center;}
+    .no-sheet-ico{font-size:48px;margin-bottom:20px;}
+    .no-sheet-title{font-size:22px;font-weight:900;margin-bottom:10px;}
+    .no-sheet-sub{font-size:14px;color:var(--text);line-height:1.7;}
+
+    /* SUCESSO EXTRA */
+    .day-tag{display:inline-block;background:rgba(250,204,21,0.10);border:1px solid rgba(250,204,21,0.22);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--yellow);margin-bottom:6px;}
+
+    /* MODAL CONFLITO DE DATA */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.70);z-index:100;display:none;align-items:flex-end;justify-content:center;padding:0 0 0 0;}
+    .modal-overlay.on{display:flex;}
+    .modal-box{background:#110D30;border:1px solid rgba(168,85,247,0.30);border-radius:20px 20px 0 0;padding:28px 24px 36px;width:100%;max-width:560px;}
+    .modal-ico{font-size:32px;margin-bottom:12px;}
+    .modal-title{font-size:17px;font-weight:900;margin-bottom:6px;}
+    .modal-sub{font-size:13px;font-weight:500;color:var(--text);line-height:1.6;margin-bottom:22px;}
+    .modal-sub strong{color:#fff;}
+    .modal-btns{display:flex;flex-direction:column;gap:10px;}
+    .modal-btn{width:100%;padding:15px;border:none;border-radius:12px;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;}
+    .modal-btn:active{opacity:0.85;}
+    .modal-btn.primary{background:linear-gradient(135deg,#b45309,#d97706);color:#fff;}
+    .modal-btn.secondary{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);color:var(--text2);}
+
+    @media(max-width:400px){
+      .head h1{font-size:22px;}
+      .field-input{font-size:20px;}
+      .total-val{font-size:22px;}
+      .grid2{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- SEM PLANILHA -->
+<div id="no-sheet" style="display:none;">
+  <div class="no-sheet-box">
+    <div class="no-sheet-ico">🔗</div>
+    <div class="no-sheet-title">Link inválido</div>
+    <div class="no-sheet-sub">Este formulário precisa de um link personalizado.<br>Entre em contato com a Vértice Assessoria para receber o seu link.</div>
+  </div>
+</div>
+
+<!-- FORMULÁRIO -->
+<div id="app" style="display:none;">
+
+  <!-- TOPO -->
+  <div class="top">
+    <div class="top-logo">VÉRTICE <span>ASSESSORIA</span></div>
+    <div class="top-cliente" id="top-cliente">Carregando...</div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- CABEÇALHO -->
+    <div class="head">
+      <div class="head-tag">📋 Relatório diário</div>
+      <h1>Como foi o dia de <em>hoje?</em></h1>
+      <p>Preencha os dados de vendas do dia. Leva menos de 2 minutos.</p>
+    </div>
+
+    <!-- DATA -->
+    <div class="date-box">
+      <div class="date-ico">📅</div>
+      <div style="flex:1;">
+        <div class="date-lbl">Data do relatório</div>
+        <input type="date" class="date-input" id="f-data">
+      </div>
+    </div>
+
+    <!-- ANÚNCIOS: INTERESSADOS -->
+    <div class="sec">
+      <div class="sec-title">📢 Contatos via Anúncios</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-lbl">Interessados via anúncios <span class="badge">WhatsApp + Loja</span></div>
+      <div class="field-row">
+        <input type="number" class="field-input" id="f-int-ads" placeholder="0" min="0" inputmode="numeric">
+      </div>
+      <div class="field-hint">Pessoas que mandaram mensagem ou vieram à loja por causa de um anúncio</div>
+    </div>
+
+    <div class="grid2">
+      <div class="field-card">
+        <div class="field-lbl">Vendas (Qtd)</div>
+        <div class="field-row">
+          <input type="number" class="field-input" id="f-vads" placeholder="0" min="0" inputmode="numeric">
+        </div>
+      </div>
+      <div class="field-card">
+        <div class="field-lbl">Valor vendido</div>
+        <div class="field-row">
+          <div class="field-prefix">R$</div>
+          <input type="number" class="field-input" id="f-fads" placeholder="0" min="0" inputmode="decimal" step="0.01">
+        </div>
+      </div>
+    </div>
+
+    <!-- ORGÂNICO: INTERESSADOS -->
+    <div class="sec">
+      <div class="sec-title">🌱 Contatos Orgânicos</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-lbl">Interessados orgânicos <span class="badge">Sem anúncio</span></div>
+      <div class="field-row">
+        <input type="number" class="field-input" id="f-int-org" placeholder="0" min="0" inputmode="numeric">
+      </div>
+      <div class="field-hint">Indicações, boca a boca, clientes que voltaram por conta própria</div>
+    </div>
+
+    <div class="grid2">
+      <div class="field-card">
+        <div class="field-lbl">Vendas (Qtd)</div>
+        <div class="field-row">
+          <input type="number" class="field-input" id="f-vorg" placeholder="0" min="0" inputmode="numeric">
+        </div>
+      </div>
+      <div class="field-card">
+        <div class="field-lbl">Valor vendido</div>
+        <div class="field-row">
+          <div class="field-prefix">R$</div>
+          <input type="number" class="field-input" id="f-forg" placeholder="0" min="0" inputmode="decimal" step="0.01">
+        </div>
+      </div>
+    </div>
+
+    <!-- TOTAIS (calculado automaticamente) -->
+    <div class="sec">
+      <div class="sec-title">✅ Totais do Dia</div>
+    </div>
+
+    <div class="grid2">
+      <div class="total-card purple">
+        <div class="total-lbl">🛒 Total de Vendas</div>
+        <div class="total-val" id="t-vendas">0</div>
+        <div class="total-sub">calculado automaticamente</div>
+      </div>
+      <div class="total-card">
+        <div class="total-lbl">💰 Total Faturado</div>
+        <div class="total-val" id="t-fat">R$ 0,00</div>
+        <div class="total-sub">calculado automaticamente</div>
+      </div>
+    </div>
+
+    <!-- BOTÃO -->
+    <div class="btn-wrap">
+      <button class="btn-send" id="btn-send" onclick="enviar()">
+        <div class="btn-spinner" id="spinner"></div>
+        <span id="btn-txt">✅ Salvar relatório do dia</span>
+      </button>
+      <div class="btn-hint">Os dados vão direto para a planilha da Vértice</div>
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="feedback" id="fb-ok">
+      <div class="fb-ico">🎉</div>
+      <div>
+        <div class="fb-title">Relatório salvo!</div>
+        <div class="fb-sub" id="fb-ok-msg">Dados enviados com sucesso.</div>
+      </div>
+    </div>
+    <div class="feedback" id="fb-err">
+      <div class="fb-ico">⚠️</div>
+      <div>
+        <div class="fb-title">Erro ao salvar</div>
+        <div class="fb-sub" id="fb-err-msg">Tente novamente. Se o problema persistir, entre em contato com a Vértice.</div>
+      </div>
+    </div>
+
+    <!-- REGISTROS RECENTES -->
+    <div class="rec-wrap">
+      <div class="sec-title" style="margin-top:0;">🕘 Entradas recentes</div>
+      <div id="rec-lista"><div class="rec-loading">Carregando...</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL CONFLITO DE DATA -->
+<div class="modal-overlay" id="modal-conflito">
+  <div class="modal-box">
+    <div class="modal-ico">⚠️</div>
+    <div class="modal-title">Data já preenchida</div>
+    <div class="modal-sub">Já existe um relatório para <strong id="modal-data-txt">este dia</strong>.<br>O que você quer fazer?</div>
+    <div class="modal-btns">
+      <button class="modal-btn primary" id="modal-btn-editar">✏️ Editar este dia</button>
+      <button class="modal-btn secondary" onclick="fecharModal()">📅 Escolher outra data</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const SHEET_ID = params.get('sheet');
+  const SCRIPT_URL = params.get('script');
+  let modoEdicao = false;
+
+  if (!SHEET_ID || !SCRIPT_URL) {
+    document.getElementById('no-sheet').style.display = 'flex';
+  } else {
+    document.getElementById('app').style.display = 'block';
+    init();
+  }
+
+  function init() {
+    const hoje = new Date();
+    document.getElementById('f-data').value = hoje.toISOString().split('T')[0];
+
+    fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=717206187`)
+      .then(r => r.text())
+      .then(txt => {
+        const json = JSON.parse(txt.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+        const nome = json.table.cols[1].label || 'Cliente';
+        document.getElementById('top-cliente').textContent = nome;
+        document.title = `Relatório — ${nome}`;
+      })
+      .catch(() => { document.getElementById('top-cliente').textContent = 'Meu negócio'; });
+
+    ['f-vads','f-fads','f-vorg','f-forg'].forEach(id =>
+      document.getElementById(id).addEventListener('input', calcTotais)
+    );
+
+    carregarRecentes();
+  }
+
+  function n(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+  function calcTotais() {
+    const totV = n('f-vads') + n('f-vorg');
+    const totF = n('f-fads') + n('f-forg');
+    document.getElementById('t-vendas').textContent = totV;
+    document.getElementById('t-fat').textContent = 'R$ ' + totF.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+
+  function brl(v) { return Number(v).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+
+  // ── REGISTROS RECENTES ──────────────────────────────────────
+  async function fetchScript(url) {
+    const res = await fetch(url, { redirect: 'follow' });
+    return await res.json();
+  }
+
+  async function carregarRecentes() {
+    const lista = document.getElementById('rec-lista');
+    try {
+      const qs = new URLSearchParams({ sheet: SHEET_ID, acao: 'ler' }).toString();
+      const result = await fetchScript(SCRIPT_URL + '?' + qs);
+      const registros = result.registros || [];
+      registrosCacheados = registros;
+
+      if (registros.length === 0) {
+        lista.innerHTML = '<div class="rec-empty">Nenhuma entrada ainda.</div>';
+        return;
+      }
+
+      lista.innerHTML = registros.map(r => {
+        const totF = Number(r.totF) || 0;
+        const totV = Number(r.totV) || 0;
+        // Converter "19/04/2026" → "19 de abril"
+        const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+        const partes = r.data.split('/');
+        const dataLeg = partes.length === 3
+          ? partes[0] + ' de ' + meses[parseInt(partes[1])-1] + ' de ' + partes[2]
+          : r.data;
+        return `<div class="rec-item" onclick="editarRegistro(${JSON.stringify(r).replace(/"/g,'&quot;')})">
+          <div class="rec-left">
+            <div class="rec-data">${dataLeg}</div>
+            <div class="rec-pills">
+              <span class="rec-pill">${totV} venda${totV!==1?'s':''}</span>
+              <span class="rec-pill green">R$ ${brl(totF)}</span>
+              <span class="rec-pill">${Number(r.intAds)||0} contatos ads</span>
+            </div>
+          </div>
+          <div class="rec-edit-btn">✏️ Editar</div>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      lista.innerHTML = '<div class="rec-empty">Não foi possível carregar os registros.</div>';
+    }
+  }
+
+  function editarRegistro(r) {
+    // Converter data "dd/mm/yyyy" → "yyyy-mm-dd" para o input date
+    const partes = r.data.split('/');
+    const isoData = partes[2] + '-' + partes[1] + '-' + partes[0];
+    document.getElementById('f-data').value = isoData;
+    document.getElementById('f-int-ads').value = r.intAds || 0;
+    document.getElementById('f-int-org').value = r.intOrg || 0;
+    document.getElementById('f-vads').value    = r.vAds   || 0;
+    document.getElementById('f-fads').value    = r.fAds   || 0;
+    document.getElementById('f-vorg').value    = r.vOrg   || 0;
+    document.getElementById('f-forg').value    = r.fOrg   || 0;
+    calcTotais();
+
+    // Ativar modo edição
+    modoEdicao = true;
+    document.getElementById('btn-txt').textContent = '✏️ Atualizar registro de ' + r.data;
+    document.getElementById('btn-send').style.background = 'linear-gradient(135deg,#b45309,#d97706)';
+
+    // Scroll para o topo do formulário
+    document.getElementById('f-data').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Limpar feedbacks
+    document.getElementById('fb-ok').className = 'feedback';
+    document.getElementById('fb-err').className = 'feedback';
+  }
+
+  function resetarModo() {
+    modoEdicao = false;
+    document.getElementById('btn-txt').textContent = '✅ Salvar relatório do dia';
+    document.getElementById('btn-send').style.background = '';
+  }
+
+  // ── MODAL CONFLITO ──────────────────────────────────────────
+  let registrosCacheados = [];
+
+  function abrirModalConflito(data, registro) {
+    const [y,m,d] = data.split('-');
+    document.getElementById('modal-data-txt').textContent = `${d}/${m}/${y}`;
+    document.getElementById('modal-btn-editar').onclick = () => {
+      fecharModal();
+      editarRegistro(registro);
+    };
+    document.getElementById('modal-conflito').classList.add('on');
+  }
+
+  function fecharModal() {
+    document.getElementById('modal-conflito').classList.remove('on');
+  }
+
+  // Fechar modal ao clicar fora
+  document.getElementById('modal-conflito').addEventListener('click', function(e) {
+    if (e.target === this) fecharModal();
+  });
+
+  function dataISOparaFormatada(iso) {
+    const [y,m,d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  // ── ENVIAR ──────────────────────────────────────────────────
+  async function enviar() {
+    const data = document.getElementById('f-data').value;
+    if (!data) { alert('Selecione a data do relatório.'); return; }
+
+    // Verificar conflito — primeiro no cache local, depois no script se necessário
+    if (!modoEdicao) {
+      const dataFmt = dataISOparaFormatada(data);
+
+      // 1. Checar cache local (rápido)
+      let existente = registrosCacheados.find(r => r.data === dataFmt);
+
+      // 2. Se cache vazio (script ainda não atualizado ou primeiro acesso), consultar script
+      if (!existente && registrosCacheados.length === 0) {
+        try {
+          const qs = new URLSearchParams({ sheet: SHEET_ID, acao: 'ler' }).toString();
+          const result = await fetchScript(SCRIPT_URL + '?' + qs);
+          if (result.registros) {
+            registrosCacheados = result.registros;
+            existente = registrosCacheados.find(r => r.data === dataFmt);
+          }
+        } catch(e) { /* se falhar, continua sem verificação */ }
+      }
+
+      if (existente) {
+        abrirModalConflito(data, existente);
+        return;
+      }
+    }
+
+    const intAds = n('f-int-ads'), intOrg = n('f-int-org');
+    const vAds = n('f-vads'),   fAds = n('f-fads');
+    const vOrg = n('f-vorg'),   fOrg = n('f-forg');
+    const totV = vAds + vOrg,   totF = fAds + fOrg;
+
+    const btn = document.getElementById('btn-send');
+    btn.disabled = true;
+    document.getElementById('spinner').style.display = 'block';
+    document.getElementById('btn-txt').textContent = modoEdicao ? 'Atualizando...' : 'Salvando...';
+    document.getElementById('fb-ok').className = 'feedback';
+    document.getElementById('fb-err').className = 'feedback';
+
+    const qs = new URLSearchParams({
+      sheet: SHEET_ID, data,
+      intAds, intOrg, vAds, fAds, vOrg, fOrg, totV, totF,
+      edicao: modoEdicao ? 'true' : 'false'
+    }).toString();
+
+    try {
+      const result = await fetchScript(SCRIPT_URL + '?' + qs);
+
+      if (result.status === 'ok') {
+        const [y,m,d] = data.split('-');
+        const diasSemana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+        const diaSemana = diasSemana[new Date(data+'T12:00:00').getDay()];
+        const acao = modoEdicao ? 'atualizado' : 'salvo';
+        document.getElementById('fb-ok-msg').innerHTML =
+          `<strong>${diaSemana}, ${d}/${m}/${y}</strong> ${acao} — ${totV} venda${totV!==1?'s':''} · R$ ${brl(totF)}`;
+        document.getElementById('fb-ok').className = 'feedback ok';
+
+        ['f-int-ads','f-vads','f-fads','f-int-org','f-vorg','f-forg'].forEach(id => {
+          document.getElementById(id).value = '';
+        });
+        calcTotais();
+        resetarModo();
+
+        // Avançar data para o dia seguinte (só se não era edição)
+        if (!modoEdicao) {
+          const prox = new Date(data+'T12:00:00');
+          prox.setDate(prox.getDate()+1);
+          document.getElementById('f-data').value = prox.toISOString().split('T')[0];
+        }
+
+        // Recarregar lista
+        carregarRecentes();
+      } else {
+        throw new Error(result.message || 'Erro desconhecido');
+      }
+    } catch(e) {
+      document.getElementById('fb-err-msg').textContent = e.message || 'Erro de conexão. Tente novamente.';
+      document.getElementById('fb-err').className = 'feedback err';
+    } finally {
+      btn.disabled = false;
+      document.getElementById('spinner').style.display = 'none';
+      if (modoEdicao) document.getElementById('btn-txt').textContent = '✏️ Atualizar registro';
+      else document.getElementById('btn-txt').textContent = '✅ Salvar relatório do dia';
+    }
+  }
+</script>
+
+</body>
+</html>
