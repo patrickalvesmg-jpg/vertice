@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roteiro de Ligação — Vértice (Delivery)</title>
+<style>
+  :root {
+    --roxo-marca: #6B21E8;
+    --lilas: #A855F7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .header {
+    background: #1e293b;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #334155;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: -0.3px;
+  }
+
+  .header .subtitulo {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .tabs-container {
+    display: flex;
+    background: #1e293b;
+    border-bottom: 2px solid #334155;
+    padding: 0 24px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    padding: 14px 28px;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover { color: #e2e8f0; }
+  .tab-btn.ativo {
+    color: #c084fc;
+    border-bottom-color: #c084fc;
+  }
+
+  .main {
+    display: flex;
+    min-height: calc(100vh - 120px);
+  }
+
+  .sidebar {
+    width: 260px;
+    background: #1e293b;
+    border-right: 1px solid #334155;
+    padding: 20px 0;
+    position: sticky;
+    top: 120px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .sidebar-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    padding: 0 20px 10px;
+  }
+
+  .sidebar-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 20px;
+    font-size: 15px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .sidebar-btn:hover { background: #273549; color: #e2e8f0; }
+
+  .sidebar-btn.ativo {
+    background: #2d1f55;
+    color: #c084fc;
+    border-left-color: #c084fc;
+    font-weight: 600;
+  }
+
+  .sidebar-numero {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: #334155;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 8px;
+    color: #94a3b8;
+  }
+
+  .sidebar-btn.ativo .sidebar-numero {
+    background: var(--roxo-marca);
+    color: #fff;
+  }
+
+  .conteudo {
+    flex: 1;
+    padding: 32px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .pagina { display: none; }
+  .pagina.ativa { display: block; }
+
+  .fase { display: none; }
+  .fase.ativa { display: block; }
+
+  .fase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .fase-numero {
+    width: 44px;
+    height: 44px;
+    background: var(--roxo-marca);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .fase-titulo { font-size: 26px; font-weight: 700; color: #f1f5f9; }
+  .fase-objetivo { font-size: 15px; color: #94a3b8; margin-top: 2px; font-style: italic; }
+
+  .fala-patrick {
+    background: #2d1f55;
+    border-left: 4px solid var(--lilas);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin: 14px 0;
+  }
+
+  .fala-cliente {
+    background: #1a2f25;
+    border-left: 4px solid #34d399;
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin: 14px 0;
+  }
+
+  .fala-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .fala-patrick .fala-label { color: #c084fc; }
+  .fala-cliente .fala-label { color: #34d399; }
+
+  .fala-texto { font-size: 19px; color: #f1f5f9; line-height: 1.65; }
+  .fala-texto .destaque-amarelo { color: #fbbf24; font-weight: 600; }
+
+  .dica {
+    background: #2d2a1a;
+    border: 1px solid #854d0e;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .dica-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #fbbf24; margin-bottom: 8px; }
+  .dica-texto { font-size: 16px; color: #fde68a; line-height: 1.6; }
+
+  .alerta {
+    background: #2a1a1a;
+    border: 1px solid #991b1b;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .alerta-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #f87171; margin-bottom: 8px; }
+  .alerta-texto { font-size: 16px; color: #fca5a5; line-height: 1.6; }
+
+  .sucesso {
+    background: #1a2f25;
+    border: 1px solid #166534;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .sucesso-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #4ade80; margin-bottom: 8px; }
+  .sucesso-texto { font-size: 16px; color: #86efac; line-height: 1.6; }
+
+  .cenarios-titulo {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin: 24px 0 12px;
+  }
+
+  .cenario {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .cenario-header {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+  }
+  .cenario-header:hover { background: #273549; }
+  .cenario-pergunta { font-size: 17px; font-weight: 600; color: #e2e8f0; }
+  .cenario-icone { font-size: 20px; color: #c084fc; transition: transform 0.2s; }
+  .cenario.aberto .cenario-icone { transform: rotate(180deg); }
+  .cenario-corpo {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid #334155;
+  }
+  .cenario.aberto .cenario-corpo { display: block; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 16px; }
+  th { background: #2d1f55; color: #c084fc; padding: 12px 16px; text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 12px 16px; border-bottom: 1px solid #334155; color: #cbd5e1; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1e293b; }
+
+  .nav-fases {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #334155;
+  }
+  .btn-nav {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid var(--roxo-marca);
+    background: transparent;
+    color: #c084fc;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-nav:hover { background: var(--roxo-marca); color: #fff; }
+  .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .destaque {
+    font-size: 21px;
+    font-weight: 700;
+    color: #f8fafc;
+    background: #2d1f55;
+    border: 1px solid var(--roxo-marca);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    line-height: 1.5;
+  }
+
+  hr.divisor { border: none; border-top: 1px solid #334155; margin: 24px 0; }
+
+  .tag-spiced {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #7dd3fc;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <h1>Roteiro de Ligação — Vértice</h1>
+    <div class="subtitulo">Método Clientes Novos · Negócios de Alimentação (adaptável por tipo)</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-container">
+  <button class="tab-btn ativo" onclick="mudarTab('gatekeeper')">📞 Porteiro / Funcionário</button>
+  <button class="tab-btn" onclick="mudarTab('decisor')">🎯 Decisor (Dono / Gerente)</button>
+</div>
+
+<div class="main">
+
+  <!-- =============================================================
+       PÁGINA PORTEIRO
+  ============================================================= -->
+  <div id="pagina-gatekeeper" class="pagina ativa" style="width:100%; padding: 32px; max-width: 880px; margin: 0 auto;">
+
+    <div class="fase-header">
+      <div class="fase-numero">P</div>
+      <div>
+        <div class="fase-titulo">Porteiro / Funcionário</div>
+        <div class="fase-objetivo">Objetivo: chegar no dono — ou garantir o contato direto dele</div>
+      </div>
+    </div>
+
+    <div class="destaque">
+      🎯 <strong>Postura:</strong> direto e cordial. O funcionário não decide — mas ele pode abrir ou fechar a porta. <strong>Use as 3 falas nessa ordem:</strong> crie rapport, desperte curiosidade com o contexto que você pesquisou, e faça a pergunta óbvia que ele não tem como negar.
+    </div>
+
+    <div class="cenarios-titulo">⚡ ABERTURA — sempre nessa ordem</div>
+
+    <div class="fala-patrick">
+      <div class="fala-label">⚡ Você (1ª fala)</div>
+      <div class="fala-texto">"Oi, tudo bem? Aqui é o {<em>seu nome</em>}. Como você se chama?"</div>
+    </div>
+
+    <div class="fala-cliente">
+      <div class="fala-label">👤 Funcionário</div>
+      <div class="fala-texto">"Oi, tudo bem! Meu nome é [Nome]."</div>
+    </div>
+
+    <div class="fala-patrick">
+      <div class="fala-label">⚡ Você (2ª fala — criar situação, gerar curiosidade)</div>
+      <div class="fala-texto">"Prazer, [Nome]! Preciso te explicar uma situação que aconteceu aqui. <strong>Não sei se, para resolver, seria com você — mas caso seja outra pessoa, você pode me ajudar a passar para ela?</strong>"</div>
+    </div>
+
+    <div class="fala-cliente">
+      <div class="fala-label">👤 Funcionário</div>
+      <div class="fala-texto">"[Responde — geralmente: claro, pode falar / do que se trata?]"</div>
+    </div>
+
+    <div class="fala-patrick">
+      <div class="fala-label">⚡ Você (3ª fala — apresentar o contexto)</div>
+      <div class="fala-texto">"Eu estava pesquisando empresas aqui na região e acabei encontrando a de vocês. Vi que vocês estão bem destacados — tanto no Google quanto no Instagram — e que estão fazendo um ótimo trabalho. Inclusive, parabéns por isso.<br><br>Só que eu identifiquei alguns pontos aqui que podem estar impedindo vocês de faturar ainda muito mais do que vocês provavelmente já faturam hoje. Eu gostaria de apresentar esses pontos para o responsável para resolver isso.<br><br><strong>Seria com você ou com outra pessoa?</strong>"</div>
+    </div>
+
+    <div class="cenario" style="margin-bottom:14px;">
+      <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+        <div class="cenario-pergunta">❓ "Quem é você? De que empresa você fala?"</div>
+        <div class="cenario-icone">▼</div>
+      </div>
+      <div class="cenario-corpo">
+        <div class="fala-patrick" style="margin-top:12px;">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">
+            "Sou o {<em>seu nome</em>}, da {<em>sua empresa</em>} — a gente é uma <strong>assessoria de vendas</strong>. A gente entra dentro do negócio e trabalha todo o processo comercial de ponta a ponta.<br><br>
+            A gente trabalha para que mais pessoas conheçam a empresa, se sintam atraídas e <strong>de fato comprem</strong>. Também para que quem já comprou <strong>volte a comprar e indique outros</strong>. E faz uma análise completa para identificar o que está travando as vendas e vai ajustando ponto por ponto — para o faturamento crescer de forma constante.<br><br>
+            Por isso eu queria falar com o responsável — <strong>você acredita que seria do interesse dele conhecer esses pontos para aumentar o faturamento da empresa?</strong>"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dica">
+      <div class="dica-label">💡 Por que funciona</div>
+      <div class="dica-texto">A 2ª fala cria uma "situação" — o funcionário fica curioso antes mesmo de saber o assunto. Na 3ª fala, você mostra que pesquisou o negócio deles antes de ligar (encontrou avaliações, Google, Instagram) e elogia o que viu. Isso gera credibilidade imediata. A pergunta final é quase impossível de negar: <strong>nenhum funcionário vai dizer que o dono não quer aumentar o faturamento.</strong></div>
+    </div>
+
+    <hr class="divisor">
+
+    <div class="cenarios-titulo">📋 CENÁRIOS — o que fazer em cada resposta</div>
+
+    <div class="cenario">
+      <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+        <div class="cenario-pergunta">✅ "Vou passar / um momento" — passa direto</div>
+        <div class="cenario-icone">▼</div>
+      </div>
+      <div class="cenario-corpo">
+        <div class="sucesso">
+          <div class="sucesso-label">Cenário ideal</div>
+          <div class="sucesso-texto">O funcionário não questionou e está passando. <strong>Vá direto para a aba do Decisor</strong> e siga o roteiro de abertura com o dono.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cenario aberto">
+      <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+        <div class="cenario-pergunta">❓ "Qual é o assunto?" / "De onde você fala?" — ele questiona</div>
+        <div class="cenario-icone">▼</div>
+      </div>
+      <div class="cenario-corpo">
+        <div class="fala-patrick" style="margin-top:12px;">
+          <div class="fala-label">⚡ Reforce o contexto e repita a pergunta</div>
+          <div class="fala-texto">"Eu estava pesquisando empresas da área de vocês aqui na região e encontrei a de vocês. Vi que estão bem destacados — boas avaliações, boa presença no Google e no Instagram. Só que identifiquei alguns pontos que provavelmente estão impedindo vocês de faturar ainda mais. Queria apresentar isso ao responsável. <strong>Você acredita que seria do interesse dele conhecer esses pontos para aumentar o faturamento da empresa?</strong>"</div>
+        </div>
+        <div class="dica">
+          <div class="dica-label">💡 O micro-sim do funcionário</div>
+          <div class="dica-texto">A pergunta é óbvia por design — <strong>nenhum funcionário vai dizer que o dono não quer vender mais.</strong> Ao concordar, ele validou o assunto e fica muito mais difícil barrar a passagem.</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Depois do sim dele</div>
+          <div class="fala-texto">"Então você consegue passar pro responsável agora?"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cenario">
+      <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+        <div class="cenario-pergunta">⏳ "Ele não pode agora / está na cozinha / em reunião"</div>
+        <div class="cenario-icone">▼</div>
+      </div>
+      <div class="cenario-corpo">
+        <div class="fala-patrick" style="margin-top:12px;">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Sem problema — imagino que está ocupado. [Nome], qual o melhor horário para eu ligar e pegar o dono disponível? De manhã antes do movimento ou no começo do dia?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Após ele informar o horário</div>
+          <div class="fala-texto">"Perfeito. E qual é o nome do dono para eu pedir por ele na próxima ligação?"</div>
+        </div>
+        <div class="dica">
+          <div class="dica-label">💡 Dica</div>
+          <div class="dica-texto">Com o nome do dono, na próxima ligação você abre: "<em>Pode chamar o [Nome] para mim?</em>" — o tom muda completamente. Parece que você já tem relacionamento.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cenario">
+      <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+        <div class="cenario-pergunta">📱 "Manda mensagem no WhatsApp do estabelecimento"</div>
+        <div class="cenario-icone">▼</div>
+      </div>
+      <div class="cenario-corpo">
+        <div class="fala-patrick" style="margin-top:12px;">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Posso mandar sim. Mas pelo conteúdo é importante que chegue direto ao dono — você teria o WhatsApp pessoal dele? Às vezes a mensagem se perde quando vai pro contato geral do estabelecimento."</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Se ele hesitar</div>
+          <div class="fala-texto">"Tudo bem, posso mandar pelo número do estabelecimento mesmo. Só me confirma o nome do dono para eu colocar no início da mensagem? Assim não fica genérico."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cenario">
+      <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+        <div class="cenario-pergunta">🚫 "Ele não tem interesse em marketing"</div>
+        <div class="cenario-icone">▼</div>
+      </div>
+      <div class="cenario-corpo">
+        <div class="fala-patrick" style="margin-top:12px;">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Entendo. <strong>O que estou oferecendo não é marketing</strong> — é uma consultoria de processo comercial. A gente trabalha no método de como o negócio atrai clientes novos de forma consistente e aumenta o faturamento. É sobre o negócio em si. Você pode só passar para o dono decidir se quer conhecer?"</div>
+        </div>
+        <div class="dica">
+          <div class="dica-label">💡 Por que funciona</div>
+          <div class="dica-texto">O funcionário foi instruído a barrar "marketing". Ele <strong>não foi instruído</strong> para barrar "consultoria de processo que reduz taxa do iFood". Você sai da categoria que ele conhece.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divisor">
+
+    <div class="cenarios-titulo">📝 O QUE ANOTAR ANTES DE DESLIGAR</div>
+    <table>
+      <tr><th>Campo</th><th>Anotação</th></tr>
+      <tr><td>Nome do estabelecimento</td><td></td></tr>
+      <tr><td>Tipo de negócio</td><td><em style="color:#64748b">Hamburgueria, pizzaria, churrascaria, lanchonete, delivery puro, presencial ou híbrido...</em></td></tr>
+      <tr><td>Nome de quem atendeu</td><td></td></tr>
+      <tr><td>Nome do dono/responsável</td><td></td></tr>
+      <tr><td>WhatsApp direto do dono</td><td></td></tr>
+      <tr><td>Melhor horário para ligar</td><td></td></tr>
+      <tr><td>Observação</td><td><em style="color:#64748b">"Usa iFood + Rappi", "só delivery", "tem motoboy próprio"...</em></td></tr>
+    </table>
+
+    <div class="alerta">
+      <div class="alerta-label">⚠️ Regras de ouro com o porteiro</div>
+      <div class="alerta-texto">
+        1. Siga as 3 falas em ordem — não pule etapas<br>
+        2. Nunca minta — não diga que é retorno se não for<br>
+        3. <strong>Nunca diga "marketing" ou "tráfego pago"</strong> — use "pontos que podem aumentar o faturamento"<br>
+        4. A pergunta final é óbvia por design — ela não foi feita para ser negada<br>
+        5. Sempre saia com algo concreto: nome do responsável, horário ou WhatsApp
+      </div>
+    </div>
+
+  </div><!-- fim pagina-gatekeeper -->
+
+  <!-- =============================================================
+       PÁGINA DECISOR
+  ============================================================= -->
+  <div id="pagina-decisor" class="pagina" style="display:none; width:100%;">
+    <div style="display:flex; width:100%;">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-titulo">Etapas da Ligação</div>
+      <button class="sidebar-btn ativo" onclick="mudarFase('abertura', this)">
+        <span class="sidebar-numero">1</span> Abertura
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('situacao', this)">
+        <span class="sidebar-numero">2</span> Situação
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('problema', this)">
+        <span class="sidebar-numero">3</span> Problema
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('impacto', this)">
+        <span class="sidebar-numero">4</span> Impacto
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('evento', this)">
+        <span class="sidebar-numero">5</span> Evento + Sins
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('reuniao', this)">
+        <span class="sidebar-numero">6</span> Vender a Reunião
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('compromisso', this)">
+        <span class="sidebar-numero">7</span> Compromisso Final
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('sinais', this)" style="margin-top:12px; border-top: 1px solid #334155; padding-top:14px;">
+        <span class="sidebar-numero" style="font-size:10px;">📊</span> Sinais
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('qualificacao', this)">
+        <span class="sidebar-numero" style="font-size:10px;">✔</span> Qualificação
+      </button>
+      <button class="sidebar-btn" onclick="mudarFase('objecoes', this)">
+        <span class="sidebar-numero" style="font-size:10px;">🛡️</span> Objeções
+      </button>
+    </div>
+
+    <!-- CONTEÚDO DECISOR -->
+    <div class="conteudo">
+
+      <!-- ============ ABERTURA ============ -->
+      <div id="fase-abertura" class="fase ativa">
+        <div class="fase-header">
+          <div class="fase-numero">1</div>
+          <div>
+            <div class="fase-titulo">Abertura <span class="tag-spiced">SPICED</span></div>
+            <div class="fase-objetivo">Objetivo: apresentar o problema real, criar curiosidade e ganhar os primeiros 2 minutos</div>
+          </div>
+        </div>
+
+        <div class="destaque">
+          ⏱️ Os primeiros 15 segundos definem se você ganha 2 minutos.<br>
+          A grande sacada: <strong>você não está vendendo</strong>. Você pesquisou o negócio dele antes de ligar — e isso já diferencia você de qualquer outro que liga. Mostre que fez um trabalho real, nomeie o problema e abra a porta.
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Abertura principal</div>
+          <div class="fala-texto">
+            "Oi, [Nome], tudo bem? Aqui é o {<em>seu nome</em>}.<br><br>
+            Eu estava pesquisando empresas aqui na região e acabei encontrando a de vocês. Vi que vocês estão bem destacados — tanto no Google quanto no Instagram — e que estão fazendo um ótimo trabalho. Inclusive, parabéns por isso.<br><br>
+            Só que eu identifiquei alguns pontos aqui que podem estar impedindo vocês de faturar ainda muito mais do que vocês provavelmente já faturam hoje. Eu gostaria de apresentar esses pontos a você, mas queria entender um pouco mais da realidade do negócio de vocês para ver se faz sentido. Você teria 2 ou 3 minutinhos?"
+          </div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que funciona</div>
+          <div class="dica-texto">Você chegou com lição de casa feita — pesquisou o Google e o Instagram antes de ligar. Isso diferencia de qualquer cold call genérico e gera credibilidade imediata. O dono pensa: <em>"esse cara não está chutando — ele viu o meu negócio de verdade."</em> A apresentação como assessoria de vendas (não agência) também quebra a resistência de quem já teve experiência ruim com marketing.</div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">❓ Se ele perguntar "o que vocês fazem exatamente?" / "que tipo de método é esse?"</div>
+
+        <div class="cenario aberto">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">"Mas vocês fazem o quê exatamente?"</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="alerta">
+              <div class="alerta-label">🚫 Não use estas palavras</div>
+              <div class="alerta-texto"><strong>marketing · tráfego pago · gestor de tráfego · agência de marketing · ranqueamento no iFood</strong> — o dono provavelmente já teve experiência ruim com essas palavras.</div>
+            </div>
+            <div class="fala-patrick">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">
+                "A Vértice é uma assessoria que trabalha <strong>todo o fluxo de vendas da empresa, de ponta a ponta</strong> — desde o momento em que o futuro cliente conhece vocês pela primeira vez, até o momento em que ele está indicando vocês para as pessoas próximas a ele.<br><br>
+                O nosso trabalho é entrar totalmente dentro do negócio de vocês — fazer parte, como se fosse da empresa mesmo — entender tudo sobre a operação e identificar os pontos que estão impedindo vocês de vender mais.<br><br>
+                Às vezes o problema é <strong>visibilidade</strong>: poucas pessoas conhecem vocês.<br>
+                Às vezes as pessoas conhecem, mas a <strong>oferta não atrai</strong>.<br>
+                Às vezes a oferta atrai, mas algo no caminho está <strong>impedindo a venda de fechar</strong>.<br>
+                Às vezes a venda fecha, mas o cliente compra uma vez e <strong>não volta</strong>.<br>
+                E às vezes tem tudo isso funcionando, mas nenhum cliente está <strong>indicando</strong> vocês para outras pessoas.<br><br>
+                A gente analisa cada um desses pontos, identifica onde está o gargalo e trabalha para corrigir — para que o faturamento de vocês comece a crescer de forma constante."
+              </div>
+            </div>
+            <div class="dica">
+              <div class="dica-label">💡 Posicionamento</div>
+              <div class="dica-texto">Você é <strong>assessor de vendas</strong>, não agência de marketing. A diferença é que você entra no negócio, diagnostica e resolve — não só entrega anúncio. Isso posiciona a Vértice como parceiro estratégico, não fornecedor.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" disabled>← Anterior</button>
+          <button class="btn-nav" onclick="mudarFase('situacao', document.querySelectorAll('.sidebar-btn')[1])">Próximo: Situação →</button>
+        </div>
+      </div>
+
+      <!-- ============ SITUAÇÃO ============ -->
+      <div id="fase-situacao" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero">2</div>
+          <div>
+            <div class="fase-titulo">Situação <span class="tag-spiced">SPICED — S</span></div>
+            <div class="fase-objetivo">Objetivo: mapear como o negócio funciona hoje e de onde vêm os clientes</div>
+          </div>
+        </div>
+
+        <div class="destaque">
+          ℹ️ O dono aceitou conversar. Agora <strong>uma pergunta por vez</strong> — sem interrogatório. Ouça a resposta completa antes de fazer a próxima. O objetivo é mapear a operação e entender a realidade dele antes de qualquer diagnóstico.
+        </div>
+
+        <hr class="divisor">
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Pergunta 1 — Modelo do negócio</div>
+          <div class="fala-texto">"Me conta um pouco da estrutura de vocês: vocês trabalham só com delivery, só com salão, ou os dois?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como usar a resposta</div>
+          <div class="dica-texto">
+            <strong>Só delivery</strong> → nas perguntas de volume, use "pedidos por dia" em vez de "clientes por mês".<br><br>
+            <strong>Salão ou híbrido</strong> → use "clientes por mês" e explore se o movimento presencial é constante ou oscila.
+          </div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Pergunta 2 — Equipe</div>
+          <div class="fala-texto">"E quantas pessoas trabalham com você na equipe hoje?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que perguntar isso</div>
+          <div class="dica-texto">Tamanho da equipe revela o porte real da operação — um delivery com 2 pessoas tem urgência diferente de um restaurante com 10. Isso calibra o tom do diagnóstico.</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Pergunta 3 — Volume</div>
+          <div class="fala-texto">
+            <em>Se for delivery:</em> "Em média, quantos pedidos vocês recebem por dia?"<br><br>
+            <em>Se for salão ou híbrido:</em> "Em média, quantos clientes vocês atendem por mês? Só pra eu entender o tamanho da operação."
+          </div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Pergunta 4 — Como atraem clientes hoje</div>
+          <div class="fala-texto">"Como vocês atraem os clientes de vocês hoje? Tem alguma estratégia — fazem anúncio nas redes sociais, rádio, carro de som, indicação? Como funciona isso aí?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como usar a resposta</div>
+          <div class="dica-texto">
+            <strong>Só iFood / app</strong> → dor de dependência e taxa alta. Avance para Problema 1.<br><br>
+            <strong>Indicação e boca a boca</strong> → crescimento imprevisível, sem controle. Use Problema 2 e 5.<br><br>
+            <strong>Já faz anúncio mas não vê resultado</strong> → dor de conversão. Use Problema 2 e 3.<br><br>
+            <strong>Nenhuma estratégia</strong> → deixa a porta aberta para apresentar o que a Vértice faz.
+          </div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Pergunta 5 — Capacidade (a pergunta-ouro)</div>
+          <div class="fala-texto">"Se vocês dobrassem o volume de clientes a partir do mês que vem — a equipe atual de vocês aguentaria, ou já estaria no limite?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Pergunta-ouro</div>
+          <div class="dica-texto">Quando ele diz "<em>aguentaria, sim</em>" — ele confirmou que <strong>existe espaço de crescimento sem mexer na estrutura</strong>. O problema não é capacidade — é falta de cliente chegando. Exatamente o que a Vértice resolve.</div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">💡 PERGUNTAS EXTRAS — se quiser aprofundar a situação</div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">Presença digital — como está o perfil hoje?</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Vocês têm Instagram e Google Meu Negócio ativos? Costumam postar com frequência ou está mais parado?"</div>
+            </div>
+            <div class="dica">
+              <div class="dica-label">💡 Por que perguntar</div>
+              <div class="dica-texto">Revela se a presença digital é um ponto fraco — e conecta diretamente com o que você identificou no perfil antes de ligar.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">Histórico com marketing ou agência</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Vocês já tentaram trabalhar com alguma agência ou serviço de marketing antes? Como foi essa experiência?"</div>
+            </div>
+            <div class="dica">
+              <div class="dica-label">💡 Por que perguntar</div>
+              <div class="dica-texto">Se teve experiência ruim, ele vai contar. Isso te prepara para reposicionar a Vértice como assessoria de vendas — diferente de agência — antes que a objeção apareça.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">Ticket médio e margem</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Em média, quanto cada cliente gasta por pedido? Só pra eu entender a operação financeira."</div>
+            </div>
+            <div class="dica">
+              <div class="dica-label">💡 Por que perguntar</div>
+              <div class="dica-texto">Com o ticket médio e o volume, você consegue estimar o faturamento e qualificar se o negócio tem porte para investir na Vértice.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('abertura', document.querySelectorAll('.sidebar-btn')[0])">← Abertura</button>
+          <button class="btn-nav" onclick="mudarFase('problema', document.querySelectorAll('.sidebar-btn')[2])">Próximo: Problema →</button>
+        </div>
+      </div>
+
+      <!-- ============ PROBLEMA ============ -->
+      <div id="fase-problema" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero">3</div>
+          <div>
+            <div class="fase-titulo">Problema <span class="tag-spiced">SPICED — P</span></div>
+            <div class="fase-objetivo">Objetivo: nomear as dores reais e fazer o dono verbalizá-las</div>
+          </div>
+        </div>
+
+        <div class="destaque">
+          🎣 <strong>A regra:</strong> após cada pergunta, cale e ouça. A força está no que ele fala — não no que você pergunta. <strong>Use no máximo 3 perguntas por ligação</strong> — escolha as que mais se encaixam com o que ele te contou na Situação.
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🎯 PERGUNTA 1 — Aquisição de clientes novos</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Você tem conseguido trazer clientes novos todos os meses no volume que você gostaria — ou ainda está abaixo do esperado?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como conduzir</div>
+          <div class="dica-texto">
+            <strong>Se disser "está abaixo":</strong> "O que você acha que está segurando? As pessoas não encontram vocês, ou chegam mas não convertem em pedido?"<br><br>
+            <strong>Se disser "está ok":</strong> Não insista — mude para a Pergunta 2 (conversão) ou 4 (faturamento). Ele pode estar satisfeito com volume mas com margem ruim.
+          </div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🎯 PERGUNTA 2 — Conversão</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Das pessoas que chegam até vocês — pelo WhatsApp, pelo perfil, pelo app — você sente que a maioria de fato compra, ou muita gente some sem fechar?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como conduzir</div>
+          <div class="dica-texto">
+            <strong>Se muita gente some:</strong> "Isso é mais comum do que parece. Geralmente o problema está na oferta — não está atrativa o suficiente para fazer a pessoa tomar a decisão na hora. Ou no processo de atendimento, que deixa a pessoa esfriar. A gente trabalha exatamente nisso."<br><br>
+            <strong>Se converte bem:</strong> "Ótimo. Então o gargalo provavelmente está em trazer mais pessoas até vocês — não em converter quem já chega."
+          </div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🎯 PERGUNTA 3 — Retenção de clientes</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Quem compra de vocês uma vez tem voltado? Você faz alguma ação pra trazer de volta as pessoas que já compraram — pra que elas peçam de novo?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como conduzir</div>
+          <div class="dica-texto">
+            <strong>Se não faz nada:</strong> "É o que a gente vê bastante. O negócio investe pra trazer o cliente, ele compra uma vez — e some. Sem uma ação de retenção, você precisa ficar conquistando cliente novo o tempo todo só pra manter o mesmo volume."<br><br>
+            <strong>Se faz alguma coisa (promoção, WhatsApp):</strong> "Que bom. E você consegue medir se está funcionando — se quem recebe a promoção realmente volta a comprar?"
+          </div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🎯 PERGUNTA 4 — Faturamento</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Você tem conseguido aumentar o faturamento de vocês mês a mês — ou está mais estagnado?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como conduzir</div>
+          <div class="dica-texto">
+            <strong>Se cresceu:</strong> "Que ótimo. E você consegue identificar o que puxou esse crescimento — ou foi mais orgânico, sem ação específica?" — se foi orgânico, a dor é não saber repetir o resultado.<br><br>
+            <strong>Se estagnado ou caindo:</strong> "O que você acredita que está impedindo de crescer? Se você tivesse que apontar uma coisa, o que seria?" — deixe ele responder. O que ele diz aqui é o gatilho para conectar com o diagnóstico na fase de Impacto.
+          </div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🎯 PERGUNTA 5 — Taxa do iFood <em style="color:#64748b; font-size:13px;">(usar só se confirmou que vende pelo app)</em></div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Você tem ideia do quanto você paga pro iFood todo mês por conta da taxa?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como conduzir</div>
+          <div class="dica-texto">
+            <strong>Se disser "não sei" ou "nunca calculei":</strong> "A maioria não sabe de cabeça. Com 27% de taxa, quem fatura R$ 30 mil pelo iFood paga R$ 8.100 por mês pra plataforma — quase R$ 100 mil por ano. Isso bate com o que você imagina?"<br><br>
+            <strong>Se disser "sei, é alto":</strong> "Exatamente. E você tem alguma forma hoje de trazer pedido sem depender deles?"
+          </div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('situacao', document.querySelectorAll('.sidebar-btn')[1])">← Situação</button>
+          <button class="btn-nav" onclick="mudarFase('impacto', document.querySelectorAll('.sidebar-btn')[3])">Próximo: Impacto →</button>
+        </div>
+      </div>
+
+      <!-- ============ IMPACTO ============ -->
+      <div id="fase-impacto" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero">4</div>
+          <div>
+            <div class="fase-titulo">Impacto <span class="tag-spiced">SPICED — I = Implicação do SPIN Selling</span></div>
+            <div class="fase-objetivo">Objetivo: fazer o dono verbalizar as consequências do problema que ele mesmo confirmou</div>
+          </div>
+        </div>
+
+        <div class="destaque">
+          💥 Você não diagnostica nem explica — faz perguntas que levam o dono a <strong>perceber e verbalizar as consequências</strong> do problema que ele acabou de confirmar. Quanto mais ele fala, mais ele se convence. <strong>Use só os blocos que correspondem ao que ele confirmou no Problema. Máximo 2 por ligação.</strong>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">📉 IMPACTO 1 — De não trazer clientes novos</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Essa dificuldade de trazer cliente novo — o que isso está gerando pro negócio de vocês?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que essa pergunta funciona</div>
+          <div class="dica-texto">Cada dono vai nomear o impacto do jeito dele — faturamento que não cresce, impossibilidade de planejar, sensação de estagnação. <strong>Ouça sem interromper. O que ele disser aqui direciona o Evento Crítico.</strong></div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🎯 IMPACTO 2 — De não converter quem chega</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Essa galera que chega mas não compra — o que você acha que isso está custando pro negócio todo mês?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que essa pergunta funciona</div>
+          <div class="dica-texto">A maioria nunca parou para calcular o custo de não converter. Quando ele tenta responder, percebe que está perdendo dinheiro que já estava quase na mão. <strong>Deixe ele chegar a essa conclusão sozinho — não dê o número.</strong></div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🔄 IMPACTO 3 — De não reter clientes</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Esse cliente que compra uma vez e não volta — o que isso representa pro negócio de vocês?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que essa pergunta funciona</div>
+          <div class="dica-texto">Ele pode falar de receita perdida, de esforço que não acumula, de depender sempre de cliente novo. <strong>Não explique. Deixe ele sentir o peso primeiro.</strong></div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">📊 IMPACTO 4 — Do faturamento estagnado ou oscilando</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Esse faturamento que não está crescendo — o que isso está significando pra você e pro negócio, tanto no dia a dia quanto nos planos que você tem?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que essa pergunta funciona</div>
+          <div class="dica-texto">É a pergunta mais aberta — e a mais poderosa. Ele pode falar do lado operacional (dificuldade de planejar, contratar, investir) ou do lado pessoal (frustração, planos travados). <strong>Se ele entrar no lado pessoal, ouça com atenção. Não mude de assunto. O que ele disser aqui é o que você usa no Microcompromisso 1.</strong></div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">💸 IMPACTO 5 — Da taxa alta do iFood <em style="color:#64748b; font-size:13px;">(usar só se confirmou que vende pelo app)</em></div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Você</div>
+          <div class="fala-texto">"Essa taxa que você paga pro app todo mês — o que isso está causando pro seu negócio?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que essa pergunta funciona</div>
+          <div class="dica-texto">Ele vai nomear o impacto com as próprias palavras — margem apertada, dificuldade de reinvestir, sensação de trabalhar pro app. <strong>Não complete. Ouça a resposta inteira antes de falar.</strong></div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('problema', document.querySelectorAll('.sidebar-btn')[2])">← Problema</button>
+          <button class="btn-nav" onclick="mudarFase('evento', document.querySelectorAll('.sidebar-btn')[4])">Próximo: Evento Crítico →</button>
+        </div>
+      </div>
+
+      <!-- ============ EVENTO CRÍTICO ============ -->
+      <div id="fase-evento" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero">5</div>
+          <div>
+            <div class="fase-titulo">Evento Crítico <span class="tag-spiced">SPICED — CE</span></div>
+            <div class="fase-objetivo">Objetivo: identificar uma meta com prazo que ele não está atingindo — o gatilho de urgência</div>
+          </div>
+        </div>
+
+        <div class="destaque">
+          🔥 Evento crítico é o <strong>motivo para agir agora</strong> e não daqui a 6 meses. Pode ser uma meta financeira, uma abertura de novo ponto, um pico de custo. Sem evento crítico, o problema existe mas não urge — e ele não muda.
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">🎯 Identificando o evento crítico</div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Opção A — Meta de crescimento com prazo</div>
+          <div class="fala-texto">"Você tem alguma meta para o negócio esse ano — um faturamento, um número de pedidos por dia, alguma coisa que você quer atingir até o final do ano?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Se ele tiver uma meta</div>
+          <div class="dica-texto">Aprofunde: "<em>E com o volume atual, você está no ritmo certo para chegar lá? Ou precisaria mudar alguma coisa?</em>"<br><br>Quando ele admite que está longe, o problema ganha prazo — e prazo gera urgência.</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Opção B — Expansão ou investimento planejado</div>
+          <div class="fala-texto">"Tem alguma mudança planejada nos próximos meses — abrir um segundo ponto, ampliar a cozinha, contratar mais gente — que vai exigir mais faturamento para sustentar?"</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Opção C — O custo de não mudar</div>
+          <div class="fala-texto">"Se continuar do jeito que está por mais 12 meses — sem mudar nada — onde você acha que o negócio vai estar? O crescimento vai acontecer naturalmente ou algo precisa mudar?"</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Opção D — Pressão de mercado / concorrência</div>
+          <div class="fala-texto">"Você está sentindo mais concorrência na região? Novos negócios abrindo, mais opções no iFood para o cliente escolher? Como você enxerga isso nos próximos anos?"</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Como usar essas opções</div>
+          <div class="dica-texto">Use <strong>no máximo 2</strong> por ligação. Comece pela A ou B — se ele não tiver meta ou plano, desça para C ou D. O objetivo é fazer ele verbalizar o custo de não agir. Quando ele faz isso, a urgência vem dele, não de você.</div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">✅ MICROCOMPROMISSOS — após identificar o evento crítico</div>
+
+        <div class="destaque" style="font-size:18px;">
+          Cada "sim" é um compromisso. Quem disse sim várias vezes seguidas <strong>não cancela</strong> a reunião. Colete os 3 sins antes de propor qualquer coisa.
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Microcompromisso 1 — confirmar o problema</div>
+          <div class="fala-texto">"Pelo que a gente conversou, o maior desafio de vocês hoje é <strong>[escolha o que ele mais confirmou: dificuldade de trazer clientes novos / pessoas que chegam mas não compram / cliente que compra uma vez e não volta / faturamento que não cresce / taxa alta do app]</strong> — isso bate com o que você vive no dia a dia?"</div>
+        </div>
+
+        <div class="fala-cliente">
+          <div class="fala-label">👤 Dono</div>
+          <div class="fala-texto">"Bate, sim."</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Microcompromisso 2 — confirmar o impacto</div>
+          <div class="fala-texto">
+            <em>Se ele citou uma meta:</em> "E isso está travando diretamente a meta de <strong>[meta que ele citou]</strong>. Se continuar assim, você não vai chegar lá, não é?"<br><br>
+            <em>Se não citou meta:</em> "E enquanto isso continua assim, o faturamento fica travado — sem conseguir crescer de forma consistente, não é?"
+          </div>
+        </div>
+
+        <div class="fala-cliente">
+          <div class="fala-label">👤 Dono</div>
+          <div class="fala-texto">"É, exatamente."</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Microcompromisso 3 — abrir para a solução</div>
+          <div class="fala-texto">"Então faz sentido a gente sentar, fazer um diagnóstico mais profundo do negócio de vocês e te mostrar os pontos que identifiquei — junto com o que dá para fazer para resolver isso e aumentar o faturamento de vocês?"</div>
+        </div>
+
+        <div class="fala-cliente">
+          <div class="fala-label">👤 Dono</div>
+          <div class="fala-texto">"Faz sentido."</div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Só avance depois dos 3 sins</div>
+          <div class="dica-texto">Sem os microcompromissos, o agendamento fica fraco e o no-show aumenta. Esses 3 sins são a fundação do compromisso com a reunião. O Micro 3 também retoma os "pontos que você identificou" da abertura — fecha o ciclo e dá coerência à conversa toda.</div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('impacto', document.querySelectorAll('.sidebar-btn')[3])">← Impacto</button>
+          <button class="btn-nav" onclick="mudarFase('reuniao', document.querySelectorAll('.sidebar-btn')[5])">Próximo: Vender a Reunião →</button>
+        </div>
+      </div>
+
+      <!-- ============ VENDER A REUNIÃO ============ -->
+      <div id="fase-reuniao" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero">6</div>
+          <div>
+            <div class="fase-titulo">Vender a Reunião <span class="tag-spiced">SPICED — D</span></div>
+            <div class="fase-objetivo">Objetivo: agendar o diagnóstico estratégico gratuito</div>
+          </div>
+        </div>
+
+        <div class="destaque">
+          🔑 <strong>Frase-âncora:</strong> "Mesmo que você não feche nada com a gente depois, você sai dessa reunião sabendo exatamente onde estão os pontos que estão travando o crescimento do negócio de vocês — sem compromisso nenhum."
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Proposta da reunião</div>
+          <div class="fala-texto">
+            "Então é o seguinte. Queria <strong>marcar um bate-papo</strong> com você, de uns 30 a 40 minutos. Não é apresentação de vendas — é um <strong>diagnóstico do negócio de vocês</strong>.<br><br>
+
+            A gente vai analisar em profundidade os pontos que identifiquei no perfil de vocês, entender onde estão os gargalos que estão travando o crescimento do faturamento — e você sai com um plano de ação claro do que mudar primeiro.<br><br>
+
+            <strong>Não tem custo.</strong> Vou ser direto: ao final, se fizer sentido, te apresento uma proposta da assessoria. Mas <strong>mesmo que você não feche nada</strong>, você sai sabendo exatamente onde estão os pontos de melhoria e o que fazer para aumentar o faturamento — sem compromisso nenhum. <strong>De qualquer forma, você sai ganhando.</strong><br><br>
+
+            Faz sentido pra você? Se sim — essa semana ou começo da próxima fica melhor?"
+          </div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 As 4 sacadas dessa proposta</div>
+          <div class="dica-texto">
+            <strong>1. Honestidade explícita:</strong> falar que vai virar proposta desarma. Esconder vira "bait and switch".<br><br>
+            <strong>2. "Sem compromisso nenhum" + "de qualquer forma sai ganhando"</strong> — mata a objeção de tempo.<br><br>
+            <strong>3. Retoma os "pontos que identificou"</strong> — fecha o ciclo da abertura e dá coerência à conversa toda.<br><br>
+            <strong>4. Fechamento por agenda</strong> — não pergunta "tem interesse?", pergunta "que semana?".
+          </div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('evento', document.querySelectorAll('.sidebar-btn')[4])">← Evento Crítico</button>
+          <button class="btn-nav" onclick="mudarFase('compromisso', document.querySelectorAll('.sidebar-btn')[6])">Próximo: Compromisso →</button>
+        </div>
+      </div>
+
+      <!-- ============ COMPROMISSO FINAL ============ -->
+      <div id="fase-compromisso" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero">7</div>
+          <div>
+            <div class="fase-titulo">Compromisso Final</div>
+            <div class="fase-objetivo">Objetivo: reduzir no-show — quem se comprometeu verbalmente não cancela</div>
+          </div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Confirmar e criar responsabilidade</div>
+          <div class="fala-texto">
+            "Perfeito, [Nome]. Marcado então para [<span class="destaque-amarelo">dia</span>] às [<span class="destaque-amarelo">hora</span>].<br><br>
+
+            Já vou te mandar agora no WhatsApp a confirmação do horário.<br><br>
+
+            Uma coisa só — se surgir algum imprevisto e você não puder, me avisa antes? Assim eu já reorganizo a agenda e a gente reagenda sem problema."
+          </div>
+        </div>
+
+        <div class="dica">
+          <div class="dica-label">💡 Por que esse pedido funciona</div>
+          <div class="dica-texto">Quem disse "<em>sim, te aviso</em>" assume responsabilidade. É muito mais difícil simplesmente não aparecer depois disso. Reduz no-show drasticamente.</div>
+        </div>
+
+        <hr class="divisor">
+
+        <div class="cenarios-titulo">📱 Sequência de WhatsApp depois da ligação</div>
+
+        <div class="cenario aberto">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">Mensagem 1 — Logo após desligar (essencial)</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Mensagem</div>
+              <div class="fala-texto">"Oi [Nome], aqui é o Patrick da Vértice — falamos agora há pouco.<br><br>Confirmando nossa sessão de diagnóstico para [dia] às [hora] (aprox. 30-40 min).<br><br>Qualquer imprevisto, só me avisar com antecedência."</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">Mensagem 2 — Dia anterior (aquecimento)</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Mensagem</div>
+              <div class="fala-texto">"Oi [Nome], só lembrando da nossa reunião amanhã às [hora].<br><br>Para a gente já chegar avançado: dos desafios que conversamos (trazer clientes novos / converter quem já chega / fazer quem comprou voltar / aumentar o faturamento de forma constante), <strong>qual você sente que está mais urgente hoje?</strong><br><br>Pode me responder em áudio se for mais prático."</div>
+            </div>
+            <div class="dica">
+              <div class="dica-label">💡 Por que pedir em áudio</div>
+              <div class="dica-texto">Quem grava um áudio investiu tempo e atenção. A taxa de comparecimento sobe muito quando o lead já "trabalhou" para a reunião.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">Mensagem 3 — Manhã do dia (confirmação)</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Mensagem</div>
+              <div class="fala-texto">"Bom dia, [Nome]! Hoje às [hora] está confirmado. Qualquer ajuste, me avisa. 👋"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sucesso">
+          <div class="sucesso-label">✅ Ligação concluída com sucesso quando</div>
+          <div class="sucesso-texto">
+            ✓ Reunião agendada com o decisor (dono ou sócio)<br>
+            ✓ Ao menos 1 dor confirmada (aquisição / conversão / retenção / faturamento / taxa do app)<br>
+            ✓ 3 microcompromissos obtidos<br>
+            ✓ WhatsApp de confirmação enviado imediatamente<br>
+            ✓ Nome e WhatsApp do decisor anotados
+          </div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('reuniao', document.querySelectorAll('.sidebar-btn')[5])">← Vender a Reunião</button>
+          <button class="btn-nav" disabled>Fim do roteiro ✓</button>
+        </div>
+      </div>
+
+      <!-- ============ SINAIS ============ -->
+      <div id="fase-sinais" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero" style="background:#854d0e; font-size:22px;">📊</div>
+          <div>
+            <div class="fase-titulo">Sinais para Acelerar ou Frear</div>
+            <div class="fase-objetivo">Leia os sinais durante a conversa e ajuste o ritmo</div>
+          </div>
+        </div>
+
+        <table>
+          <tr><th>Sinal</th><th>O que fazer</th></tr>
+          <tr>
+            <td style="color:#86efac;">✅ Confirma dependência do iFood ou taxa alta</td>
+            <td>Dor validada. Avance para o impacto financeiro.</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">✅ Pergunta "como vocês fazem isso?"</td>
+            <td>Sinal verde. Proponha a reunião de diagnóstico.</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">✅ Fala sobre problemas espontaneamente</td>
+            <td>Ouça com atenção. Anote. Use na devolutiva do diagnóstico.</td>
+          </tr>
+          <tr>
+            <td style="color:#fde68a;">⚠️ Respostas curtas, sem contexto</td>
+            <td>Desacelere. Faça pergunta mais aberta. Mude de dor.</td>
+          </tr>
+          <tr>
+            <td style="color:#fde68a;">⚠️ Pergunta o preço cedo</td>
+            <td>"Antes de valor, preciso entender o cenário — é exatamente isso que a gente faz no diagnóstico."</td>
+          </tr>
+          <tr>
+            <td style="color:#fca5a5;">❌ "Não tenho problema, estou bem com o iFood"</td>
+            <td>"Que bom. E o que estaria impedindo vocês de dobrar o volume de pedidos sem aumentar a taxa que pagam?"</td>
+          </tr>
+          <tr>
+            <td style="color:#fca5a5;">❌ "Não tenho tempo agora"</td>
+            <td>"Sem problema. Quando seria melhor — no começo da manhã, entre os turnos?"</td>
+          </tr>
+        </table>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('compromisso', document.querySelectorAll('.sidebar-btn')[6])">← Compromisso</button>
+          <button class="btn-nav" onclick="mudarFase('qualificacao', document.querySelectorAll('.sidebar-btn')[8])">Qualificação →</button>
+        </div>
+      </div>
+
+      <!-- ============ QUALIFICAÇÃO ============ -->
+      <div id="fase-qualificacao" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero" style="background:#166534; font-size:22px;">✔</div>
+          <div>
+            <div class="fase-titulo">Filtro de Qualificação</div>
+            <div class="fase-objetivo">Avalie durante a ligação se vale agendar a reunião</div>
+          </div>
+        </div>
+
+        <div class="destaque">
+          O ticket da Vértice não é baixo. Não adianta marcar reunião com quem não tem perfil. <strong>Filtre na ligação</strong> — se não passar, encerre com educação.
+        </div>
+
+        <table>
+          <tr><th>Sinal positivo ✅</th><th>Sinal de alerta ⚠️</th></tr>
+          <tr>
+            <td style="color:#86efac;">Usa iFood ou outro app como principal canal de venda</td>
+            <td style="color:#fca5a5;">Só vende presencialmente, sem delivery</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">Tem operação em andamento (não está montando ainda)</td>
+            <td style="color:#fca5a5;">Está apenas planejando abrir — sem operação real</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">Demonstra querer crescer ou reduzir custo da taxa</td>
+            <td style="color:#fca5a5;">Satisfeito com a situação atual, sem querer mudar nada</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">Já investiu em algo antes (mesmo se deu errado)</td>
+            <td style="color:#fca5a5;">Nunca investiu e tem resistência grande a qualquer custo</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">Confirmou pelo menos 1 dor na conversa</td>
+            <td style="color:#fca5a5;">Negou tudo, não verbalizou nenhum problema</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">É o dono ou decisor — conversa e decide sozinho</td>
+            <td style="color:#fca5a5;">Funcionário sem alçada — não pode nem transmitir recado</td>
+          </tr>
+          <tr>
+            <td style="color:#86efac;">Faturamento estimado acima de R$ 15k/mês</td>
+            <td style="color:#fca5a5;">Operação muito pequena, sem margem para investir</td>
+          </tr>
+        </table>
+
+        <div class="alerta">
+          <div class="alerta-label">⚠️ Quando desqualificar</div>
+          <div class="alerta-texto">
+            Se a maioria dos sinais for negativa, <strong>não force o agendamento</strong>. Encerre com educação:<br><br>
+            <em>"Vou ser honesto com você — pelo que conversamos, acredito que o momento do negócio de vocês não é o ideal para uma parceria com a gente agora. Mas fico à disposição quando o cenário mudar."</em><br><br>
+            Você ganha respeito profissional e deixa a porta aberta.
+          </div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('sinais', document.querySelectorAll('.sidebar-btn')[7])">← Sinais</button>
+          <button class="btn-nav" onclick="mudarFase('objecoes', document.querySelectorAll('.sidebar-btn')[9])">Objeções →</button>
+        </div>
+      </div>
+
+      <!-- ============ OBJEÇÕES ============ -->
+      <div id="fase-objecoes" class="fase">
+        <div class="fase-header">
+          <div class="fase-numero" style="background:#1e3a5f; font-size:22px;">🛡️</div>
+          <div>
+            <div class="fase-titulo">Lidando com Objeções</div>
+            <div class="fase-objetivo">Respostas prontas para as objeções mais comuns do nicho de delivery</div>
+          </div>
+        </div>
+
+        <div class="cenario aberto">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">"Quanto custa essa consultoria de vocês?"</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Antes de falar de valores, preciso entender melhor o cenário do negócio de vocês para te dar uma resposta que faça sentido. O plano muda bastante conforme o porte e o momento da operação — qualquer número que eu chutar agora seria injusto com você. <strong>Por isso a gente faz o diagnóstico primeiro</strong> — depois apresenta um plano específico, com valor adequado."</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">"Não tenho dinheiro para marketing agora"</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Entendo. Mas me faz uma conta rápida: você fatura quanto por mês pelo iFood?<br><br>*(Ele responde)*<br><br>Então você já tem dinheiro para marketing — só que está pagando para o iFood em vez de investir em canal próprio. A diferença é que com o iFood você fica dependente — e esse custo não tem retorno acumulado. Com o que proponho, você constrói algo seu. <strong>A reunião de diagnóstico não tem custo — quer pelo menos entender a conta?</strong>"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">"Já tentei agência e não funcionou"</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Faz sentido — e eu ouço isso bastante. Sabe por que geralmente não funciona? A agência entrega o anúncio. Mas o problema não está só no anúncio — está em todo o processo. A pessoa vê o anúncio, se interessa, mas aí o perfil está parado, o Google não está otimizado, não tem uma oferta atrativa o suficiente para ela tomar a decisão de comprar. A agência conclui que "não converte" — mas o problema estava no processo, não no anúncio em si. Foi mais ou menos assim na sua experiência?<br><br>A Vértice não é agência. A gente é uma <strong>assessoria de vendas</strong> — a gente entra dentro do negócio e trabalha tudo: desde fazer mais pessoas conhecerem a empresa, até converter essas pessoas em clientes, e fazer quem já comprou voltar e indicar outros. A gente identifica onde estão os gargalos e resolve ponto por ponto."</div>
+            </div>
+            <div class="dica">
+              <div class="dica-label">💡 O que isso faz</div>
+              <div class="dica-texto">Você validou a experiência ruim dele e <strong>reposicionou o problema</strong>: não foi o anúncio, foi o processo todo. Isso prepara o terreno para ele entender que precisa de uma <strong>assessoria de vendas</strong> que trabalha ponta a ponta — não de mais uma agência que só entrega anúncio.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">"O iFood já traz pedido suficiente para mim"</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Que ótimo — quer dizer que tem demanda. Agora imagina se você pudesse capturar parte dessa demanda diretamente, sem pagar 27% de comissão por pedido.<br><br>A ideia não é sair do iFood. É que o iFood <strong>seja uma opção, não uma obrigação</strong>. Que se eles mudarem as regras ou subirem a taxa amanhã, você tenha uma alternativa funcionando."</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">"Não tenho tempo para 40 minutos de reunião"</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Entendo — a rotina do negócio não para. A gente consegue fazer fora do horário de pico — antes de abrir, no intervalo entre o almoço e o jantar, ou no começo da semana. Esses 30-40 minutos podem te mostrar quanto você está deixando na mesa todo mês. Quando seria o melhor horário essa semana?"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cenario">
+          <div class="cenario-header" onclick="toggleCenario(this.parentElement)">
+            <div class="cenario-pergunta">"Preciso falar com meu sócio"</div>
+            <div class="cenario-icone">▼</div>
+          </div>
+          <div class="cenario-corpo">
+            <div class="fala-patrick" style="margin-top:12px;">
+              <div class="fala-label">⚡ Você</div>
+              <div class="fala-texto">"Faz total sentido. Inclusive — se possível, melhor que o sócio participe da reunião também. Assim vocês recebem o diagnóstico juntos e a decisão fica mais fácil. Que tal a gente já marcar e você alinha a presença dele? Se não der, a gente reagenda. Mas marcando agora você já reserva o horário."</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-fases">
+          <button class="btn-nav" onclick="mudarFase('qualificacao', document.querySelectorAll('.sidebar-btn')[8])">← Qualificação</button>
+          <button class="btn-nav" onclick="mudarFase('abertura', document.querySelectorAll('.sidebar-btn')[0])">↩ Voltar ao início</button>
+        </div>
+      </div>
+
+    </div><!-- fim conteudo -->
+    </div><!-- fim flex wrapper -->
+  </div><!-- fim pagina-decisor -->
+
+</div><!-- fim main -->
+
+<script>
+  function mudarTab(tab) {
+    document.querySelectorAll('.pagina').forEach(p => {
+      p.style.display = 'none';
+      p.classList.remove('ativa');
+    });
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('ativo'));
+
+    if (tab === 'gatekeeper') {
+      const pg = document.getElementById('pagina-gatekeeper');
+      pg.style.display = 'block';
+      pg.classList.add('ativa');
+      document.querySelectorAll('.tab-btn')[0].classList.add('ativo');
+    } else {
+      const pd = document.getElementById('pagina-decisor');
+      pd.style.display = 'block';
+      pd.classList.add('ativa');
+      document.querySelectorAll('.tab-btn')[1].classList.add('ativo');
+    }
+  }
+
+  function mudarFase(faseId, btnClicado) {
+    document.querySelectorAll('.fase').forEach(f => f.classList.remove('ativa'));
+    document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('ativo'));
+    document.getElementById('fase-' + faseId).classList.add('ativa');
+    if (btnClicado) btnClicado.classList.add('ativo');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleCenario(el) {
+    el.classList.toggle('aberto');
+  }
+</script>
+
+</body>
+</html>
