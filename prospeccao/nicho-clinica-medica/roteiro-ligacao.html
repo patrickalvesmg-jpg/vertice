@@ -74,75 +74,10 @@
   }
 
   .main {
-    display: flex;
     min-height: calc(100vh - 120px);
   }
 
-  .sidebar {
-    width: 260px;
-    background: #1e293b;
-    border-right: 1px solid #334155;
-    padding: 20px 0;
-    position: sticky;
-    top: 120px;
-    height: calc(100vh - 120px);
-    overflow-y: auto;
-    flex-shrink: 0;
-  }
-
-  .sidebar-titulo {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #64748b;
-    padding: 0 20px 10px;
-  }
-
-  .sidebar-btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 10px 20px;
-    font-size: 15px;
-    border: none;
-    background: transparent;
-    color: #94a3b8;
-    cursor: pointer;
-    transition: all 0.15s;
-    border-left: 3px solid transparent;
-  }
-
-  .sidebar-btn:hover { background: #273549; color: #e2e8f0; }
-
-  .sidebar-btn.ativo {
-    background: #2d1f55;
-    color: #c084fc;
-    border-left-color: #c084fc;
-    font-weight: 600;
-  }
-
-  .sidebar-numero {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    background: #334155;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 22px;
-    font-size: 12px;
-    font-weight: 700;
-    margin-right: 8px;
-    color: #94a3b8;
-  }
-
-  .sidebar-btn.ativo .sidebar-numero {
-    background: var(--roxo-marca);
-    color: #fff;
-  }
-
   .conteudo {
-    flex: 1;
     padding: 32px;
     max-width: 880px;
     margin: 0 auto;
@@ -151,8 +86,14 @@
   .pagina { display: none; }
   .pagina.ativa { display: block; }
 
-  .fase { display: none; }
-  .fase.ativa { display: block; }
+  /* Decisor em scroll único: todas as seções visíveis, com separação explícita */
+  .fase { display: block; }
+
+  .fase + .fase {
+    margin-top: 56px;
+    padding-top: 48px;
+    border-top: 3px solid #334155;
+  }
 
   .fase-header {
     display: flex;
@@ -250,6 +191,17 @@
     margin: 24px 0 12px;
   }
 
+  .tema-titulo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+    background: #1e293b;
+    border-left: 4px solid var(--roxo-marca);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 18px;
+    margin: 28px 0 10px;
+  }
+
   .cenario {
     background: #1e293b;
     border: 1px solid #334155;
@@ -281,27 +233,6 @@
   td { padding: 12px 16px; border-bottom: 1px solid #334155; color: #cbd5e1; vertical-align: top; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #1e293b; }
-
-  .nav-fases {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 32px;
-    padding-top: 24px;
-    border-top: 1px solid #334155;
-  }
-  .btn-nav {
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: 1px solid var(--roxo-marca);
-    background: transparent;
-    color: #c084fc;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-nav:hover { background: var(--roxo-marca); color: #fff; }
-  .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
 
   .destaque {
     font-size: 21px;
@@ -363,9 +294,6 @@
       </div>
     </div>
 
-    <div class="destaque">
-      🎯 <strong>Postura:</strong> direto e cordial. Peça pelo responsável sem se explicar. A secretária não é o decisor — não perca energia convencendo ela. <strong>Só apresente o contexto se ela questionar.</strong>
-    </div>
 
     <div class="cenarios-titulo">⚡ ABERTURA — sempre nessa ordem</div>
 
@@ -380,24 +308,15 @@
     </div>
 
     <div class="fala-patrick">
-      <div class="fala-label">⚡ Você (2ª fala — criar situação, gerar curiosidade)</div>
-      <div class="fala-texto">"Prazer, [Nome]! Preciso te explicar uma situação que aconteceu aqui. <strong>Não sei se, para resolver, seria com você — mas caso seja outra pessoa, você pode me ajudar a passar para ela?</strong>"</div>
+      <div class="fala-label">⚡ Você (2ª fala — pedir ajuda e buscar o decisor)</div>
+      <div class="fala-texto">"Você pode me ajudar com uma coisa? <strong>Não sei se eu liguei no número certo pra falar sobre isso.</strong> Qual é a melhor pessoa pra eu falar sobre <strong>como eu posso fazer pra vocês atraírem mais pacientes particulares e aumentar o faturamento de vocês?</strong>"</div>
     </div>
 
     <div class="fala-cliente">
       <div class="fala-label">👤 Secretária</div>
-      <div class="fala-texto">"[Responde — geralmente: claro, pode falar / do que se trata?]"</div>
+      <div class="fala-texto">"[Responde — geralmente: é com o(a) Dr(a). / pode falar comigo / do que se trata?]"</div>
     </div>
 
-    <div class="fala-patrick">
-      <div class="fala-label">⚡ Você (3ª fala — apresentar o contexto)</div>
-      <div class="fala-texto">"Eu estava pesquisando clínicas aqui na região e acabei encontrando a de vocês. Vi que estão bem destacados na região — estão fazendo um ótimo trabalho. Inclusive, parabéns por isso.<br><br>Só que eu identifiquei que vocês ainda não estão fazendo tudo que podem para atrair muito mais pacientes particulares do que já atendem. Eu gostaria de apresentar isso ao responsável.<br><br><strong>Seria com você ou com outra pessoa?</strong>"</div>
-    </div>
-
-    <div class="dica">
-      <div class="dica-label">💡 Por que funciona</div>
-      <div class="dica-texto">A 2ª fala cria uma "situação" — a secretária fica curiosa antes mesmo de saber o assunto. Na 3ª fala, você mostra que pesquisou a clínica antes de ligar e elogia o que viu. Isso gera credibilidade imediata. A pergunta final é direta e pressupõe que vai ser passado para alguém — <strong>não há como negar sem parecer que está bloqueando o responsável.</strong></div>
-    </div>
 
     <hr class="divisor">
 
@@ -423,12 +342,8 @@
       </div>
       <div class="cenario-corpo">
         <div class="fala-patrick" style="margin-top:12px;">
-          <div class="fala-label">⚡ Você</div>
-          <div class="fala-texto">"Eu estava pesquisando clínicas aqui na região e encontrei a de vocês. Vi que estão bem destacados na região — estão fazendo um ótimo trabalho. Só que identifiquei que vocês ainda não estão fazendo tudo que podem para atrair muito mais pacientes particulares do que já atendem. Queria apresentar isso ao responsável. <strong>Seria com você ou com outra pessoa?</strong>"</div>
-        </div>
-        <div class="dica">
-          <div class="dica-label">💡 Por que funciona</div>
-          <div class="dica-texto">Você trouxe contexto real (pesquisou a clínica), elogiou o trabalho deles e nomeou um problema específico — pacientes particulares. A pergunta final é direta e presume passagem, tornando difícil bloquear sem justificativa.</div>
+          <div class="fala-label">⚡ Diga o assunto em uma frase e devolva a pergunta</div>
+          <div class="fala-texto">"É justamente sobre isso: <strong>como a clínica pode atrair mais pacientes particulares e aumentar o faturamento no dia a dia.</strong> Por isso eu queria falar com o(a) responsável. <strong>Seria com você ou com outra pessoa?</strong>"</div>
         </div>
         <div class="fala-patrick">
           <div class="fala-label">⚡ Depois dela confirmar</div>
@@ -450,10 +365,6 @@
         <div class="fala-patrick">
           <div class="fala-label">⚡ Após ela informar o horário</div>
           <div class="fala-texto">"Perfeito. E qual é o nome do(a) Dr(a). para eu pedir por ele(a) na próxima ligação?"</div>
-        </div>
-        <div class="dica">
-          <div class="dica-label">💡 Dica</div>
-          <div class="dica-texto">Com o nome do médico, na próxima ligação você abre: "<em>Pode chamar o Dr. [Nome] para mim?</em>" — o tom muda completamente.</div>
         </div>
       </div>
     </div>
@@ -485,10 +396,6 @@
           <div class="fala-label">⚡ Você</div>
           <div class="fala-texto">"Na verdade, não é sobre marketing digital — e entendo por que pode parecer isso.<br><br>A gente entende que marketing digital, usado de forma isolada, é praticamente jogar dinheiro fora. Fazer anúncio, postar no Instagram e só isso — de fato não vai trazer mais paciente, não vai aumentar o faturamento da clínica. A gente sabe disso porque vê isso acontecer o tempo todo.<br><br>O que a gente faz é diferente: a gente olha para o processo como um todo. Entra dentro da clínica, identifica em qual parte do fluxo de atração de pacientes estão os gargalos — e vai corrigindo ponto a ponto. O marketing digital pode ser uma das ferramentas que a gente usa dentro disso, mas nunca é o único passo.<br><br>Por isso eu queria só passar isso ao responsável — <strong>seria com você ou com outra pessoa?</strong>"</div>
         </div>
-        <div class="dica">
-          <div class="dica-label">💡 O que está acontecendo aqui</div>
-          <div class="dica-texto">Não é uma objeção — é uma confusão. A secretária assumiu que é "mais uma coisa de marketing". Você não confronta, você corrige: concorda que marketing isolado não funciona, e reposiciona o que a Vértice faz como algo diferente e mais completo.</div>
-        </div>
       </div>
     </div>
 
@@ -506,16 +413,6 @@
       <tr><td>Observação</td><td><em style="color:#64748b">"Atende plano X", "Foco em cirurgia", etc.</em></td></tr>
     </table>
 
-    <div class="alerta">
-      <div class="alerta-label">⚠️ Regras de ouro da secretária</div>
-      <div class="alerta-texto">
-        1. Quanto menos você explica, menos ela tem para barrar<br>
-        2. Nunca minta — não diga que é retorno se não for<br>
-        3. <strong>Nunca diga "marketing" ou "tráfego pago"</strong> — diga consultoria comercial<br>
-        4. Use o micro-sim: "paciente particular seria do interesse do responsável?"<br>
-        5. Sempre saia com algo concreto: nome, horário ou WhatsApp
-      </div>
-    </div>
 
   </div>
 
@@ -523,48 +420,12 @@
        PÁGINA DECISOR
   ============================================================= -->
   <div id="pagina-decisor" class="pagina" style="display:none; width:100%;">
-    <div style="display:flex; width:100%;">
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-      <div class="sidebar-titulo">Etapas da Ligação</div>
-      <button class="sidebar-btn ativo" onclick="mudarFase('abertura', this)">
-        <span class="sidebar-numero">1</span> Abertura
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('situacao', this)">
-        <span class="sidebar-numero">2</span> Situação
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('problema', this)">
-        <span class="sidebar-numero">3</span> Problema
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('impacto', this)">
-        <span class="sidebar-numero">4</span> Impacto
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('evento', this)">
-        <span class="sidebar-numero">5</span> Evento + Sins
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('reuniao', this)">
-        <span class="sidebar-numero">6</span> Vender a Reunião
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('compromisso', this)">
-        <span class="sidebar-numero">7</span> Compromisso Final
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('sinais', this)" style="margin-top:12px; border-top: 1px solid #334155; padding-top:14px;">
-        <span class="sidebar-numero" style="font-size:10px;">📊</span> Sinais
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('qualificacao', this)">
-        <span class="sidebar-numero" style="font-size:10px;">✔</span> Qualificação
-      </button>
-      <button class="sidebar-btn" onclick="mudarFase('objecoes', this)">
-        <span class="sidebar-numero" style="font-size:10px;">🛡️</span> Objeções
-      </button>
-    </div>
 
     <!-- CONTEÚDO DECISOR -->
     <div class="conteudo">
 
       <!-- ============ ABERTURA ============ -->
-      <div id="fase-abertura" class="fase ativa">
+      <div id="fase-abertura" class="fase">
         <div class="fase-header">
           <div class="fase-numero">1</div>
           <div>
@@ -573,24 +434,16 @@
           </div>
         </div>
 
-        <div class="destaque">
-          ⏱️ Os primeiros 15 segundos definem se você ganha 2 minutos.<br>
-          A grande sacada: <strong>você não está vendendo</strong>. Está nomeando um problema que ele já vive e apresentando que existe solução.
-        </div>
 
         <div class="fala-patrick">
           <div class="fala-label">⚡ Abertura principal</div>
           <div class="fala-texto">
             "Oi, Dr(a). [Nome], tudo bem? Aqui é o {<em>seu nome</em>}.<br><br>
-            Eu estava pesquisando clínicas aqui na região e acabei encontrando a de vocês. Vi que estão bem destacados na região — estão fazendo um ótimo trabalho. Inclusive, parabéns por isso.<br><br>
-            Só que eu identifiquei que vocês ainda não estão fazendo tudo que podem para atrair muito mais pacientes particulares do que já atendem. Eu gostaria de apresentar isso a você, mas queria entender um pouco mais da realidade da clínica de vocês para ver se faz sentido. Você teria 2 ou 3 minutinhos?"
+            Eu andei pesquisando a clínica de vocês e vi tudo que vocês têm feito ali para atrair pacientes e crescer. <strong>Está sendo ótimo o que vocês estão fazendo.</strong> Vi que a clínica de vocês tem uma boa estrutura — só que identifiquei algumas coisas que vocês ainda não estão fazendo e que poderiam trazer muito mais pacientes particulares, aumentar muito mais o faturamento de vocês de forma consistente.<br><br>
+            Eu gostaria de te apresentar isso, mas primeiro eu preciso entender se faria sentido pra você. Então eu gostaria de te fazer algumas perguntas aqui — uns 2 ou 3 minutinhos — pra eu ter mais contexto sobre a clínica de vocês. Pode ser?"
           </div>
         </div>
 
-        <div class="dica">
-          <div class="dica-label">💡 Por que funciona</div>
-          <div class="dica-texto">Você chegou com lição de casa feita — pesquisou a clínica antes de ligar. Isso diferencia de qualquer cold call genérico. O médico pensa: <em>"esse cara viu a minha clínica de verdade."</em> O elogio sincero abre a conversa, e a menção a "pacientes particulares" ativa imediatamente a dor mais comum de qualquer clínica médica.</div>
-        </div>
 
         <hr class="divisor">
 
@@ -602,10 +455,6 @@
             <div class="cenario-icone">▼</div>
           </div>
           <div class="cenario-corpo">
-            <div class="alerta">
-              <div class="alerta-label">🚫 Não use estas palavras</div>
-              <div class="alerta-texto"><strong>marketing · tráfego pago · gestor de tráfego · agência de marketing</strong> — o médico provavelmente já teve experiência ruim com essas palavras.</div>
-            </div>
             <div class="fala-patrick">
               <div class="fala-label">⚡ Você</div>
               <div class="fala-texto">
@@ -618,275 +467,132 @@
                 A gente analisa cada um desses pontos, identifica onde está o gargalo e trabalha para corrigir — para que o fluxo de pacientes particulares comece a crescer de forma constante."
               </div>
             </div>
-            <div class="dica">
-              <div class="dica-label">💡 Posicionamento</div>
-              <div class="dica-texto">Você é <strong>consultor</strong>, não fornecedor. Consultor diagnostica antes de propor — fornecedor empurra solução. Essa postura muda tudo.</div>
-            </div>
           </div>
         </div>
 
-        <div class="nav-fases">
-          <button class="btn-nav" disabled>← Anterior</button>
-          <button class="btn-nav" onclick="mudarFase('situacao', document.querySelectorAll('.sidebar-btn')[1])">Próximo: Situação →</button>
-        </div>
       </div>
 
-      <!-- ============ SITUAÇÃO ============ -->
-      <div id="fase-situacao" class="fase">
+      <!-- ============ DIAGNÓSTICO (Situação » Problema » Impacto) ============ -->
+      <div id="fase-diagnostico" class="fase">
         <div class="fase-header">
           <div class="fase-numero">2</div>
           <div>
-            <div class="fase-titulo">Situação <span class="tag-spiced">SPICED — S</span></div>
-            <div class="fase-objetivo">Objetivo: mapear o perfil e o tamanho da operação atual</div>
-          </div>
-        </div>
-
-        <div class="destaque">
-          ℹ️ O médico aceitou conversar. Agora <strong>3 perguntas simples</strong> para mapear a operação — sem interrogatório. Cada uma tem uma justificativa implícita que soa natural.
-        </div>
-
-        <hr class="divisor">
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Pergunta 1 — Como os pacientes chegam hoje</div>
-          <div class="fala-texto">"Para eu entender melhor a realidade de vocês: como os pacientes chegam hoje na clínica? Vêm por indicação, pelo plano, pelo Google, redes sociais — ou vocês fazem algum tipo de divulgação?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Por que começar aqui</div>
-          <div class="dica-texto">Essa pergunta revela o nível de dependência de indicação ou de plano — as duas dores centrais. Mencionar "plano" é importante porque muitas clínicas recebem pacientes exclusivamente via encaminhamento do próprio plano e nem consideram isso uma limitação ainda. Deixe ele falar. Não interrompa.</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Pergunta 2 — Estrutura da clínica</div>
-          <div class="fala-texto">"E me conta um pouco da estrutura — quantos médicos atendem aí na clínica?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Por que perguntar isso</div>
-          <div class="dica-texto">Tamanho da equipe médica = tamanho da operação. Uma clínica com 4 médicos tem capacidade e urgência bem diferentes de um consultório solo.</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Pergunta 3 — Volume de pacientes novos por mês</div>
-          <div class="fala-texto">"E em termos de volume — em média, quantos pacientes novos vocês atendem por mês? Estou perguntando porque a estratégia muda bastante conforme esse número."</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Pergunta 4 — Espaço na agenda (a pergunta-ouro)</div>
-          <div class="fala-texto">"E se vocês fossem dobrar o volume de pacientes novos por mês — a agenda atual aguentaria, ou já estaria no limite?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Pergunta-ouro</div>
-          <div class="dica-texto">Quando ele diz "<em>aguentaria, sim</em>" — ele acabou de confirmar que <strong>existe espaço de crescimento sem mexer na estrutura</strong>. É a prova matemática de que vale conversar sobre o método.</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Pergunta 5 — Mix particular/plano</div>
-          <div class="fala-texto">"E desses pacientes, você tem uma noção de quantos são particulares e quantos são de plano? Qual seria a proporção mais ou menos?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Leitura da resposta</div>
-          <div class="dica-texto">Se a maioria é plano, a dor é imediata — use na etapa de Problema. Se já tem bastante particular, valide e aprofunde: "<em>e como vocês conseguem esses pacientes particulares hoje?</em>"</div>
-        </div>
-
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('abertura', document.querySelectorAll('.sidebar-btn')[0])">← Abertura</button>
-          <button class="btn-nav" onclick="mudarFase('problema', document.querySelectorAll('.sidebar-btn')[2])">Próximo: Problema →</button>
-        </div>
-      </div>
-
-      <!-- ============ PROBLEMA ============ -->
-      <div id="fase-problema" class="fase">
-        <div class="fase-header">
-          <div class="fase-numero">3</div>
-          <div>
-            <div class="fase-titulo">Problema <span class="tag-spiced">SPICED — P</span></div>
-            <div class="fase-objetivo">Objetivo: nomear as dores reais e fazer o médico verbalizá-las</div>
-          </div>
-        </div>
-
-        <div class="destaque">
-          🎣 <strong>A regra:</strong> faça uma <strong>ponte conversacional</strong> antes de cada pergunta. Depois de ouvir, <strong>cale e ouça</strong>. A força está no que ele fala — não no que você pergunta. Use no máximo 3 perguntas por ligação.
-        </div>
-
-        <hr class="divisor">
-
-        <div class="cenarios-titulo">🎯 PROBLEMA 1 — Descoberta: visibilidade para quem não conhece a clínica</div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Você</div>
-          <div class="fala-texto">"Alguém que ainda não conhece a clínica — que nunca ouviu falar de vocês — consegue te encontrar com facilidade? Se eu pesquisar agora <span class="destaque-amarelo">[especialidade]</span> em <span class="destaque-amarelo">[cidade]</span>, a clínica de vocês aparece?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Como aprofundar</div>
-          <div class="dica-texto">
-            <strong>Se disser "não sei" ou "acho que não":</strong> "Então quem não conhece vocês não tem nem como começar a considerar. É a primeira etapa travada."<br><br>
-            <strong>Se disser "aparece sim":</strong> "E quem encontra — o que encontra? Um site, perfil no Google, redes sociais com conteúdo atualizado?"
+            <div class="fase-titulo">Diagnóstico <span class="tag-spiced">SPICED — S » P » I</span></div>
+            <div class="fase-objetivo">Objetivo: conduzir o médico pela conversa — situação, problema e impacto, em cadeia</div>
           </div>
         </div>
 
         <hr class="divisor">
 
-        <div class="cenarios-titulo">🎯 PROBLEMA 2 — Consideração: velocidade e processo de atendimento no WhatsApp</div>
+        <div class="cenarios-titulo">🗺️ MAPEAMENTO RÁPIDO — abra por aqui</div>
 
         <div class="fala-patrick">
-          <div class="fala-label">⚡ Você</div>
-          <div class="fala-texto">"Uma resposta rápida melhora muito a conversão de consultas particulares — principalmente porque quem está procurando manda mensagem pra mais de uma clínica ao mesmo tempo. Como que funciona o atendimento no WhatsApp de vocês? O WhatsApp fica congestionado, tem uma pessoa específica que cuida disso?"</div>
+          <div class="fala-label">⚡ Como os pacientes chegam hoje</div>
+          <div class="fala-texto">"Como eles chegam hoje na clínica? Agendam direto pelo WhatsApp ou o agendamento é feito de outra forma, por algum sistema? Como funciona?"</div>
         </div>
 
-        <div class="dica">
-          <div class="dica-label">💡 Como aprofundar</div>
-          <div class="dica-texto">
-            <strong>Se demorar ou for desorganizado:</strong> "Faz sentido. Quem responde primeiro tem vantagem real — o paciente fecha com quem atendeu melhor e mais rápido, não necessariamente com o melhor médico."<br><br>
-            <strong>Se disser "respondemos rápido":</strong> "E de quem manda mensagem — quantos de fato agendam? Vocês têm alguma noção dessa taxa de conversão?"
-          </div>
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Estrutura</div>
+          <div class="fala-texto">"Quantos médicos atendem hoje?"</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Volume</div>
+          <div class="fala-texto">"Quantos pacientes novos vocês atendem por mês?"</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Espaço na agenda (a pergunta-ouro)</div>
+          <div class="fala-texto">"Se dobrasse o número de pacientes, a estrutura de vocês aguentaria?"</div>
+        </div>
+
+        <div class="fala-patrick">
+          <div class="fala-label">⚡ Mix particular/plano</div>
+          <div class="fala-texto">"Qual a proporção entre particulares e plano hoje?"</div>
         </div>
 
         <hr class="divisor">
 
-        <div class="cenarios-titulo">🎯 PROBLEMA 3 — Retenção: o que acontece depois da consulta</div>
+        <div class="cenarios-titulo">🔗 TEMAS ENCADEADOS — situação » problema » impacto</div>
 
+        <!-- TEMA: ATRAIR PACIENTES PARTICULARES -->
+        <div class="tema-titulo">🎯 Atrair pacientes particulares</div>
         <div class="fala-patrick">
-          <div class="fala-label">⚡ Você</div>
-          <div class="fala-texto">"E paciente que já passou aí, que já foi atendido — vocês têm algum processo pra fazer ele voltar ou indicar? Ou ele volta quando precisa?"</div>
+          <div class="fala-label">S » Situação</div>
+          <div class="fala-texto">"Vocês fazem algo pra atrair pacientes todos os meses — algum tipo de propaganda, parceria, alguma coisa assim?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">P » Problema</div>
+          <div class="fala-texto">"Tem vindo paciente particular novo no volume que você queria, ou está abaixo?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">I » Impacto</div>
+          <div class="fala-texto">"E isso, o que trava no faturamento da clínica?"</div>
         </div>
 
-        <div class="dica">
-          <div class="dica-label">💡 Como aprofundar</div>
-          <div class="dica-texto">
-            <strong>Se não tiver processo:</strong> "Paciente satisfeito indica — mas só se for lembrado de fazer isso. Sem processo, você depende da memória dele."<br><br>
-            <strong>Se tiver algo:</strong> "Interessante. O que vocês usam — WhatsApp, e-mail, retorno automático?"
-          </div>
+        <!-- TEMA: CONVERSÃO NO WHATSAPP -->
+        <div class="tema-titulo">💬 Conversão no WhatsApp</div>
+        <div class="fala-patrick">
+          <div class="fala-label">S » Situação</div>
+          <div class="fala-texto">"Hoje você tem recebido um bom volume de mensagens no WhatsApp? Pessoas interessadas em agendar uma consulta ou marcar uma avaliação?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">P » Problema</div>
+          <div class="fala-texto">"E dessas oportunidades que chegam, você acha que sua equipe tem convertido bem em consultas marcadas — ou dá pra melhorar essa conversão de quem se interessa até de fato marcar uma avaliação ou consulta?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">I » Impacto</div>
+          <div class="fala-texto">"E você acha que essa baixa conversão no WhatsApp também tem freado o crescimento de vocês?"</div>
+        </div>
+
+        <!-- TEMA: FATURAMENTO -->
+        <div class="tema-titulo">📊 Faturamento</div>
+        <div class="fala-patrick">
+          <div class="fala-label">S » Situação</div>
+          <div class="fala-texto">"O faturamento da clínica tem crescido nos últimos meses, ou você acha que está mais estagnado?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">P » Problema</div>
+          <div class="fala-texto">"O que você acredita que está travando esse crescimento?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">I » Impacto</div>
+          <div class="fala-texto">"E isso, o que significa pros planos que você tem pra clínica?"</div>
+        </div>
+
+        <!-- TEMA: PREVISIBILIDADE -->
+        <div class="tema-titulo">📅 Previsibilidade da agenda</div>
+        <div class="fala-patrick">
+          <div class="fala-label">S+P » Situação e Problema</div>
+          <div class="fala-texto">"Dá pra prever quantos pacientes novos vão entrar no próximo mês, ou é bem variável mesmo? Tipo, um mês chega bastante paciente, no outro chegam poucos?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">I » Impacto</div>
+          <div class="fala-texto">"Sem essa previsibilidade, como você consegue planejar pra crescer ou contratar?"</div>
+        </div>
+
+        <!-- TEMA: CONCORRÊNCIA -->
+        <div class="tema-titulo">⚔️ Concorrência na região</div>
+        <div class="fala-patrick">
+          <div class="fala-label">S » Situação</div>
+          <div class="fala-texto">"Têm aparecido outras clínicas novas, concorrentes, na região de vocês?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">P » Problema</div>
+          <div class="fala-texto">"Você sente que parte dos pacientes está indo pra elas? Tem perdido alguns pacientes pra essas clínicas novas?"</div>
+        </div>
+        <div class="fala-patrick">
+          <div class="fala-label">I » Impacto</div>
+          <div class="fala-texto">"E esse paciente que acaba indo pra concorrente — quanto você acha que isso já representa de faturamento que está deixando de entrar todo mês?"</div>
         </div>
 
         <hr class="divisor">
 
-        <div class="cenarios-titulo">🎯 PROBLEMA 4 — Dependência e previsibilidade (ativar a dor)</div>
+        <div class="cenarios-titulo">💰 FAIXA DE FATURAMENTO — pra calibrar a conversa</div>
 
         <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção A — dependência de indicação</div>
-          <div class="fala-texto">"Você consegue prever hoje quantos pacientes novos vão entrar no mês que vem? Ou é mais um 'a gente vai vendo quando chega'?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção B — sazonalidade</div>
-          <div class="fala-texto">"Tem meses que o volume de pacientes cai sem razão aparente — começo de ano, julho, alguma época específica? Como vocês lidam quando isso acontece?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção C — crescimento travado</div>
-          <div class="fala-texto">"O que você sente que está travando a clínica de crescer mais rápido hoje? Se você tivesse que apontar uma coisa, o que seria?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção D — teto do plano</div>
-          <div class="fala-texto">"Você sente que o plano trava o faturamento da clínica num teto? Tipo — pra faturar mais, você precisa atender mais pacientes, e não tem como aumentar o valor por consulta?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Como escolher</div>
-          <div class="dica-texto">Use <strong>no máximo 1</strong> dessas opções por ligação — a que mais se encaixa com o que ele já te contou na Situação. O objetivo é fazer ele verbalizar a dor com as próprias palavras.</div>
-        </div>
-
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('situacao', document.querySelectorAll('.sidebar-btn')[1])">← Situação</button>
-          <button class="btn-nav" onclick="mudarFase('impacto', document.querySelectorAll('.sidebar-btn')[3])">Próximo: Impacto →</button>
-        </div>
-      </div>
-
-      <!-- ============ IMPACTO ============ -->
-      <div id="fase-impacto" class="fase">
-        <div class="fase-header">
-          <div class="fase-numero">4</div>
-          <div>
-            <div class="fase-titulo">Impacto — Diagnóstico <span class="tag-spiced">SPICED — I</span></div>
-            <div class="fase-objetivo">Objetivo: devolver um diagnóstico personalizado usando a Jornada de Compra Vértice</div>
-          </div>
-        </div>
-
-        <div class="destaque">
-          💥 Aqui você <strong>não diagnostica</strong> — você pergunta sobre o impacto real dos problemas que ele acabou de te contar. Financeiro, operacional e pessoal. O objetivo é fazer ele sentir o peso do que está perdendo.
-        </div>
-
-        <hr class="divisor">
-
-        <div class="cenarios-titulo">💸 IMPACTO 1 — Financeiro</div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção A — Quanto fica na mesa (quando ele já abriu dependência de plano ou indicação)</div>
-          <div class="fala-texto">"Você consegue estimar o quanto isso impacta no faturamento da clínica todo mês? Quanto você acha que fica na mesa por não ter um fluxo constante de paciente particular?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção B — Diferença de ticket</div>
-          <div class="fala-texto">"Qual é a diferença de valor entre uma consulta pelo plano e uma consulta particular na clínica de vocês? Essa diferença no acumulado do mês — você já parou pra calcular o quanto representa?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção C — Crescimento do faturamento</div>
-          <div class="fala-texto">"Nos últimos 12 meses, o faturamento da clínica cresceu, ficou estável ou oscilou bastante? O que você espera para os próximos 12?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção D — Faixa de faturamento (use quando a conversa já estiver fluindo bem)</div>
-          <div class="fala-texto">"Você vai concordar comigo: a realidade de uma clínica que fatura de R$ 20 a 50 mil por mês é uma, de R$ 50 a 150 mil é outra, acima de R$ 150 mil é completamente diferente. Só pra eu entender em qual faixa vocês estão hoje — pra conversa fazer mais sentido pro seu caso."</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Como conduzir</div>
-          <div class="dica-texto">Deixe ele calcular ou estimar. O ato de calcular torna o impacto concreto. Não sugira o número — deixe vir dele. Use no máximo 1 opção por ligação.<br><br>A pergunta de faturamento por faixa funciona melhor quando o médico já está engajado e falando — nunca como segunda ou terceira pergunta. A justificativa antes ("a realidade muda muito") é o que faz ela soar como calibragem, não como curiosidade de vendedor.</div>
-        </div>
-
-        <hr class="divisor">
-
-        <div class="cenarios-titulo">⚙️ IMPACTO 2 — Operacional</div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção A — Volume vs. qualidade (quando ele depende muito de plano)</div>
-          <div class="fala-texto">"Pra compensar o valor menor dos planos, você acaba tendo que atender mais volume — mais consultas por dia, menos tempo por atendimento. Você sente isso no dia a dia?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção B — Capacidade ociosa</div>
-          <div class="fala-texto">"Tem horários na agenda que ficam vazios com frequência? Consultas canceladas em cima da hora, espaços que não preenchem? Isso acontece com vocês?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção C — Dependência de poucos pacientes</div>
-          <div class="fala-texto">"Você tem noção de quantos pacientes respondem pela maior parte do faturamento da clínica? Se 2 ou 3 deles pararem de vir — por mudança de plano, mudança de cidade — isso teria um impacto relevante?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção D — Barreira de crescimento</div>
-          <div class="fala-texto">"Se você quisesse crescer 30% no faturamento nos próximos 6 meses — o que seria necessário para isso acontecer? Onde estaria o maior obstáculo?"</div>
-        </div>
-
-        <hr class="divisor">
-
-        <div class="cenarios-titulo">👤 IMPACTO 3 — Pessoal (use com cuidado, só se a conversa abrir)</div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção A — Sobrecarga (só se ele sinalizou cansaço)</div>
-          <div class="fala-texto">"E isso tá chegando fora da clínica também? Você consegue desligar do trabalho, ter tempo pra família, ou a correria da operação acaba tomando tudo?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção B — Qualidade de vida vs. volume</div>
-          <div class="fala-texto">"Você se vê ainda daqui a 5 anos atendendo no mesmo ritmo de hoje — ou em algum momento quer ter uma operação que funcione melhor com menos esforço da sua parte?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Quando usar o impacto pessoal</div>
-          <div class="dica-texto">Só use se ele já demonstrou sinais de cansaço ou sobrecarga. Quando funciona, conecta o problema de negócio com a vida real dele — é o impacto mais forte possível. Se vier sem abertura, soa invasivo.</div>
-        </div>
-
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('problema', document.querySelectorAll('.sidebar-btn')[2])">← Problema</button>
-          <button class="btn-nav" onclick="mudarFase('evento', document.querySelectorAll('.sidebar-btn')[4])">Próximo: Evento Crítico →</button>
+          <div class="fala-label">⚡ Você (de forma discreta)</div>
+          <div class="fala-texto">"Eu entendo que a realidade de cada clínica muda bastante conforme a faixa de faturamento — uma clínica que fatura de R$ 20 a 50 mil por mês é uma realidade, de R$ 50 a 150 mil é outra, acima de R$ 150 mil é diferente. Só pra eu entender melhor o cenário de vocês: em qual faixa você se enquadra hoje?"</div>
         </div>
       </div>
 
@@ -900,9 +606,6 @@
           </div>
         </div>
 
-        <div class="destaque">
-          🔥 Evento crítico é o <strong>motivo para agir agora</strong> e não daqui a 6 meses. Pode ser uma meta financeira, uma abertura de novo espaço, um prazo, uma pressão. Sem evento crítico, o problema existe mas não urge — e ele não muda.
-        </div>
 
         <hr class="divisor">
 
@@ -913,10 +616,6 @@
           <div class="fala-texto">"Você tem alguma meta de crescimento para a clínica esse ano — um número de pacientes, um faturamento, alguma coisa que você quer atingir até o final do ano?"</div>
         </div>
 
-        <div class="dica">
-          <div class="dica-label">💡 Se ele tiver uma meta</div>
-          <div class="dica-texto">Aprofunde: "<em>E você está no ritmo certo para chegar lá? Com o fluxo atual, você acha que vai bater essa meta?</em>"<br><br>Quando ele admite que está longe, o problema ganha prazo — e prazo gera urgência.</div>
-        </div>
 
         <div class="fala-patrick">
           <div class="fala-label">⚡ Opção B — Expansão ou investimento planejado</div>
@@ -929,32 +628,19 @@
         </div>
 
         <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção D — Pressão de mercado</div>
-          <div class="fala-texto">"Você está sentindo mais concorrência na região? Outras clínicas abrindo, mais opções para o paciente escolher? Como você enxerga isso nos próximos anos?"</div>
-        </div>
-
-        <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção E — Prazo pessoal ou profissional</div>
+          <div class="fala-label">⚡ Opção D — Prazo pessoal ou profissional</div>
           <div class="fala-texto">"Tem alguma coisa que você quer ter construído na clínica até o final desse ano — algo que, se não acontecer, vai te incomodar bastante?"</div>
         </div>
 
         <div class="fala-patrick">
-          <div class="fala-label">⚡ Opção F — O que trava de avançar (para casos sem urgência aparente)</div>
+          <div class="fala-label">⚡ Opção E — O que trava de avançar (para casos sem urgência aparente)</div>
           <div class="fala-texto">"E se eu te perguntar de outra forma: existe algo que, se continuar assim por mais um ano, vai se tornar um problema sério — financeiro ou operacional?"</div>
-        </div>
-
-        <div class="dica">
-          <div class="dica-label">💡 Como usar essas opções</div>
-          <div class="dica-texto">Use <strong>no máximo 2</strong> por ligação. Comece pela A ou B — se ele não tiver meta ou plano, desça para C ou F. O objetivo é fazer ele verbalizar o custo de não agir. Quando ele faz isso, a urgência vem dele, não de você.</div>
         </div>
 
         <hr class="divisor">
 
         <div class="cenarios-titulo">✅ MICROCOMPROMISSOS — após identificar o evento crítico</div>
 
-        <div class="destaque" style="font-size:18px;">
-          Cada "sim" é um compromisso. Quem disse sim várias vezes seguidas <strong>não cancela</strong> a reunião. Colete os 3 sins antes de propor qualquer coisa.
-        </div>
 
         <div class="fala-patrick">
           <div class="fala-label">⚡ Microcompromisso 1 — confirmar o problema</div>
@@ -986,15 +672,7 @@
           <div class="fala-texto">"Faz sentido."</div>
         </div>
 
-        <div class="dica">
-          <div class="dica-label">💡 Só avance depois dos 3 sins</div>
-          <div class="dica-texto">Sem os microcompromissos, o agendamento fica fraco e o no-show aumenta. Esses 3 sins são a fundação do compromisso com a reunião.</div>
-        </div>
 
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('impacto', document.querySelectorAll('.sidebar-btn')[3])">← Impacto</button>
-          <button class="btn-nav" onclick="mudarFase('reuniao', document.querySelectorAll('.sidebar-btn')[5])">Próximo: Vender a Reunião →</button>
-        </div>
       </div>
 
       <!-- ============ VENDER A REUNIÃO ============ -->
@@ -1022,20 +700,7 @@
           </div>
         </div>
 
-        <div class="dica">
-          <div class="dica-label">💡 As 4 sacadas dessa proposta</div>
-          <div class="dica-texto">
-            <strong>1. Honestidade explícita:</strong> falar que vai virar proposta desarma. Esconder vira "bait and switch".<br><br>
-            <strong>2. "Sem compromisso nenhum" + "de qualquer forma sai ganhando"</strong> — mata a objeção de tempo.<br><br>
-            <strong>3. "Faz sentido pra você?"</strong> — convida ele a dizer sim antes do agendamento.<br><br>
-            <strong>4. Fechamento por agenda</strong> — não pergunta "tem interesse?", pergunta "que semana?".
-          </div>
-        </div>
 
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('evento', document.querySelectorAll('.sidebar-btn')[4])">← Evento Crítico</button>
-          <button class="btn-nav" onclick="mudarFase('compromisso', document.querySelectorAll('.sidebar-btn')[6])">Próximo: Compromisso →</button>
-        </div>
       </div>
 
       <!-- ============ COMPROMISSO FINAL ============ -->
@@ -1059,10 +724,6 @@
           </div>
         </div>
 
-        <div class="dica">
-          <div class="dica-label">💡 Por que esse pedido funciona</div>
-          <div class="dica-texto">Quem disse "<em>sim, te aviso</em>" assume responsabilidade. É muito mais difícil simplesmente não aparecer depois disso. Reduz no-show drasticamente.</div>
-        </div>
 
         <hr class="divisor">
 
@@ -1091,10 +752,6 @@
               <div class="fala-label">⚡ Mensagem</div>
               <div class="fala-texto">"Oi Dr(a). [Nome], só lembrando da nossa reunião amanhã às [hora].<br><br>Para a gente já chegar avançado: dos 3 desafios (atrair paciente particular / converter quem entra em contato / fidelizar quem já passou), <strong>qual você sente que tá mais travado hoje?</strong><br><br>Pode me responder em áudio se for mais prático."</div>
             </div>
-            <div class="dica">
-              <div class="dica-label">💡 Por que pedir em áudio</div>
-              <div class="dica-texto">Quem grava um áudio investiu tempo e atenção. A taxa de comparecimento sobe muito quando o lead já "trabalhou" para a reunião.</div>
-            </div>
           </div>
         </div>
 
@@ -1122,10 +779,6 @@
           </div>
         </div>
 
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('reuniao', document.querySelectorAll('.sidebar-btn')[5])">← Vender a Reunião</button>
-          <button class="btn-nav" disabled>Fim do roteiro ✓</button>
-        </div>
       </div>
 
       <!-- ============ SINAIS ============ -->
@@ -1170,10 +823,6 @@
           </tr>
         </table>
 
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('compromisso', document.querySelectorAll('.sidebar-btn')[6])">← Compromisso</button>
-          <button class="btn-nav" onclick="mudarFase('qualificacao', document.querySelectorAll('.sidebar-btn')[8])">Qualificação →</button>
-        </div>
       </div>
 
       <!-- ============ QUALIFICAÇÃO ============ -->
@@ -1186,9 +835,6 @@
           </div>
         </div>
 
-        <div class="destaque">
-          O ticket da Vértice não é baixo. Não adianta marcar reunião com quem não tem perfil. <strong>Filtre na ligação</strong> — se não passar, encerre com educação.
-        </div>
 
         <table>
           <tr><th>Sinal positivo ✅</th><th>Sinal de alerta ⚠️</th></tr>
@@ -1218,19 +864,7 @@
           </tr>
         </table>
 
-        <div class="alerta">
-          <div class="alerta-label">⚠️ Quando desqualificar</div>
-          <div class="alerta-texto">
-            Se a maioria dos sinais for negativa, <strong>não force o agendamento</strong>. Encerre com educação:<br><br>
-            <em>"Vou ser honesto com você — pelo que conversamos, acredito que o momento da clínica de vocês não é o ideal para uma parceria com a gente agora. Mas fico à disposição quando o cenário mudar."</em><br><br>
-            Você ganha respeito profissional e deixa a porta aberta.
-          </div>
-        </div>
 
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('sinais', document.querySelectorAll('.sidebar-btn')[7])">← Sinais</button>
-          <button class="btn-nav" onclick="mudarFase('objecoes', document.querySelectorAll('.sidebar-btn')[9])">Objeções →</button>
-        </div>
       </div>
 
       <!-- ============ OBJEÇÕES ============ -->
@@ -1305,21 +939,12 @@
               <div class="fala-label">⚡ Você</div>
               <div class="fala-texto">"Faz sentido — e isso aparece muito. Sabe por que geralmente não funciona? O anúncio quase sempre entrega o contato. O problema fica depois: a recepção demora pra responder, não tem script de como conduzir, ninguém retorna pra quem disse 'vou pensar'. Aí o paciente esfria e fecha em outro lugar — e a clínica conclui que 'marketing não funciona'. Foi mais ou menos assim na experiência de vocês?"</div>
             </div>
-            <div class="dica">
-              <div class="dica-label">💡 O que isso faz</div>
-              <div class="dica-texto">Você validou a experiência ruim dele e <strong>reposicionou o problema</strong>: não foi o anúncio, foi o processo. Isso prepara o terreno para ele entender que precisa de <strong>consultoria de processo</strong>, não de mais uma agência.</div>
-            </div>
           </div>
         </div>
 
-        <div class="nav-fases">
-          <button class="btn-nav" onclick="mudarFase('qualificacao', document.querySelectorAll('.sidebar-btn')[8])">← Qualificação</button>
-          <button class="btn-nav" onclick="mudarFase('abertura', document.querySelectorAll('.sidebar-btn')[0])">↩ Voltar ao início</button>
-        </div>
       </div>
 
     </div><!-- fim conteudo -->
-    </div><!-- fim flex wrapper -->
   </div><!-- fim pagina-decisor -->
 
 </div><!-- fim main -->
@@ -1343,14 +968,6 @@
       pd.classList.add('ativa');
       document.querySelectorAll('.tab-btn')[1].classList.add('ativo');
     }
-  }
-
-  function mudarFase(faseId, btnClicado) {
-    document.querySelectorAll('.fase').forEach(f => f.classList.remove('ativa'));
-    document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('ativo'));
-    document.getElementById('fase-' + faseId).classList.add('ativa');
-    if (btnClicado) btnClicado.classList.add('ativo');
-    window.scrollTo(0, 0);
   }
 
   function toggleCenario(el) {
