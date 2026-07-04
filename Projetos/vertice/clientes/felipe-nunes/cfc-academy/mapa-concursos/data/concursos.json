@@ -16,7 +16,10 @@
     "dataProva": "2026-10-17",
     "localProva": "Conceição da Barra de Minas/MG",
     "atualizadoEm": "2026-06-21",
-    "editalUrl": "https://example.gov.br/edital1.pdf"
+    "editalUrl": "https://example.gov.br/edital1.pdf",
+    "nivel": "municipal",
+    "escolaridade": "superior",
+    "taxaInscricao": 70
   },
   {
     "id": "conc-goias-contabeis-2026",
@@ -26,7 +29,7 @@
     "uf": "GO",
     "cidade": "Goiânia",
     "vagas": "2 + CR",
-    "salario": 8500.00,
+    "salario": 8500,
     "salarioObs": "+ benefícios e auxílio moradia",
     "cargaHoraria": "40h",
     "status": "aberto",
@@ -35,7 +38,10 @@
     "dataProva": "2026-09-19",
     "localProva": "Goiânia/GO",
     "atualizadoEm": "2026-06-20",
-    "editalUrl": "https://example.gov.br/edital2.pdf"
+    "editalUrl": "https://example.gov.br/edital2.pdf",
+    "nivel": "estadual",
+    "escolaridade": "superior",
+    "taxaInscricao": 120
   },
   {
     "id": "conc-sao-paulo-prefeitura-2026",
@@ -45,7 +51,7 @@
     "uf": "SP",
     "cidade": "São Paulo",
     "vagas": "5",
-    "salario": 6200.00,
+    "salario": 6200,
     "salarioObs": "",
     "cargaHoraria": "40h",
     "status": "encerrado",
@@ -54,7 +60,10 @@
     "dataProva": "2026-07-24",
     "localProva": "São Paulo/SP",
     "atualizadoEm": "2026-06-18",
-    "editalUrl": "https://example.gov.br/edital3.pdf"
+    "editalUrl": "https://example.gov.br/edital3.pdf",
+    "nivel": "municipal",
+    "escolaridade": "superior",
+    "taxaInscricao": 90
   },
   {
     "id": "conc-pernambuco-auditoria-2026",
@@ -64,7 +73,7 @@
     "uf": "PE",
     "cidade": "Recife",
     "vagas": "3 + CR",
-    "salario": 7800.00,
+    "salario": 7800,
     "salarioObs": "+ benefícios",
     "cargaHoraria": "40h",
     "status": "aberto",
@@ -73,7 +82,10 @@
     "dataProva": "2026-10-03",
     "localProva": "Recife/PE",
     "atualizadoEm": "2026-06-22",
-    "editalUrl": "https://example.gov.br/edital4.pdf"
+    "editalUrl": "https://example.gov.br/edital4.pdf",
+    "nivel": "estadual",
+    "escolaridade": "superior",
+    "taxaInscricao": 90
   },
   {
     "id": "conc-bahia-conta-2026",
@@ -83,7 +95,7 @@
     "uf": "BA",
     "cidade": "Salvador",
     "vagas": "1",
-    "salario": 5500.00,
+    "salario": 5500,
     "salarioObs": "",
     "cargaHoraria": "40h",
     "status": "encerrado",
@@ -92,7 +104,10 @@
     "dataProva": "2026-06-28",
     "localProva": "Salvador/BA",
     "atualizadoEm": "2026-06-19",
-    "editalUrl": "https://example.gov.br/edital5.pdf"
+    "editalUrl": "https://example.gov.br/edital5.pdf",
+    "nivel": "municipal",
+    "escolaridade": "superior",
+    "taxaInscricao": 70
   },
   {
     "id": "conc-parana-tcmun-2026",
@@ -102,7 +117,7 @@
     "uf": "PR",
     "cidade": "Curitiba",
     "vagas": "2",
-    "salario": 6800.00,
+    "salario": 6800,
     "salarioObs": "+ benefícios e auxílio transporte",
     "cargaHoraria": "40h",
     "status": "aberto",
@@ -111,7 +126,10 @@
     "dataProva": "2026-10-10",
     "localProva": "Curitiba/PR",
     "atualizadoEm": "2026-06-21",
-    "editalUrl": "https://example.gov.br/edital6.pdf"
+    "editalUrl": "https://example.gov.br/edital6.pdf",
+    "nivel": "municipal",
+    "escolaridade": "superior",
+    "taxaInscricao": 90
   },
   {
     "id": "conc-rio-grande-sul-contabil-2026",
@@ -121,7 +139,7 @@
     "uf": "RS",
     "cidade": "Porto Alegre",
     "vagas": "1 + CR",
-    "salario": 9200.00,
+    "salario": 9200,
     "salarioObs": "+ benefícios",
     "cargaHoraria": "40h",
     "status": "outro",
@@ -130,7 +148,10 @@
     "dataProva": "2026-11-21",
     "localProva": "Porto Alegre/RS",
     "atualizadoEm": "2026-06-22",
-    "editalUrl": "https://example.gov.br/edital7.pdf"
+    "editalUrl": "https://example.gov.br/edital7.pdf",
+    "nivel": "estadual",
+    "escolaridade": "superior",
+    "taxaInscricao": 120
   },
   {
     "id": "conc-distrito-federal-cgf-2026",
@@ -140,7 +161,7 @@
     "uf": "DF",
     "cidade": "Brasília",
     "vagas": "4",
-    "salario": 7000.00,
+    "salario": 7000,
     "salarioObs": "",
     "cargaHoraria": "40h",
     "status": "encerrado",
@@ -149,7 +170,10 @@
     "dataProva": "2026-05-29",
     "localProva": "Brasília/DF",
     "atualizadoEm": "2026-06-17",
-    "editalUrl": "https://example.gov.br/edital8.pdf"
+    "editalUrl": "https://example.gov.br/edital8.pdf",
+    "nivel": "federal",
+    "escolaridade": "superior",
+    "taxaInscricao": 90
   },
   {
     "id": "conc-minas-gerais-tce-2026",
@@ -159,7 +183,7 @@
     "uf": "MG",
     "cidade": "Belo Horizonte",
     "vagas": "3",
-    "salario": 8100.00,
+    "salario": 8100,
     "salarioObs": "+ benefícios e auxílio alimentação",
     "cargaHoraria": "40h",
     "status": "aberto",
@@ -168,6 +192,9 @@
     "dataProva": "2026-10-11",
     "localProva": "Belo Horizonte/MG",
     "atualizadoEm": "2026-06-22",
-    "editalUrl": "https://example.gov.br/edital9.pdf"
+    "editalUrl": "https://example.gov.br/edital9.pdf",
+    "nivel": "estadual",
+    "escolaridade": "superior",
+    "taxaInscricao": 120
   }
 ]

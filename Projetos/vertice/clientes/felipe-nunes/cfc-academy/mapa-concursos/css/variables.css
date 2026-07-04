@@ -1,14 +1,59 @@
-:root {
-  --cor-primaria: #0f2a4a;      /* azul-marinho CFC (calibrar com logo) */
-  --cor-primaria-clara: #1c3d63;
-  --cor-destaque: #f39422;      /* laranja CTA/alertas */
-  --cor-whatsapp: #25a05a;
-  --cor-fundo: #f2f3f5;
-  --cor-card: #ffffff;
-  --cor-texto: #1f2937;
-  --cor-texto-suave: #6b7280;
-  --cor-borda: #e5e7eb;
-  --raio: 10px;
-  --sombra: 0 1px 3px rgba(0,0,0,.08);
-  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+/* ============================================================
+   CFC · Mapa de Concursos — Design System "Editorial Esmeralda"
+   Ponto único de calibração de identidade.
+   ============================================================ */
+:root{
+  /* superfícies (off-white quente) */
+  --paper:#FAF9F6;
+  --paper-2:#F3F1EA;
+  --card:#FFFFFF;
+
+  /* tinta */
+  --ink:#191C1A;
+  --ink-2:#5C625E;
+  --ink-3:#8A8F8A;
+
+  /* acento — verde-esmeralda (aprovação / dinheiro) */
+  --esmeralda:#0E6B4F;
+  --esmeralda-d:#0A5540;
+  --esmeralda-wash:#EAF2EE;
+
+  /* dourado — usado com parcimônia (selecionado / destaque nobre) */
+  --gold:#B9892E;
+  --gold-wash:#F6EFDD;
+
+  /* linhas */
+  --line:#E4E0D6;
+  --line-strong:#D6D1C4;
+
+  /* semânticos (discretos) */
+  --ok:#0E6B4F;
+  --warn:#B9892E;
+  --crit:#B4442E;
+
+  /* raios e sombra */
+  --r-sm:10px;
+  --r:14px;
+  --r-lg:18px;
+  --r-pill:999px;
+  --sombra:0 1px 2px rgba(25,28,26,.05);
+  --shadow-lift:0 6px 24px -10px rgba(25,28,26,.18);
+  --raio:14px;
+
+  /* tipografia — serif p/ display, sans p/ corpo, mono p/ dados */
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,"Cascadia Mono",Consolas,"Liberation Mono",Menlo,monospace;
+  --fonte:var(--sans);
+
+  /* ---- aliases de compatibilidade (nomes antigos → nova paleta) ---- */
+  --cor-primaria:var(--esmeralda);
+  --cor-primaria-clara:var(--esmeralda-d);
+  --cor-destaque:var(--gold);
+  --cor-whatsapp:#0E6B4F;
+  --cor-fundo:var(--paper);
+  --cor-card:var(--card);
+  --cor-texto:var(--ink);
+  --cor-texto-suave:var(--ink-2);
+  --cor-borda:var(--line);
 }

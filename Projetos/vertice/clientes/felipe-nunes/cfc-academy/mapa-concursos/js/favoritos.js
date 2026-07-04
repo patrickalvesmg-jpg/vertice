@@ -3,21 +3,26 @@ import { carregarConcursos } from './data.js';
 import { renderCard } from './render.js';
 import { store } from './store.js';
 
-montarHeader();
+montarHeader('favoritos');
+
+const vazio = `<div class="vazio">
+  <h3>Você ainda não favoritou nenhum concurso</h3>
+  <p>Salve os concursos que interessam para acompanhá-los aqui.</p>
+  <a class="btn btn-primary" href="app.html">Explorar concursos ›</a>
+</div>`;
 
 function aplicar(lista) {
   const favoritos = store.getFavoritos();
   const filtrados = lista.filter(c => favoritos.includes(c.id));
   const alvo = document.querySelector('#lista');
-  alvo.innerHTML = filtrados.length
-    ? filtrados.map(renderCard).join('')
-    : '<p class="vazio">Você ainda não favoritou nenhum concurso.</p>';
+  if (!filtrados.length){ alvo.innerHTML = vazio; return; }
+  alvo.innerHTML = filtrados.map(renderCard).join('');
   alvo.querySelectorAll('[data-fav]').forEach(b =>
     b.addEventListener('click', () => { store.toggleFavorito(b.dataset.fav); aplicar(lista); }));
 }
 
 carregarConcursos()
-  .then(lista => aplicar(lista))
+  .then(aplicar)
   .catch(() => {
-    document.querySelector('#lista').innerHTML = '<p class="vazio">Não foi possível carregar os concursos.</p>';
+    document.querySelector('#lista').innerHTML = '<div class="vazio"><h3>Não foi possível carregar os concursos</h3></div>';
   });

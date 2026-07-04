@@ -1,18 +1,21 @@
 import { store } from './store.js';
 export function montarHeader(ativo = ''){
   if (!store.isLogged()) { location.href = 'login.html'; return; }
-  const item = (href, label, id, cls='') =>
-    `<a href="${href}" class="hd-link ${cls} ${ativo===id?'ativo':''}">${label}</a>`;
+  const cls = (...xs) => xs.filter(Boolean).join(' ');
+  const item = (href, label, id, extra='') =>
+    `<a href="${href}" class="${cls('hd-link', extra, ativo===id && 'ativo')}">${label}</a>`;
   const html = `
   <header class="hd">
-    <div class="container hd-in">
-      <a href="app.html" class="hd-logo">CFC · Mapa de Concursos</a>
+    <div class="hd-in">
+      <a href="app.html" class="hd-logo">Mapa de Concursos<span>.</span></a>
       <nav class="hd-nav">
-        ${item('calendario.html','📅 Calendário','calendario')}
-        ${item('perfil.html','👤 Meu Perfil','perfil')}
-        ${item('alertas.html','🔔 Alertas','alertas','hd-alertas')}
-        <a href="#" class="hd-link hd-grupo">🟢 Grupo</a>
-        <a href="#" class="hd-link hd-sair" id="hd-sair">↪ Sair</a>
+        ${item('app.html','Concursos','app')}
+        ${item('calendario.html','Calendário','calendario')}
+        ${item('favoritos.html','Favoritos','favoritos')}
+        ${item('alertas.html','Alertas','alertas','hd-alertas')}
+        ${item('perfil.html','Meu Perfil','perfil')}
+        <a href="#" class="hd-link hd-grupo">Comunidade ›</a>
+        <a href="#" class="hd-link hd-sair" id="hd-sair">Sair</a>
       </nav>
     </div>
   </header>`;

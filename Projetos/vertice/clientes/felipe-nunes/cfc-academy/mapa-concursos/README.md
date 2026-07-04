@@ -52,6 +52,9 @@ Adicione um novo objeto ao array em `data/concursos.json`, seguindo o formato:
   "salarioObs": "",
   "cargaHoraria": "40h",
   "status": "aberto",
+  "nivel": "estadual",
+  "escolaridade": "superior",
+  "taxaInscricao": 120,
   "inscricaoInicio": "2026-08-19T08:00",
   "inscricaoFim": "2026-09-18T16:00",
   "dataProva": "2026-10-17",
@@ -65,8 +68,15 @@ Observações sobre os campos:
 
 - `id`: identificador único (string), usado por favoritos/alertas e pela URL de detalhe (`concurso.html?id=...`). Nunca reutilize um `id` já existente.
 - `uf`: sigla de 2 letras, usada para colorir o mapa (deve bater com o `id` dos estados em `assets/brasil.svg`).
-- `status`: `"aberto"`, `"encerrado"` ou outro valor livre (exibido como "Outros").
+- `status`: `"aberto"`, `"encerrado"` ou outro valor livre (exibido como "Previsto"/"Outros").
+- `nivel`: `"federal"`, `"estadual"`, `"municipal"` ou `"distrital"` — usado no filtro por nível do órgão.
+- `escolaridade`: `"superior"` ou `"medio"` — usado no filtro por escolaridade.
+- `taxaInscricao`: número (R$) — exibido na tela de detalhe.
 - `dataProva`, `atualizadoEm`: datas **sem horário**, no formato `AAAA-MM-DD`.
+
+## Identidade visual
+
+O design é **editorial esmeralda**: off-white, verde-esmeralda como acento (aprovação/dinheiro), tipografia serifada nos títulos. Toda a paleta e tipografia ficam em `css/variables.css` (ponto único de calibração). Os nomes antigos de variáveis (`--cor-*`) são mantidos como aliases da nova paleta, então ajustar a marca é editar apenas esse arquivo.
 - `inscricaoInicio`, `inscricaoFim`: podem incluir horário, no formato `AAAA-MM-DDTHH:mm`.
 - `salario`: número (use `null` se não divulgado) — `salarioObs` complementa em texto (ex.: "+ benefícios").
 - `vagas`: string livre (aceita "1", "2 + CR" etc.).
