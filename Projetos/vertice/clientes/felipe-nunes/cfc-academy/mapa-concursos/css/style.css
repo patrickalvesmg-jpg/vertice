@@ -51,3 +51,13 @@ body { font-family: var(--fonte); background: var(--cor-fundo); color: var(--cor
   .recursos-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 28px; }
 }
+
+/* ===== Header (área logada) ===== */
+.hd { background: var(--cor-primaria); color:#fff; }
+.hd-in { display:flex; align-items:center; justify-content:space-between; height:64px; }
+.hd-logo { color:#fff; font-weight:700; text-decoration:none; }
+.hd-nav { display:flex; align-items:center; gap:18px; }
+.hd-link { color:#e5eefb; text-decoration:none; font-size:14px; }
+.hd-link.ativo { color:#fff; font-weight:600; }
+.hd-alertas { background:var(--cor-destaque); color:#fff; padding:8px 14px; border-radius:var(--raio); }
+.hd-grupo { background:var(--cor-whatsapp); color:#fff; padding:8px 14px; border-radius:var(--raio); }
