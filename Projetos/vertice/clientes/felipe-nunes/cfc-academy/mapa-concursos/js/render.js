@@ -1,6 +1,15 @@
 import { store } from './store.js';
 const brl = v => v==null ? '' : v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const dia = s => s ? new Date(s).toLocaleDateString('pt-BR') : '';
+// Datas "AAAA-MM-DD" (sem horário) precisam de parse local para não cair um dia por causa do UTC.
+// Datas com horário ("AAAA-MM-DDTHH:mm") já são interpretadas em horário local pelo Date nativo.
+const dia = s => {
+  if (!s) return '';
+  if (s.length === 10) {
+    const [ano, mes, d] = s.split('-').map(Number);
+    return new Date(ano, mes - 1, d).toLocaleDateString('pt-BR');
+  }
+  return new Date(s).toLocaleDateString('pt-BR');
+};
 export function renderCard(c){
   const aberto = c.status === 'aberto';
   const badge = aberto ? '<span class="badge badge-aberto">Inscrições Abertas</span>'
