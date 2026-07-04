@@ -8,7 +8,7 @@ export function renderCard(c){
     : '<span class="badge">Outros</span>';
   const fav = store.isFavorito(c.id) ? 'fav-on' : '';
   return `<article class="conc ${aberto?'conc-aberto':''}">
-    <div class="conc-top"><h3>${c.orgao}</h3>${badge}</div>
+    <div class="conc-top"><h3><a class="conc-titulo-link" href="concurso.html?id=${c.id}">${c.orgao}</a></h3>${badge}</div>
     <p class="conc-cargo">${c.cargo}</p>
     <p class="conc-linha">💲 ${brl(c.salario)}${c.salarioObs?' '+c.salarioObs:''} · 📅 Prova: ${dia(c.dataProva)}</p>
     <p class="conc-meta">📍 ${c.cidade||''}/${c.uf} · Vagas: ${c.vagas} · Banca: ${c.banca} · ${c.cargaHoraria||''}</p>

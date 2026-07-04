@@ -7,10 +7,18 @@ const toggle = (k, id) => {
   writeArr(k, a); return a;
 };
 export const store = {
-  login(email){ localStorage.setItem(K.user, JSON.stringify({ email })); },
+  login(email){ localStorage.setItem(K.user, JSON.stringify({ email, nome: '' })); },
   logout(){ localStorage.removeItem(K.user); },
   isLogged(){ return !!localStorage.getItem(K.user); },
-  getUsuario(){ return JSON.parse(localStorage.getItem(K.user) || 'null'); },
+  getUsuario(){
+    const u = JSON.parse(localStorage.getItem(K.user) || 'null');
+    return u ? { email: u.email, nome: u.nome || '' } : null;
+  },
+  setNome(nome){
+    const u = store.getUsuario();
+    if (!u) return;
+    localStorage.setItem(K.user, JSON.stringify({ email: u.email, nome }));
+  },
   toggleFavorito(id){ return toggle(K.fav, id); },
   getFavoritos(){ return readArr(K.fav); },
   isFavorito(id){ return readArr(K.fav).includes(id); },

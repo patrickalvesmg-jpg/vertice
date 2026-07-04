@@ -93,6 +93,8 @@ body { font-family: var(--fonte); background: var(--cor-fundo); color: var(--cor
 .conc-aberto { border-left-color: var(--cor-destaque); }
 .conc-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:6px; }
 .conc-top h3 { font-size:16px; color:var(--cor-texto); line-height:1.3; }
+.conc-titulo-link { color:inherit; text-decoration:none; }
+.conc-titulo-link:hover { text-decoration:underline; color:var(--cor-primaria); }
 .conc-cargo { font-size:14px; font-weight:600; color:var(--cor-primaria); margin-bottom:8px; }
 .conc-linha { font-size:14px; color:var(--cor-texto); margin-bottom:6px; }
 .conc-meta { font-size:13px; color:var(--cor-texto-suave); margin-bottom:4px; line-height:1.5; }
