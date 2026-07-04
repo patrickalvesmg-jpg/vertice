@@ -137,3 +137,18 @@ body { font-family: var(--fonte); background: var(--cor-fundo); color: var(--cor
 .lg-com { background:var(--cor-primaria); }
 .lg-sel { background:var(--cor-destaque); }
 .lg-sem { background:#d1d5db; }
+
+/* ===== Calendário de Provas ===== */
+.aba-mes { background:var(--cor-card); color:var(--cor-texto-suave); border:1px solid var(--cor-borda); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer; font-family:var(--fonte); }
+.aba-mes:hover { border-color:var(--cor-primaria); color:var(--cor-primaria); }
+.aba-mes.aba-mes-on { background:var(--cor-primaria); color:#fff; border-color:var(--cor-primaria); }
+
+.cal-titulo-mes { font-size:18px; color:var(--cor-texto); margin:20px 0 12px; }
+
+.cal-tabela { width:100%; border-collapse:collapse; background:var(--cor-card); border-radius:var(--raio); overflow:hidden; box-shadow:var(--sombra); }
+.cal-tabela th, .cal-tabela td { text-align:left; padding:12px 16px; font-size:14px; }
+.cal-tabela th { background:var(--cor-fundo); color:var(--cor-texto-suave); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em; }
+.cal-tabela tbody tr { border-top:1px solid var(--cor-borda); }
+.cal-tabela tbody tr:nth-child(even) { background:var(--cor-fundo); }
+
+.badge-prazo { display:inline-block; margin-left:8px; white-space:nowrap; font-size:12px; font-weight:600; padding:3px 9px; border-radius:999px; background:rgba(243,148,34,.15); color:var(--cor-destaque); }

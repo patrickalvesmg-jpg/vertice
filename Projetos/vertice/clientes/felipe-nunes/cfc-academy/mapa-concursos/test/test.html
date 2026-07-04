@@ -33,3 +33,12 @@ assert(filtrar(amostra, { status:'encerrado' }).length === 1, 'filtra por status
 assert(ordenar(amostra, 'recentes')[0].id === 'b', 'ordena por mais recente');
 console.log('--- fim dos testes data ---');
 </script>
+<script type="module">
+import { agruparPorMes } from '../js/calendario.js';
+function assert(cond, msg){ console[cond?'log':'error']((cond?'PASS':'FAIL')+': '+msg); }
+const provas = [{id:'a',dataProva:'2026-07-11'},{id:'b',dataProva:'2026-07-12'},{id:'c',dataProva:'2026-08-01'}];
+const g = agruparPorMes(provas);
+assert(g['2026-07'].length === 2, 'agrupa 2 provas em julho');
+assert(g['2026-08'].length === 1, 'agrupa 1 prova em agosto');
+console.log('--- fim dos testes calendario ---');
+</script>
