@@ -10,27 +10,53 @@
 <body>
 <div id="hd"></div>
 
-<main class="container app-main">
-  <div class="app-barra">
-    <h1 class="app-titulo">Concursos abertos</h1>
-    <p class="app-contador" id="contador">0 concursos</p>
-  </div>
+<main class="app-main">
+  <header class="app-head">
+    <span class="eyebrow">Concursos · Área Contábil · Brasil</span>
+    <div class="app-headrow">
+      <h1 class="app-titulo">Sua próxima <em>aprovação</em> começa aqui.</h1>
+      <div class="app-count">
+        <div class="n" id="contador-n">0</div>
+        <div class="l" id="contador-l">concursos</div>
+      </div>
+    </div>
+  </header>
 
   <div class="app-controles">
-    <input type="search" id="busca" class="busca" placeholder="Buscar por órgão, cargo ou banca...">
-    <select id="ordenar" class="ordenar">
-      <option value="recentes">Mais recentes</option>
-    </select>
-    <button type="button" class="btn btn-filtros" id="btn-filtros">Filtros avançados</button>
-  </div>
+    <div class="busca-wrap">
+      <span class="ic">⌕</span>
+      <input type="search" id="busca" class="busca" placeholder="Buscar por órgão, cargo, banca ou cidade…">
+    </div>
 
-  <div class="app-abas" id="abas"></div>
+    <div class="app-toolrow">
+      <div class="app-abas" id="abas"></div>
+      <span class="tool-spacer"></span>
+      <button type="button" class="btn-filtros" id="btn-filtros">⚙ Filtros avançados</button>
+      <select id="ordenar" class="ordenar">
+        <option value="salario">Maior salário</option>
+        <option value="prazo">Prazo acabando</option>
+        <option value="prova">Prova mais próxima</option>
+        <option value="vagas">Mais vagas</option>
+        <option value="recentes">Mais recentes</option>
+      </select>
+    </div>
+
+    <div class="filtros-adv" id="filtros-adv" hidden></div>
+    <div class="filtros-ativos" id="filtros-ativos"></div>
+  </div>
 
   <div class="app-colunas">
     <section id="coluna-lista" class="coluna-lista">
       <div id="lista"></div>
     </section>
-    <aside id="coluna-mapa" class="coluna-mapa"></aside>
+    <aside class="coluna-mapa-wrap">
+      <div id="coluna-mapa" class="coluna-mapa"></div>
+      <div class="painel-cta">
+        <h3>Passar exige método.</h3>
+        <p>Os aprovados da CFC Academy estudam com o Método 3R. Veja como se preparar para o concurso certo.</p>
+        <a href="#">Quero passar ›</a>
+      </div>
+    </aside>
   </div>
 </main>
 

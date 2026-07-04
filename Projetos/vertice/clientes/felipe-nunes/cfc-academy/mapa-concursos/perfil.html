@@ -10,10 +10,13 @@
 <body>
 <div id="hd"></div>
 
-<main class="container app-main">
-  <div class="app-barra">
-    <h1 class="app-titulo">Meu Perfil</h1>
-  </div>
+<main class="app-main">
+  <header class="app-head">
+    <span class="eyebrow">Sua conta</span>
+    <div class="app-headrow">
+      <h1 class="app-titulo">Meu <em>perfil</em></h1>
+    </div>
+  </header>
 
   <div class="card" style="max-width:480px;">
     <div class="campo">
@@ -25,8 +28,8 @@
       <input type="text" id="perfil-nome" placeholder="Seu nome">
     </div>
     <button type="button" class="btn btn-primary" id="perfil-salvar">Salvar</button>
-    <p id="perfil-msg" class="conc-atual" style="margin-top:10px;"></p>
-    <button type="button" class="btn" id="perfil-sair" style="margin-top:18px; background:var(--cor-borda); color:var(--cor-texto);">↪ Sair</button>
+    <p id="perfil-msg" class="k" style="margin-top:12px;color:var(--esmeralda-d)"></p>
+    <button type="button" class="btn btn-outline" id="perfil-sair" style="margin-top:20px;">Sair</button>
   </div>
 </main>
 
