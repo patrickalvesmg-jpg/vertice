@@ -9,7 +9,8 @@ export function agruparPorMes(lista){
 }
 export function diasAte(dataISO){
   const hoje = new Date(); hoje.setHours(0,0,0,0);
-  const d = new Date(dataISO); d.setHours(0,0,0,0);
+  const [ano, mes, dia] = dataISO.split('-').map(Number);
+  const d = new Date(ano, mes - 1, dia);
   return Math.round((d - hoje) / 86400000);
 }
 
