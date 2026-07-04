@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/style.css">
+<title>Entrar — Mapa de Concursos CFC</title>
+</head>
+<body>
+
+<div class="tela-auth">
+  <div class="card auth-card">
+    <a href="index.html" class="logo">CFC · <span>Mapa de Concursos</span></a>
+    <h2 id="auth-titulo">Entrar</h2>
+    <p class="auth-sub" id="auth-sub">Acesse sua conta para ver os concursos.</p>
+
+    <form id="form-login">
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="voce@email.com" required>
+      </div>
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
+
+    <p class="auth-toggle">
+      Ainda não tem conta? <a id="toggle-cadastro">Criar conta</a>
+    </p>
+    <a href="index.html" class="auth-voltar">← Voltar para a página inicial</a>
+  </div>
+</div>
+
+<script type="module" src="js/login.js"></script>
+</body>
+</html>

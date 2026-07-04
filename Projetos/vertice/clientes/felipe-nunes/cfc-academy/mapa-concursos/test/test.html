@@ -1,0 +1,48 @@
+<!doctype html><meta charset="utf-8"><title>Testes</title>
+<script type="module">
+import { store } from '../js/store.js';
+function assert(cond, msg){ console[cond?'log':'error']((cond?'PASS':'FAIL')+': '+msg); }
+localStorage.clear();
+assert(store.isLogged() === false, 'começa deslogado');
+store.login('a@b.com');
+assert(store.isLogged() === true, 'loga');
+assert(store.getUsuario().email === 'a@b.com', 'guarda email');
+assert(store.getUsuario().nome === '', 'nome começa vazio');
+store.setNome('Fulano');
+assert(store.getUsuario().nome === 'Fulano', 'setNome atualiza nome');
+assert(store.getUsuario().email === 'a@b.com', 'setNome mantém email');
+store.toggleFavorito('x1');
+assert(store.isFavorito('x1') === true, 'favorita');
+store.toggleFavorito('x1');
+assert(store.isFavorito('x1') === false, 'desfavorita');
+store.toggleAlerta('x2');
+assert(store.getAlertas().includes('x2'), 'cria alerta');
+store.logout();
+assert(store.isLogged() === false, 'desloga');
+console.log('--- fim dos testes store ---');
+</script>
+<script type="module">
+import { contarPorUF, contarPorStatus, filtrar, ordenar } from '../js/data.js';
+function assert(cond, msg){ console[cond?'log':'error']((cond?'PASS':'FAIL')+': '+msg); }
+const amostra = [
+  { id:'a', uf:'MG', status:'aberto', orgao:'Prefeitura X', cargo:'Contador', banca:'FCC', atualizadoEm:'2026-06-01' },
+  { id:'b', uf:'MG', status:'encerrado', orgao:'Câmara Y', cargo:'Contador', banca:'Cebraspe', atualizadoEm:'2026-06-10' },
+  { id:'c', uf:'SP', status:'aberto', orgao:'TRF', cargo:'Analista', banca:'FCC', atualizadoEm:'2026-05-01' },
+];
+assert(contarPorUF(amostra).MG === 2, 'conta 2 em MG');
+assert(contarPorStatus(amostra).aberto === 2, 'conta 2 abertos');
+assert(filtrar(amostra, { uf:'SP' }).length === 1, 'filtra por UF');
+assert(filtrar(amostra, { texto:'trf' }).length === 1, 'busca por texto');
+assert(filtrar(amostra, { status:'encerrado' }).length === 1, 'filtra por status');
+assert(ordenar(amostra, 'recentes')[0].id === 'b', 'ordena por mais recente');
+console.log('--- fim dos testes data ---');
+</script>
+<script type="module">
+import { agruparPorMes } from '../js/calendario.js';
+function assert(cond, msg){ console[cond?'log':'error']((cond?'PASS':'FAIL')+': '+msg); }
+const provas = [{id:'a',dataProva:'2026-07-11'},{id:'b',dataProva:'2026-07-12'},{id:'c',dataProva:'2026-08-01'}];
+const g = agruparPorMes(provas);
+assert(g['2026-07'].length === 2, 'agrupa 2 provas em julho');
+assert(g['2026-08'].length === 1, 'agrupa 1 prova em agosto');
+console.log('--- fim dos testes calendario ---');
+</script>
