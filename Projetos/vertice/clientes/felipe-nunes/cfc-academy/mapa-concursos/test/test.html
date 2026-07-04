@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8"><title>Testes</title>
+<script type="module">
+import { store } from '../js/store.js';
+function assert(cond, msg){ console[cond?'log':'error']((cond?'PASS':'FAIL')+': '+msg); }
+localStorage.clear();
+assert(store.isLogged() === false, 'começa deslogado');
+store.login('a@b.com');
+assert(store.isLogged() === true, 'loga');
+assert(store.getUsuario().email === 'a@b.com', 'guarda email');
+store.toggleFavorito('x1');
+assert(store.isFavorito('x1') === true, 'favorita');
+store.toggleFavorito('x1');
+assert(store.isFavorito('x1') === false, 'desfavorita');
+store.toggleAlerta('x2');
+assert(store.getAlertas().includes('x2'), 'cria alerta');
+store.logout();
+assert(store.isLogged() === false, 'desloga');
+console.log('--- fim dos testes ---');
+</script>
