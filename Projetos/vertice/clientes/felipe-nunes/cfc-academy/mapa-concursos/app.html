@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/style.css">
+<title>Concursos — Mapa de Concursos CFC</title>
+</head>
+<body>
+<div id="hd"></div>
+
+<main class="container app-main">
+  <div class="app-barra">
+    <h1 class="app-titulo">Concursos abertos</h1>
+    <p class="app-contador" id="contador">0 concursos</p>
+  </div>
+
+  <div class="app-controles">
+    <input type="search" id="busca" class="busca" placeholder="Buscar por órgão, cargo ou banca...">
+    <select id="ordenar" class="ordenar">
+      <option value="recentes">Mais recentes</option>
+    </select>
+    <button type="button" class="btn btn-filtros" id="btn-filtros">Filtros avançados</button>
+  </div>
+
+  <div class="app-abas" id="abas"></div>
+
+  <div class="app-colunas">
+    <section id="coluna-lista" class="coluna-lista">
+      <div id="lista"></div>
+    </section>
+    <aside id="coluna-mapa" class="coluna-mapa"></aside>
+  </div>
+</main>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
