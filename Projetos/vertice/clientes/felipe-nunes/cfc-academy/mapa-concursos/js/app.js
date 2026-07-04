@@ -2,6 +2,7 @@ import { montarHeader } from './header.js';
 import { carregarConcursos, contarPorStatus, filtrar, ordenar } from './data.js';
 import { renderCard } from './render.js';
 import { store } from './store.js';
+import { montarMapa } from './mapa.js';
 
 montarHeader('app');
 let todos = [];
@@ -32,5 +33,10 @@ document.querySelector('#busca').addEventListener('input', e => { estado.texto=e
 document.querySelector('#ordenar').addEventListener('change', e => { estado.ordem=e.target.value; aplicar(); });
 
 carregarConcursos()
-  .then(d => { todos = d; montarAbas(); aplicar(); })
+  .then(d => {
+    todos = d;
+    montarAbas();
+    aplicar();
+    montarMapa(document.querySelector('#coluna-mapa'), todos, (uf) => window.__setUF(uf));
+  })
   .catch(() => { document.querySelector('#lista').innerHTML = '<p class="vazio">Não foi possível carregar os concursos.</p>'; });

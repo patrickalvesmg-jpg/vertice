@@ -116,3 +116,24 @@ body { font-family: var(--fonte); background: var(--cor-fundo); color: var(--cor
   .app-colunas { grid-template-columns: 1fr; }
   .coluna-mapa { position:static; min-height:220px; }
 }
+
+/* ===== Mapa do Brasil (coluna direita) ===== */
+.coluna-mapa { padding:20px; }
+.mapa-head { font-size:16px; font-weight:700; color:var(--cor-texto); margin-bottom:4px; }
+.mapa-sub { font-size:13px; color:var(--cor-texto-suave); margin-bottom:14px; }
+
+.mapa-svg { width:100%; }
+.mapa-svg svg { width:100%; height:auto; display:block; }
+
+.mapa-svg .state { stroke:#ffffff; stroke-width:1; transition: fill .15s ease; }
+.uf-sem { fill:#d1d5db; }
+.uf-com { fill:var(--cor-primaria); cursor:pointer; }
+.uf-com:hover { fill:var(--cor-primaria-clara); }
+.uf-sel { fill:var(--cor-destaque) !important; cursor:pointer; }
+
+.mapa-legenda { display:flex; flex-wrap:wrap; gap:12px; margin-top:16px; font-size:12px; color:var(--cor-texto-suave); }
+.mapa-legenda span { display:inline-flex; align-items:center; gap:6px; }
+.lg { display:inline-block; width:12px; height:12px; border-radius:3px; }
+.lg-com { background:var(--cor-primaria); }
+.lg-sel { background:var(--cor-destaque); }
+.lg-sem { background:#d1d5db; }
