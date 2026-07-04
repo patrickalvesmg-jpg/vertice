@@ -1,0 +1,8 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--fonte); background: var(--cor-fundo); color: var(--cor-texto); }
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--raio); border: none; cursor: pointer; font-size: 14px; text-decoration: none; }
+.btn-primary { background: var(--cor-primaria); color: #fff; }
+.btn-destaque { background: var(--cor-destaque); color: #fff; }
+.btn-whatsapp { background: var(--cor-whatsapp); color: #fff; }
+.card { background: var(--cor-card); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px; }

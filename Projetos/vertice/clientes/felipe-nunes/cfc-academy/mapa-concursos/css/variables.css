@@ -1,0 +1,14 @@
+:root {
+  --cor-primaria: #0f2a4a;      /* azul-marinho CFC (calibrar com logo) */
+  --cor-primaria-clara: #1c3d63;
+  --cor-destaque: #f39422;      /* laranja CTA/alertas */
+  --cor-whatsapp: #25a05a;
+  --cor-fundo: #f2f3f5;
+  --cor-card: #ffffff;
+  --cor-texto: #1f2937;
+  --cor-texto-suave: #6b7280;
+  --cor-borda: #e5e7eb;
+  --raio: 10px;
+  --sombra: 0 1px 3px rgba(0,0,0,.08);
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
